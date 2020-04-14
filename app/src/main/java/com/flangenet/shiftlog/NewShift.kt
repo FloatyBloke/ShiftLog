@@ -2,13 +2,12 @@ package com.flangenet.shiftlog
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.flangenet.shiftlog.Model.Shift
 import kotlinx.android.synthetic.main.activity_new_shift.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -16,12 +15,15 @@ import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-public var shiftStartDateTime: LocalDateTime = LocalDateTime.now()
-public var shiftEndDateTime: LocalDateTime = LocalDateTime.now()
-public val dFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-public val tFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
 
 class NewShift : AppCompatActivity() {
+
+    val dFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    val tFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
+
+    var shift = Shift(LocalDateTime.now(),LocalDateTime.now(),0F,0F,5F,0F)
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
@@ -29,10 +31,14 @@ class NewShift : AppCompatActivity() {
             btnShiftCancel.setOnClickListener{btnShiftCancelClicked()}
             btnShiftSave.setOnClickListener{btnSaveShiftClicked()}
 
-            txtShiftStartDate.text = shiftStartDateTime.format(dFormatter)
-            txtShiftEndDate.text = shiftEndDateTime.format(dFormatter)
-            txtShiftStartTime.text = shiftStartDateTime.format(tFormatter)
-            txtShiftEndTime.text = shiftEndDateTime.format(tFormatter)
+            // Remove Seconds and Nanos from current time
+            var tTime = LocalDateTime.now()
+            tTime = tTime.minusSeconds(tTime.second.toLong())
+            tTime = tTime.minusNanos(tTime.nano.toLong())
+            shift.start= tTime
+            shift.end = tTime
+
+
 
 
         // Date and time
@@ -49,36 +55,21 @@ class NewShift : AppCompatActivity() {
         println(time)
 
 
-        // Calendar
-        val c = Calendar.getInstance()
-            c.set(2019,0,7)
-        val inYear = c.get(Calendar.YEAR)
-        val inMonth = c.get(Calendar.MONTH)
-        val inDay = c.get(Calendar.DAY_OF_MONTH)
-        val cDate = c.get(Calendar.DATE)
-
-
-
-
         // Button click to show DatePickerDialog
         txtShiftStartDate.setOnClickListener{
             val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, outYear, outMonth, outDay ->
-                //val td:LocalDate = LocalDate.of(outYear,(outMonth+1),outDay)
-                //txtShiftStartDate.text = td.format(dFormatter)
-                shiftStartDateTime = LocalDateTime.of(outYear,outMonth,outDay, shiftStartDateTime.hour,shiftStartDateTime.minute)
-                hourDiffCalc()
-            }, shiftStartDateTime.year, shiftStartDateTime.monthValue, shiftStartDateTime.dayOfMonth)
+                shift.start = LocalDateTime.of(outYear,(outMonth+1),outDay, shift.start.hour,shift.start.minute,0,0)
+                mainCalc()
+            }, shift.start.year, ((shift.start.monthValue)-1), shift.start.dayOfMonth)
             dpd.show()
             //
         }
 
         txtShiftEndDate.setOnClickListener{
             val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, outYear, outMonth, outDay ->
-                //val td:LocalDate = LocalDate.of(outYear,(outMonth+1),outDay)
-                //txtShiftEndDate.text = td.format(dFormatter)
-                shiftEndDateTime = LocalDateTime.of(outYear,outMonth,outDay,shiftEndDateTime.hour,shiftEndDateTime.minute)
-                hourDiffCalc()
-            }, shiftEndDateTime.year, shiftEndDateTime.monthValue, shiftEndDateTime.dayOfMonth)
+                shift.end = LocalDateTime.of(outYear,(outMonth+1),outDay,shift.end.hour,shift.end.minute,0,0)
+                mainCalc()
+            }, shift.end.year, ((shift.end.monthValue)-1), shift.end.dayOfMonth)
             dpd.show()
 
         }
@@ -86,23 +77,20 @@ class NewShift : AppCompatActivity() {
         txtShiftStartTime.setOnClickListener {
             val cal = Calendar.getInstance()
             val timeSetListener = TimePickerDialog.OnTimeSetListener { _, outHour, outMinute ->
-                //val tt:LocalTime = LocalTime.of(outHour,outMinute)
-                //txtShiftStartTime.text = tt.format(tFormatter)
-                shiftStartDateTime = LocalDateTime.of(shiftStartDateTime.year,shiftStartDateTime.monthValue,shiftStartDateTime.dayOfMonth,outHour,outMinute)
-                hourDiffCalc()
+                shift.start = LocalDateTime.of(shift.start.year,shift.start.monthValue,shift.start.dayOfMonth,outHour,outMinute,0,0)
+                println(shift.start)
+                mainCalc()
             }
-            TimePickerDialog(this, timeSetListener, shiftStartDateTime.hour, shiftStartDateTime.minute, true).show()
+            TimePickerDialog(this, timeSetListener, shift.start.hour, shift.start.minute, true).show()
         }
 
         txtShiftEndTime.setOnClickListener {
             val cal = Calendar.getInstance()
             val timeSetListener = TimePickerDialog.OnTimeSetListener { _, outHour, outMinute ->
-                //val tt:LocalTime = LocalTime.of(outHour,outMinute)
-                //txtShiftEndTime.text = tt.format(tFormatter)
-                shiftEndDateTime = LocalDateTime.of(shiftEndDateTime.year,shiftEndDateTime.monthValue,shiftEndDateTime.dayOfMonth,outHour,outMinute)
-                hourDiffCalc()
+                shift.end = LocalDateTime.of(shift.end.year,shift.end.monthValue,shift.end.dayOfMonth,outHour,outMinute,0,0)
+                mainCalc()
             }
-            TimePickerDialog(this, timeSetListener, shiftEndDateTime.hour, shiftEndDateTime.minute, true).show()
+            TimePickerDialog(this, timeSetListener, shift.end.hour, shift.end.minute, true).show()
         }
 
 
@@ -121,7 +109,10 @@ class NewShift : AppCompatActivity() {
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>,view: View, position: Int, id: Long) {
                     Toast.makeText(this@NewShift,breakArray[position], Toast.LENGTH_SHORT).show()
-                    hourDiffCalc()
+                    val breakMins: Int = spinner.selectedItem.toString().toInt()
+                    shift.breaks = (breakMins.toFloat()/60)
+                    println(shift.breaks)
+                    mainCalc()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -130,12 +121,14 @@ class NewShift : AppCompatActivity() {
             }
         }
 
+            mainCalc()
+
 
 }
 
 
     fun btnSaveShiftClicked(){
-        hourDiffCalc()
+        mainCalc()
     }
 
     fun btnShiftCancelClicked(){
@@ -143,61 +136,35 @@ class NewShift : AppCompatActivity() {
     }
 
 
-    fun hourDiffCalc() {
-
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
-        //var tDateTime = LocalDateTime.parse(edtShiftStart.text, formatter)
+    fun mainCalc() {
 
 
-        val startDT = returnDateString("${txtShiftStartDate.text} ${txtShiftStartTime.text}:00.000")
-        val endDT = returnDateString("${txtShiftEndDate.text} ${txtShiftEndTime.text}:00.000")
-
-        val shiftStart = LocalDateTime.parse(startDT, formatter)
-        val shiftEnd = LocalDateTime.parse(endDT, formatter)
-
-        val shiftMins = Duration.between(shiftStart,shiftEnd).toMinutes()
+        val shiftMins = Duration.between(shift.start,shift.end).toMinutes()
+        println("S:${shift.start} E:${shift.end} Shift:${shiftMins}")
         val shiftHours: Float = (shiftMins.toFloat()/60)
-        val breakMins: Int = spinner.selectedItem.toString().toInt()
-        val breakHours: Float = (breakMins.toFloat()/60)
+
+        val breakHours: Float = shift.breaks
         val shiftHoursTotal = shiftHours - breakHours
-        val hourlyRate: Float = txtHourlyRate.text.toString().toFloat()
+        val hourlyRate: Float = shift.rate
         val shiftPay: Float = shiftHoursTotal * hourlyRate
 
+        shift.hours = shiftHoursTotal
+        shift.pay = shiftPay
+        shift.breaks = breakHours
 
 
 
         // Update screen
-        txtShiftStartDate.text = shiftStartDateTime.format(dFormatter)
-        txtShiftEndDate.text = shiftEndDateTime.format(dFormatter)
-        txtShiftStartTime.text = shiftStartDateTime.format(tFormatter)
-        txtShiftEndTime.text = shiftEndDateTime.format(tFormatter)
-        txtHours.text = shiftHoursTotal.toString()
-        txtPay.text = "$shiftPay"
+        txtShiftStartDate.text = shift.start.format(dFormatter)
+        txtShiftEndDate.text = shift.end.format(dFormatter)
+        txtShiftStartTime.text = shift.start.format(tFormatter)
+        txtShiftEndTime.text = shift.end.format(tFormatter)
+        txtHours.text = shift.hours.toString()
+        txtPay.text = "${shift.pay}"
 
     }
 
-    fun returnDateString(isoString: String) : String {
-        // From ISO Date - 2017-09-11t01:16:13.858Z
-        //                 YYYY-MM-DD*HH:MM:SS.SSS*
-        // To Monday 4:35 PM
 
-
-        // from  13/04/2020 13:30
-        //       dd/MM/yyyy HH:mm:ss.SSS
-        // to    2020-04-13T13:30.00.000
-        //       yyyy-MM-dd'T'HH:mm:ss.SSS
-
-        val  isoFormatter = SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS", Locale.getDefault())
-        isoFormatter.timeZone = TimeZone.getTimeZone("UTC")
-        var convertedDate = Date()
-        try {
-            convertedDate = isoFormatter.parse(isoString)
-        } catch (e: ParseException) {
-            Log.d("PARSE", "Cannot parse date")
-        }
-        val outDateString = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault())
-        return outDateString.format(convertedDate)
-    }
 
 
 
