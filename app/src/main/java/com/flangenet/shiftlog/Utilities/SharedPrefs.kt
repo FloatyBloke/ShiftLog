@@ -6,10 +6,10 @@ import android.content.SharedPreferences
 class SharedPrefs(context: Context) {
 
 
-    val HOURLY_RATE = "hourly Rate"
+    var HOURLY_RATE = "hourly Rate"
     val WEEK_START_DAY = "week start day"
-    val USER_NAME = "user name"
-    val USER_EMAIL = "user email"
+    var USER_NAME = "user name"
+    var USER_EMAIL = "user email"
 
 
     val PREFS_FILENAME = "prefsWL"

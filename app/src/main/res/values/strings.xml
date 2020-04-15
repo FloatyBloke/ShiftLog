@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">ShiftLog</string>
+    <string name="save_settings">Save Settings</string>
+    <string name="first_day_of_week">First day of week</string>
+    <string name="hourly_rate">Hourly Rate</string>
+    <string name="email_address">Email Address</string>
+    <string name="user_name">User Name</string>
+    <string name="shift_log_settings">Shift Log Settings</string>
+    <string name="settings_saved">Settings Saved</string>
 
 
     <string-array name="breakChoices">
@@ -12,5 +19,15 @@
         <item>90</item>
         <item>105</item>
         <item>120</item>
+    </string-array>
+
+    <string-array name="dayOfWeek">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
     </string-array>
 </resources>

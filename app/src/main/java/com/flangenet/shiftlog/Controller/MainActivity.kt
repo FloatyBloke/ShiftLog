@@ -16,14 +16,16 @@ class MainActivity : AppCompatActivity() {
         //floatingActionButton.setOnClickListener {btn1Clicked()}
 
         btnNewShift.setOnClickListener{openNewShift()}
+        btnSettings.setOnClickListener{openSettings()}
     }
 
 
 
-     fun btn1Clicked() {
-        Log.d("Click","Hello")
-
+    fun openSettings(){
+        val settingsIntent = Intent(this, Settings::class.java)
+        startActivity(settingsIntent)
     }
+
 
     fun openNewShift(){
         val newShiftIntent = Intent(this, NewShift::class.java)

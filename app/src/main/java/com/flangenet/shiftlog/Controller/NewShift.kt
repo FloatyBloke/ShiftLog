@@ -8,7 +8,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.flangenet.shiftlog.Model.Shift
 import com.flangenet.shiftlog.R
-import com.flangenet.shiftlog.Utilities.SharedPrefs
 import kotlinx.android.synthetic.main.activity_new_shift.*
 import java.time.*
 import java.time.format.DateTimeFormatter
@@ -170,7 +169,7 @@ class NewShift : AppCompatActivity() {
         txtShiftStartTime.text = shift.start.format(tFormatter)
         txtShiftEndTime.text = shift.end.format(tFormatter)
         txtHours.text = shift.hours.toString()
-        txtHourlyRate.text = shift.rate.toString()
+        txtShiftHourlyRate.text = shift.rate.toString()
         txtPay.text = "${shift.pay}"
 
     }
