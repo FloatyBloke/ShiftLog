@@ -1,16 +1,15 @@
-package com.flangenet.shiftlog
+package com.flangenet.shiftlog.Controller
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.flangenet.shiftlog.Model.Shift
+import com.flangenet.shiftlog.R
+import com.flangenet.shiftlog.Utilities.SharedPrefs
 import kotlinx.android.synthetic.main.activity_new_shift.*
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -19,8 +18,11 @@ import java.util.*
 
 class NewShift : AppCompatActivity() {
 
+
+
     val dFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
     val tFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
 
 
     var shift = Shift(LocalDateTime.now(),LocalDateTime.now(),0F,0F,5F,0F)
@@ -37,6 +39,12 @@ class NewShift : AppCompatActivity() {
             tTime = tTime.minusNanos(tTime.nano.toLong())
             shift.start= tTime
             shift.end = tTime
+
+            shift.rate = App.prefs.hourlyRate
+
+            println("From Prefs: ${App.prefs.hourlyRate}")
+            println("From item : ${shift.rate}")
+
 
 
 
@@ -108,7 +116,7 @@ class NewShift : AppCompatActivity() {
             spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>,view: View, position: Int, id: Long) {
-                    Toast.makeText(this@NewShift,breakArray[position], Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this@NewShift,breakArray[position], Toast.LENGTH_SHORT).show()
                     val breakMins: Int = spinner.selectedItem.toString().toInt()
                     shift.breaks = (breakMins.toFloat()/60)
                     println(shift.breaks)
@@ -128,6 +136,8 @@ class NewShift : AppCompatActivity() {
 
 
     fun btnSaveShiftClicked(){
+        App.prefs.hourlyRate = 6F
+        shift.rate = App.prefs.hourlyRate
         mainCalc()
     }
 
@@ -160,6 +170,7 @@ class NewShift : AppCompatActivity() {
         txtShiftStartTime.text = shift.start.format(tFormatter)
         txtShiftEndTime.text = shift.end.format(tFormatter)
         txtHours.text = shift.hours.toString()
+        txtHourlyRate.text = shift.rate.toString()
         txtPay.text = "${shift.pay}"
 
     }

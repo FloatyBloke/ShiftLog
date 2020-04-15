@@ -1,10 +1,10 @@
-package com.flangenet.shiftlog
+package com.flangenet.shiftlog.Controller
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import com.flangenet.shiftlog.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openNewShift(){
-        val newShiftIntent = Intent(this,NewShift::class.java)
+        val newShiftIntent = Intent(this, NewShift::class.java)
         startActivity(newShiftIntent)
     }
 }
