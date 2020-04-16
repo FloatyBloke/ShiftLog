@@ -6,16 +6,19 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.Model.Shift
 import com.flangenet.shiftlog.R
+import com.flangenet.shiftlog.Utilities.DBHelper
 import kotlinx.android.synthetic.main.activity_new_shift.*
 import java.time.*
 import java.time.format.DateTimeFormatter
-import java.util.*
+
 
 
 
 class NewShift : AppCompatActivity() {
+    internal lateinit var db: DBHelper
 
 
 
@@ -31,6 +34,8 @@ class NewShift : AppCompatActivity() {
             setContentView(R.layout.activity_new_shift)
             btnShiftCancel.setOnClickListener{btnShiftCancelClicked()}
             btnShiftSave.setOnClickListener{btnSaveShiftClicked()}
+
+            db = DBHelper(this)
 
             // Remove Seconds and Nanos from current time
             var tTime = LocalDateTime.now()
@@ -82,7 +87,6 @@ class NewShift : AppCompatActivity() {
         }
 
         txtShiftStartTime.setOnClickListener {
-            val cal = Calendar.getInstance()
             val timeSetListener = TimePickerDialog.OnTimeSetListener { _, outHour, outMinute ->
                 shift.start = LocalDateTime.of(shift.start.year,shift.start.monthValue,shift.start.dayOfMonth,outHour,outMinute,0,0)
                 println(shift.start)
@@ -92,7 +96,6 @@ class NewShift : AppCompatActivity() {
         }
 
         txtShiftEndTime.setOnClickListener {
-            val cal = Calendar.getInstance()
             val timeSetListener = TimePickerDialog.OnTimeSetListener { _, outHour, outMinute ->
                 shift.end = LocalDateTime.of(shift.end.year,shift.end.monthValue,shift.end.dayOfMonth,outHour,outMinute,0,0)
                 mainCalc()
@@ -134,11 +137,6 @@ class NewShift : AppCompatActivity() {
 }
 
 
-    fun btnSaveShiftClicked(){
-        App.prefs.hourlyRate = 6F
-        shift.rate = App.prefs.hourlyRate
-        mainCalc()
-    }
 
     fun btnShiftCancelClicked(){
         finish()
@@ -149,7 +147,7 @@ class NewShift : AppCompatActivity() {
 
 
         val shiftMins = Duration.between(shift.start,shift.end).toMinutes()
-        println("S:${shift.start} E:${shift.end} Shift:${shiftMins}")
+        //println("S:${shift.start} E:${shift.end} Shift:${shiftMins}")
         val shiftHours: Float = (shiftMins.toFloat()/60)
 
         val breakHours: Float = shift.breaks
@@ -171,6 +169,12 @@ class NewShift : AppCompatActivity() {
         txtHours.text = shift.hours.toString()
         txtShiftHourlyRate.text = shift.rate.toString()
         txtPay.text = "${shift.pay}"
+
+    }
+
+    fun btnSaveShiftClicked(){
+        var passShift = DBShift(1, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay)
+        db.addShift(passShift)
 
     }
 
