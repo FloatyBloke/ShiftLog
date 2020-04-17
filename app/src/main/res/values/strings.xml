@@ -12,6 +12,7 @@
     <string name="settings">Settings</string>
     <string name="view_shifts">View Shifts</string>
     <string name="background_of_clouds">Background Of Clouds</string>
+    <string name="date_format">Date Format</string>
 
 
     <string-array name="breakChoices">
@@ -34,5 +35,11 @@
         <item>Friday</item>
         <item>Saturday</item>
         <item>Sunday</item>
+    </string-array>
+
+    <string-array name="dateFormats">
+        <item>dd/MM/yyyy</item>
+        <item>dd/MM/yy</item>
+        <item>MMM dd yyyy</item>
     </string-array>
 </resources>

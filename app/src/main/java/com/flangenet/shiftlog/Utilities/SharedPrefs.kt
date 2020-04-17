@@ -10,6 +10,7 @@ class SharedPrefs(context: Context) {
     val WEEK_START_DAY = "week start day"
     var USER_NAME = "user name"
     var USER_EMAIL = "user email"
+    var DATE_FORMAT = "date format"
 
 
     val PREFS_FILENAME = "prefsWL"
@@ -20,6 +21,7 @@ class SharedPrefs(context: Context) {
         set(value) = prefs.edit().putFloat(HOURLY_RATE,value).apply()
 
     var weekStartDay: Int
+        // TODO Implement week start day
         get() = prefs.getInt(WEEK_START_DAY,1)
         set(value) = prefs.edit().putInt(WEEK_START_DAY,value).apply()
     var userName: String?
@@ -29,4 +31,8 @@ class SharedPrefs(context: Context) {
     var userEmail: String?
         get() = prefs.getString(USER_EMAIL,"user@name.com")
         set(value) = prefs.edit().putString(USER_EMAIL,value).apply()
+
+    var dateFormat: String?
+        get() = prefs.getString(DATE_FORMAT, "dd/MM/yyyy")
+        set(value) = prefs.edit().putString(DATE_FORMAT,value).apply()
 }

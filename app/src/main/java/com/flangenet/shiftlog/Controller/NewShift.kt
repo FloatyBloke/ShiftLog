@@ -175,6 +175,7 @@ class NewShift : AppCompatActivity() {
     fun btnSaveShiftClicked(){
         var passShift = DBShift(1, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay)
         db.addShift(passShift)
+        finish()
 
     }
 

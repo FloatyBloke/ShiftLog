@@ -2,6 +2,7 @@ package com.flangenet.shiftlog.Controller
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flangenet.shiftlog.Adapter.ListShiftsAdapter
 import com.flangenet.shiftlog.Model.DBShift
@@ -32,7 +33,10 @@ class ListShifts : AppCompatActivity() {
         lstShifts = db.allShifts
         println("Hello : ${lstShifts[1].hours}")
 
-        shiftsAdapter = ListShiftsAdapter(this, lstShifts as ArrayList<DBShift>)
+        shiftsAdapter = ListShiftsAdapter(this, lstShifts as ArrayList<DBShift>){shift ->
+            println(shift.id)
+            Toast.makeText(this,"Do whatever needs to be done with shift ${shift.id}",Toast.LENGTH_LONG).show()
+        }
         listShiftsView.adapter = shiftsAdapter
         val layoutManager = LinearLayoutManager(this)
         listShiftsView.layoutManager = layoutManager

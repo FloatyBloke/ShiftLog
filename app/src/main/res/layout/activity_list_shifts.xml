@@ -30,6 +30,64 @@
         app:layout_constraintBottom_toTopOf="@+id/btnListShiftsCancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shiftListHeader" />
+
+    <TextView
+        android:id="@+id/shiftListHeader"
+        android:layout_width="173dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Shift List"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/h4"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Pay"
+        android:textAlignment="textEnd"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/h3" />
+
+    <TextView
+        android:id="@+id/h3"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Rate"
+        android:textAlignment="textEnd"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toStartOf="@+id/h4"
+        app:layout_constraintTop_toTopOf="@+id/h2" />
+
+    <TextView
+        android:id="@+id/h2"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Hours"
+        android:textAlignment="textEnd"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toStartOf="@+id/h3"
+        app:layout_constraintTop_toTopOf="@+id/h1" />
+
+    <TextView
+        android:id="@+id/h1"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
+        android:text="Break"
+        android:textAlignment="textEnd"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toStartOf="@+id/h2"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

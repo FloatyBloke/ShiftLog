@@ -70,6 +70,7 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
             }
             //println(lstShifts)
             return lstShifts
+            //db.
         }
 
 
@@ -111,7 +112,7 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
     }
 
 
-    fun sqlToDatetime(sqlDate: String): LocalDateTime{
+     fun sqlToDatetime(sqlDate: String): LocalDateTime{
         // Convert SQL String date to LocalDateTime
 
         // SQL TEXT DATE as ISO8601 strings ("YYYY-MM-DD HH:MM:SS.SSS").
