@@ -11,6 +11,8 @@ import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.DBHelper
 import com.flangenet.shiftlog.Utilities.EXTRA_EDIT_SHIFT
 import kotlinx.android.synthetic.main.activity_list_shifts.*
+import java.time.LocalDate
+import java.time.temporal.ChronoField
 
 class ListShifts : AppCompatActivity() {
 
@@ -39,12 +41,19 @@ class ListShifts : AppCompatActivity() {
 
 
     fun refreshData(){
+
+        val currentDate = LocalDate.now()
+        val wcDate = currentDate.with(ChronoField.DAY_OF_WEEK,1)
+        val weDate = currentDate.with(ChronoField.DAY_OF_WEEK,7)
+        println("Week Commencing Date : $wcDate")
+        println("Week Commencing Ending : $weDate")
+
         lstShifts = db.allShifts
 
         shiftsAdapter = ListShiftsAdapter(this, lstShifts as ArrayList<DBShift>){shift ->
 
             Toast.makeText(this,"Do whatever needs to be done with shift ${shift.id}",Toast.LENGTH_SHORT).show()
-            val editShiftIntent = Intent(this,NewShift::class.java)
+            val editShiftIntent = Intent(this,EditShift::class.java)
             editShiftIntent.putExtra(EXTRA_EDIT_SHIFT, shift.id)
             startActivity(editShiftIntent)
 

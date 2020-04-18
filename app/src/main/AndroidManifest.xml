@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Controller.ListShifts"></activity>
         <activity android:name=".Controller.Settings" />
-        <activity android:name=".Controller.NewShift" />
+        <activity android:name=".Controller.EditShift" />
         <activity android:name=".Controller.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

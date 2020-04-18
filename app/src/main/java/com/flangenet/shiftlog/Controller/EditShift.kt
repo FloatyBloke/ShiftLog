@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter
 
 
 
-class NewShift : AppCompatActivity() {
+class EditShift : AppCompatActivity() {
     internal lateinit var db: DBHelper
     var shiftID: Int = 0
     var shift = Shift(LocalDateTime.now(),LocalDateTime.now(),0F,0F,5F,0F)
