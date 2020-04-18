@@ -56,6 +56,19 @@
         app:layout_constraintTop_toBottomOf="@+id/dowSpinner" />
 
     <TextView
+        android:id="@+id/txtTimeFormatHead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/time_format"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dformatSpinner" />
+
+    <TextView
         android:id="@+id/txtHourlyRateHead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -154,7 +167,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:text="@string/user_name"
         app:layout_constraintEnd_toEndOf="parent"
@@ -197,4 +210,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtDateFormatHead" />
+
+    <Spinner
+        android:id="@+id/tformatSpinner"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/wak_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTimeFormatHead" />
 </androidx.constraintlayout.widget.ConstraintLayout>

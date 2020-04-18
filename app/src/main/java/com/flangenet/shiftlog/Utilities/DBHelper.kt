@@ -56,8 +56,8 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
 
                     tshift.id = cursor.getInt(cursor.getColumnIndex(COL_ID))
                     tshift.start = sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_START)))
-                    println("*${cursor.getString(cursor.getColumnIndex(COL_START))}*")
-                    println(sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_START))))
+                    //println("*${cursor.getString(cursor.getColumnIndex(COL_START))}*")
+                    //println(sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_START))))
                         //
                     tshift.end = sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_END)))
                     tshift.breaks = cursor.getFloat(cursor.getColumnIndex(COL_BREAKS))
@@ -68,9 +68,33 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
                     lstShifts.add(tshift)
                 } while (cursor.moveToNext())
             }
-            //println(lstShifts)
             return lstShifts
-            //db.
+        }
+
+    fun getShift(shiftID:Int): DBShift {
+
+        val selectQuery = "SELECT * FROM $TABLE_NAME WHERE $COL_ID=$shiftID"
+        val db = this.writableDatabase
+        val cursor = db.rawQuery(selectQuery,null)
+
+        val tShift:DBShift = DBShift()
+
+        if (cursor.moveToFirst()) {
+            //do {
+                tShift.id = cursor.getInt(cursor.getColumnIndex(COL_ID))
+                tShift.start = sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_START)))
+                //println("*${cursor.getString(cursor.getColumnIndex(COL_START))}*")
+                //println(sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_START))))
+                //
+                tShift.end = sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_END)))
+                tShift.breaks = cursor.getFloat(cursor.getColumnIndex(COL_BREAKS))
+                tShift.hours = cursor.getFloat(cursor.getColumnIndex((COL_HOURS)))
+                tShift.rate = cursor.getFloat(cursor.getColumnIndex((COL_RATE)))
+                tShift.pay = cursor.getFloat(cursor.getColumnIndex((COL_PAY)))
+            //} while (cursor.moveToNext())
+        }
+
+        return tShift
         }
 
 

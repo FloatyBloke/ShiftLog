@@ -1,5 +1,6 @@
 package com.flangenet.shiftlog.Controller
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -8,6 +9,7 @@ import com.flangenet.shiftlog.Adapter.ListShiftsAdapter
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.DBHelper
+import com.flangenet.shiftlog.Utilities.EXTRA_EDIT_SHIFT
 import kotlinx.android.synthetic.main.activity_list_shifts.*
 
 class ListShifts : AppCompatActivity() {
@@ -29,13 +31,16 @@ class ListShifts : AppCompatActivity() {
 
 
     fun refreshData(){
-        println("*********** AT start of Routine")
         lstShifts = db.allShifts
-        println("Hello : ${lstShifts[1].hours}")
 
         shiftsAdapter = ListShiftsAdapter(this, lstShifts as ArrayList<DBShift>){shift ->
-            println(shift.id)
-            Toast.makeText(this,"Do whatever needs to be done with shift ${shift.id}",Toast.LENGTH_LONG).show()
+
+            Toast.makeText(this,"Do whatever needs to be done with shift ${shift.id}",Toast.LENGTH_SHORT).show()
+            val editShiftIntent = Intent(this,NewShift::class.java)
+            editShiftIntent.putExtra(EXTRA_EDIT_SHIFT, shift.id)
+            startActivity(editShiftIntent)
+
+
         }
         listShiftsView.adapter = shiftsAdapter
         val layoutManager = LinearLayoutManager(this)

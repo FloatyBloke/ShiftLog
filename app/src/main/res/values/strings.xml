@@ -13,6 +13,7 @@
     <string name="view_shifts">View Shifts</string>
     <string name="background_of_clouds">Background Of Clouds</string>
     <string name="date_format">Date Format</string>
+    <string name="time_format">Time Format</string>
 
 
     <string-array name="breakChoices">
@@ -40,6 +41,11 @@
     <string-array name="dateFormats">
         <item>dd/MM/yyyy</item>
         <item>dd/MM/yy</item>
+        <item>dd-MMM-yyyy</item>
         <item>MMM dd yyyy</item>
+    </string-array>
+    <string-array name="timeFormats">
+        <item>hh:mm</item>
+        <item>h:mm a</item>
     </string-array>
 </resources>

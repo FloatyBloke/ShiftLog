@@ -11,6 +11,7 @@ class SharedPrefs(context: Context) {
     var USER_NAME = "user name"
     var USER_EMAIL = "user email"
     var DATE_FORMAT = "date format"
+    var TIME_FORMAT = "time format"
 
 
     val PREFS_FILENAME = "prefsWL"
@@ -35,4 +36,8 @@ class SharedPrefs(context: Context) {
     var dateFormat: String?
         get() = prefs.getString(DATE_FORMAT, "dd/MM/yyyy")
         set(value) = prefs.edit().putString(DATE_FORMAT,value).apply()
+
+    var timeFormat: String?
+        get() = prefs.getString(TIME_FORMAT, "HH:mm")
+        set(value) = prefs.edit().putString(TIME_FORMAT,value).apply()
 }
