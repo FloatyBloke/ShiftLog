@@ -12,6 +12,7 @@ import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.DBHelper
 import com.flangenet.shiftlog.Utilities.EXTRA_EDIT_SHIFT
 import kotlinx.android.synthetic.main.activity_new_shift.*
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.time.*
 import java.time.format.DateTimeFormatter
@@ -24,13 +25,18 @@ class NewShift : AppCompatActivity() {
     var shiftID: Int = 0
     var shift = Shift(LocalDateTime.now(),LocalDateTime.now(),0F,0F,5F,0F)
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_shift)
+
         shiftID = intent.getIntExtra(EXTRA_EDIT_SHIFT,0)
+        if (shiftID > 0) { txtNewShiftTitle.text = "Edit Shift"}
         println("Shift To Process : $shiftID")
         btnShiftCancel.setOnClickListener{btnShiftCancelClicked()}
         btnShiftSave.setOnClickListener{btnSaveShiftClicked()}
+        btnShiftDelete.setOnClickListener{btnShiftDeleteClicked()}
 
         // Spinner Setup - access the items of the list
         val breakArray = resources.getStringArray(R.array.breakChoices)
@@ -68,8 +74,10 @@ class NewShift : AppCompatActivity() {
             var tTime = LocalDateTime.now()
             tTime = tTime.minusSeconds(tTime.second.toLong())
             tTime = tTime.minusNanos(tTime.nano.toLong())
+
             shift.start= tTime
             shift.end = tTime
+            shift.breaks = 0F
             shift.rate = App.prefs.hourlyRate
         } else {
             val tShift:DBShift = db.getShift(shiftID)
@@ -79,12 +87,11 @@ class NewShift : AppCompatActivity() {
             shift.hours = tShift.hours!!
             shift.rate = tShift.rate!!
             shift.pay = tShift.pay!!
-
-
         }
+        val t= ((shift.breaks)*60).toInt()
+        spinner.setSelection(breakArray.indexOf(t.toString()))
 
-
-        spinner.setSelection(breakArray.indexOf(App.prefs.dateFormat))
+        println("BreakMins $t")
 
 
 
@@ -141,7 +148,7 @@ class NewShift : AppCompatActivity() {
 
         shift.hours = shiftHoursTotal
         shift.pay = shiftPay
-        shift.breaks = breakHours
+        //shift.breaks = breakHours
 
         // Update screen
         txtShiftStartDate.text = shift.start.format(DateTimeFormatter.ofPattern(App.prefs.dateFormat))
@@ -173,7 +180,13 @@ class NewShift : AppCompatActivity() {
 
     fun btnShiftDeleteClicked(){
         val passShift = DBShift(shiftID, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay)
-        db.deleteShift(passShift)
+        try {
+            db.deleteShift(passShift)
+            Toast.makeText(this,"Deleted Shift : ${shift.start}", Toast.LENGTH_SHORT).show()
+        } catch (e:Exception){
+            Toast.makeText(this,"Error Deleting Shift : ${shift.start}", Toast.LENGTH_SHORT).show()
+        }
+
         finish()
     }
 

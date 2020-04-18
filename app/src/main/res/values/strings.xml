@@ -45,7 +45,7 @@
         <item>MMM dd yyyy</item>
     </string-array>
     <string-array name="timeFormats">
-        <item>hh:mm</item>
+        <item>HH:mm</item>
         <item>h:mm a</item>
     </string-array>
 </resources>

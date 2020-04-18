@@ -80,18 +80,14 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         val tShift:DBShift = DBShift()
 
         if (cursor.moveToFirst()) {
-            //do {
                 tShift.id = cursor.getInt(cursor.getColumnIndex(COL_ID))
                 tShift.start = sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_START)))
-                //println("*${cursor.getString(cursor.getColumnIndex(COL_START))}*")
-                //println(sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_START))))
-                //
+
                 tShift.end = sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_END)))
                 tShift.breaks = cursor.getFloat(cursor.getColumnIndex(COL_BREAKS))
                 tShift.hours = cursor.getFloat(cursor.getColumnIndex((COL_HOURS)))
                 tShift.rate = cursor.getFloat(cursor.getColumnIndex((COL_RATE)))
                 tShift.pay = cursor.getFloat(cursor.getColumnIndex((COL_PAY)))
-            //} while (cursor.moveToNext())
         }
 
         return tShift
@@ -101,11 +97,12 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
     fun addShift(shift: DBShift){
         val db=  this.writableDatabase
         val values = ContentValues()
-        //values.put(COL_ID, person.id)
+        //values.put(COL_ID, person.id) as it's an auto number
         values.put(COL_START,datetimeToSQL(shift.start!!))
         values.put(COL_END,datetimeToSQL(shift.end!!))
         values.put(COL_BREAKS,shift.breaks)
         values.put(COL_HOURS,shift.hours)
+        values.put(COL_RATE, shift.rate)
         values.put(COL_PAY,shift.pay)
         println("*****************$values")
         db.insert(TABLE_NAME,null,values)
@@ -122,6 +119,7 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         values.put(COL_END,datetimeToSQL(shift.end!!))
         values.put(COL_BREAKS,shift.breaks)
         values.put(COL_HOURS,shift.hours)
+        values.put(COL_RATE, shift.rate)
         values.put(COL_PAY,shift.pay)
 
 

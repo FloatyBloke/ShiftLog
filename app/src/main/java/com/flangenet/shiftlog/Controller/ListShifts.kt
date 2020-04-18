@@ -17,6 +17,14 @@ class ListShifts : AppCompatActivity() {
     internal  lateinit var  db: DBHelper
     internal var lstShifts: List<DBShift> = ArrayList<DBShift>()
 
+    override fun onResume() {
+
+        super.onResume()
+        Toast.makeText(this,"I'm Resuming",Toast.LENGTH_SHORT).show()
+        db = DBHelper(this)
+        refreshData()
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
