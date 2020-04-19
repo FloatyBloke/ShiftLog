@@ -34,7 +34,7 @@ class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, va
                         breaks?.text = shift.breaks.toString()
                         hours?.text = shift.hours.toString()
                         rate?.text = shift.rate.toString()
-                        pay?.text = shift.pay.toString()
+                        pay?.text = String.format("%.2f",shift.pay)
                         itemView.setOnClickListener{itemClick(shift)
                         }
                 }

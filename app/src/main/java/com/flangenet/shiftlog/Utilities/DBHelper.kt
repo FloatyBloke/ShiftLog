@@ -3,11 +3,16 @@ package com.flangenet.shiftlog.Utilities
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
+import android.widget.Toast
+import com.flangenet.shiftlog.Controller.EditShift
 import com.flangenet.shiftlog.Model.DBShift
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoField
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -31,7 +36,8 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val CREATE_TABLE_QUERY_STRING = ("CREATE TABLE $TABLE_NAME ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_START TEXT, $COL_END TEXT, $COL_BREAKS REAL, $COL_HOURS REAL, $COL_RATE REAL, $COL_PAY REAL)")
+        val CREATE_TABLE_QUERY_STRING =
+            ("CREATE TABLE $TABLE_NAME ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_START TEXT, $COL_END TEXT, $COL_BREAKS REAL, $COL_HOURS REAL, $COL_RATE REAL, $COL_PAY REAL)")
         println(CREATE_TABLE_QUERY_STRING)
         db!!.execSQL(CREATE_TABLE_QUERY_STRING)
     }
@@ -42,43 +48,53 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
 
     }
 
-    //CRUD
-    val allShifts:List<DBShift>
-        get() {
+    fun getShifts(firstDate: LocalDate): List<DBShift> {
+
             val lstShifts = ArrayList<DBShift>()
-            val selectQuery = "SELECT * FROM $TABLE_NAME"
+            val searchDate = dateToSQLDate(firstDate)
+            var selectQuery = "SELECT * FROM $TABLE_NAME"
+            selectQuery = " $selectQuery WHERE DATE(start) >= '$searchDate' AND DATE(start) <= DATE('$searchDate','+6 days')"
+            selectQuery = " $selectQuery ORDER BY start"
+            println(selectQuery)
+
             val db = this.writableDatabase
-            val cursor = db.rawQuery(selectQuery,null)
 
-            if (cursor.moveToFirst()) {
-                do {
-                    val tshift = DBShift()
+            try {
 
-                    tshift.id = cursor.getInt(cursor.getColumnIndex(COL_ID))
-                    tshift.start = sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_START)))
-                    //println("*${cursor.getString(cursor.getColumnIndex(COL_START))}*")
-                    //println(sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_START))))
-                        //
-                    tshift.end = sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_END)))
-                    tshift.breaks = cursor.getFloat(cursor.getColumnIndex(COL_BREAKS))
-                    tshift.hours = cursor.getFloat(cursor.getColumnIndex((COL_HOURS)))
-                    tshift.rate = cursor.getFloat(cursor.getColumnIndex((COL_RATE)))
-                    tshift.pay = cursor.getFloat(cursor.getColumnIndex((COL_PAY)))
+                val cursor = db.rawQuery(selectQuery, null)
 
-                    lstShifts.add(tshift)
-                } while (cursor.moveToNext())
+                if (cursor.moveToFirst()) {
+                    do {
+                        val tshift = DBShift()
+
+                        tshift.id = cursor.getInt(cursor.getColumnIndex(COL_ID))
+                        tshift.start =
+                            sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_START)))
+                        tshift.end = sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_END)))
+                        tshift.breaks = cursor.getFloat(cursor.getColumnIndex(COL_BREAKS))
+                        tshift.hours = cursor.getFloat(cursor.getColumnIndex((COL_HOURS)))
+                        tshift.rate = cursor.getFloat(cursor.getColumnIndex((COL_RATE)))
+                        tshift.pay = cursor.getFloat(cursor.getColumnIndex((COL_PAY)))
+
+                        lstShifts.add(tshift)
+                    } while (cursor.moveToNext())
+                }
+
+            } catch (e: SQLiteException) {
+                //Toast.makeText(EditShift(), "Database query error", Toast.LENGTH_SHORT).show()
             }
             return lstShifts
+
         }
+
+
 
     fun getShift(shiftID:Int): DBShift {
 
         val selectQuery = "SELECT * FROM $TABLE_NAME WHERE $COL_ID=$shiftID"
         val db = this.writableDatabase
         val cursor = db.rawQuery(selectQuery,null)
-
         val tShift:DBShift = DBShift()
-
         if (cursor.moveToFirst()) {
                 tShift.id = cursor.getInt(cursor.getColumnIndex(COL_ID))
                 tShift.start = sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_START)))
@@ -89,7 +105,6 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
                 tShift.rate = cursor.getFloat(cursor.getColumnIndex((COL_RATE)))
                 tShift.pay = cursor.getFloat(cursor.getColumnIndex((COL_PAY)))
         }
-
         return tShift
         }
 
@@ -104,10 +119,8 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         values.put(COL_HOURS,shift.hours)
         values.put(COL_RATE, shift.rate)
         values.put(COL_PAY,shift.pay)
-        println("*****************$values")
         db.insert(TABLE_NAME,null,values)
         db.close()
-
     }
 
     fun updateShift(shift: DBShift) : Int
@@ -121,8 +134,6 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         values.put(COL_HOURS,shift.hours)
         values.put(COL_RATE, shift.rate)
         values.put(COL_PAY,shift.pay)
-
-
         return db.update(TABLE_NAME, values,"$COL_ID=?", arrayOf(shift.id.toString()))
     }
 
@@ -133,21 +144,15 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         db.close()
     }
 
-
      fun sqlToDatetime(sqlDate: String): LocalDateTime{
-        // Convert SQL String date to LocalDateTime
-
-        // SQL TEXT DATE as ISO8601 strings ("YYYY-MM-DD HH:MM:SS.SSS").
-        // In : 2007-12-03 10:15:30.999
-        // LocalDateTime
-        //var t2:Formatter = "yyyy-MM-dd'T'HH:mm:ss'.'"
-        //var t:LocalDateTime = LocalDateTime.parse(sqlDate, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'.'"))
-
-
-
         return LocalDateTime.parse(sqlDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
     }
+
     fun datetimeToSQL(inDate: LocalDateTime) : String {
         return inDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+    }
+
+    fun dateToSQLDate(inDate: LocalDate) : String {
+        return inDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     }
 }

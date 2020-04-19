@@ -7,17 +7,38 @@
     tools:context=".Controller.ListShifts">
 
     <Button
-        android:id="@+id/btnListShiftsCancel"
-        android:layout_width="match_parent"
+        android:id="@+id/btnListLeft"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Previous"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnListDisplay"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnListDisplay"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="@android:string/cancel"
+        android:text="Middle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnListRight"
+        app:layout_constraintStart_toEndOf="@+id/btnListLeft" />
+
+    <Button
+        android:id="@+id/btnListRight"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/btnListDisplay" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listShiftsView"
@@ -27,7 +48,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnListShiftsCancel"
+        app:layout_constraintBottom_toTopOf="@+id/btnListLeft"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shiftListHeader" />

@@ -1,5 +1,6 @@
 package com.flangenet.shiftlog.Controller
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -20,6 +21,12 @@ class Settings : AppCompatActivity() {
         // Set Button Listeners
         btnSettingsCancel.setOnClickListener{settingsCancel()}
         btnSettingsSave.setOnClickListener{settingsSave()}
+
+        btnFiles.setOnClickListener{
+            val fileIntent = Intent(this,FileIO::class.java)
+            startActivity(fileIntent)
+
+        }
 
         // Day of week Spinner Setup
         val weekArray = resources.getStringArray(R.array.dayOfWeek)
