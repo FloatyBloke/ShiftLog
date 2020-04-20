@@ -8,9 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flangenet.shiftlog.Adapter.ListShiftsAdapter
 import com.flangenet.shiftlog.Model.DBShift
+import com.flangenet.shiftlog.Model.Shift
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.DBHelper
 import com.flangenet.shiftlog.Utilities.EXTRA_EDIT_SHIFT
+import com.flangenet.shiftlog.Utilities.dateConvert
 import kotlinx.android.synthetic.main.activity_list_shifts.*
 import java.io.File
 import java.time.LocalDate
@@ -26,7 +28,7 @@ class ListShifts : AppCompatActivity() {
     override fun onResume() {
 
         super.onResume()
-        Toast.makeText(this,"I'm Resuming",Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this,"I'm Resuming",Toast.LENGTH_SHORT).show()
         db = DBHelper(this)
         refreshData()
     }
@@ -45,29 +47,44 @@ class ListShifts : AppCompatActivity() {
         //println("Week Commencing Ending : $weDate")
         btnListLeft.setOnClickListener{btnListLeftClicked()}
         btnListRight.setOnClickListener{btnListRightClicked()}
-        btnListDisplay.setOnClickListener{btnListDisplayClicked()}
+        //btnListDisplay.setOnClickListener{btnListDisplayClicked()}
     }
-
-
-
-
 
 
     fun refreshData(){
 
-        btnListDisplay.text = wcDate.toString()
+        //btnListDisplay.text = wcDate.toString()
 
         lstShifts = db.getShifts(wcDate)
 
         shiftsAdapter = ListShiftsAdapter(this, lstShifts as ArrayList<DBShift>){shift ->
-            Toast.makeText(this,"Do whatever needs to be done with shift ${shift.id}",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this,"Do whatever needs to be done with shift ${shift.id}",Toast.LENGTH_SHORT).show()
             val editShiftIntent = Intent(this,EditShift::class.java)
             editShiftIntent.putExtra(EXTRA_EDIT_SHIFT, shift.id)
             startActivity(editShiftIntent)
         }
+
+
         listShiftsView.adapter = shiftsAdapter
         val layoutManager = LinearLayoutManager(this)
         listShiftsView.layoutManager = layoutManager
+        //var totals: Shift? = null
+        var totalBreaks:Float = 0F
+        var totalHours: Float = 0F
+        var totalPay: Float = 0F
+
+        lstShifts.forEach{shift ->
+            totalBreaks += shift.breaks!!
+            totalHours += shift.hours!!
+            totalPay += shift.pay!!
+        }
+
+        println("Breaks : $totalBreaks Hours : $totalHours Pay : $totalPay")
+        txtTotalBreaks.text = String.format("%.2f",totalBreaks)
+        txtTotalHours.text = String.format("%.2f",totalHours)
+        txtTotalPay.text = String.format("%.2f",totalPay)
+        txtWeekCommencing.text = "Week ${dateConvert(wcDate)}"
+
     }
 
     fun btnListLeftClicked(){

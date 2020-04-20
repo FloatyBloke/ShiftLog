@@ -6,48 +6,53 @@
     android:layout_height="match_parent"
     tools:context=".Controller.ListShifts">
 
-    <Button
-        android:id="@+id/btnListLeft"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/txtWeekCommencing"
+        android:layout_width="125dp"
+        android:layout_height="18dp"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Previous"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnListDisplay"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="Week Commencing"
+        android:textAlignment="textStart"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listShiftsView" />
 
-    <Button
-        android:id="@+id/btnListDisplay"
-        android:layout_width="100dp"
+    <TextView
+        android:id="@+id/txtTotalHours"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Middle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnListRight"
-        app:layout_constraintStart_toEndOf="@+id/btnListLeft" />
+        android:text="Hours"
+        android:textAlignment="textEnd"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="@+id/h2"
+        app:layout_constraintTop_toTopOf="@+id/txtTotalBreaks" />
 
-    <Button
-        android:id="@+id/btnListRight"
-        android:layout_width="100dp"
+    <TextView
+        android:id="@+id/txtTotalBreaks"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnListDisplay" />
+        android:text="Break"
+        android:textAlignment="textEnd"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="@+id/h1"
+        app:layout_constraintTop_toBottomOf="@+id/listShiftsView" />
+
+    <TextView
+        android:id="@+id/txtTotalPay"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="Pay"
+        android:textAlignment="textEnd"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="@+id/h4"
+        app:layout_constraintTop_toTopOf="@+id/txtTotalHours" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listShiftsView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toTopOf="@+id/btnListLeft"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +78,7 @@
         android:layout_marginEnd="16dp"
         android:text="Pay"
         android:textAlignment="textEnd"
-        android:textStyle="italic"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/h3" />
 
@@ -84,7 +89,7 @@
         android:layout_marginEnd="16dp"
         android:text="Rate"
         android:textAlignment="textEnd"
-        android:textStyle="italic"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toStartOf="@+id/h4"
         app:layout_constraintTop_toTopOf="@+id/h2" />
 
@@ -95,7 +100,7 @@
         android:layout_marginEnd="16dp"
         android:text="Hours"
         android:textAlignment="textEnd"
-        android:textStyle="italic"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toStartOf="@+id/h3"
         app:layout_constraintTop_toTopOf="@+id/h1" />
 
@@ -107,8 +112,28 @@
         android:layout_marginEnd="16dp"
         android:text="Break"
         android:textAlignment="textEnd"
-        android:textStyle="italic"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toStartOf="@+id/h2"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnListRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_media_ff" />
+
+    <ImageButton
+        android:id="@+id/btnListLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_media_rew" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

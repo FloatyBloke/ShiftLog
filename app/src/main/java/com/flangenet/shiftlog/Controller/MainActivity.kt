@@ -6,6 +6,9 @@ import android.os.Bundle
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.EXTRA_EDIT_SHIFT
 import kotlinx.android.synthetic.main.activity_main.*
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +38,18 @@ class MainActivity : AppCompatActivity() {
     fun openViewShifts(){
         val listShiftsIntent = Intent(this, ListShifts::class.java)
         startActivity(listShiftsIntent)
+    }
+
+    public fun sqlToDatetime(sqlDate: String): LocalDateTime {
+        return LocalDateTime.parse(sqlDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+    }
+
+    public fun datetimeToSQL(inDate: LocalDateTime) : String {
+        return inDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+    }
+
+    fun dateToSQLDate(inDate: LocalDate) : String {
+        return inDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     }
 
 }

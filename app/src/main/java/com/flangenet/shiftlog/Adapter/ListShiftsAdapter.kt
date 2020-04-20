@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.flangenet.shiftlog.Controller.App
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.R
+import com.flangenet.shiftlog.Utilities.dateConvert
+import com.flangenet.shiftlog.Utilities.timeConvert
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -31,8 +33,8 @@ class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, va
 
                         end?.text = "${timeConvert(shift.start?.toLocalTime())} - ${timeConvert(shift.end?.toLocalTime())}"
 
-                        breaks?.text = shift.breaks.toString()
-                        hours?.text = shift.hours.toString()
+                        breaks?.text = String.format("%.2f",shift.breaks)
+                        hours?.text = String.format("%.2f",shift.hours)
                         rate?.text = shift.rate.toString()
                         pay?.text = String.format("%.2f",shift.pay)
                         itemView.setOnClickListener{itemClick(shift)
@@ -54,12 +56,5 @@ class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, va
                 holder.bindShifts(context,shifts[position])
         }
 
-        fun dateConvert(inDate: LocalDate) : String {
-                //println(App.prefs.dateFormat)
-                return inDate.format(DateTimeFormatter.ofPattern(App.prefs.dateFormat))
-        }
-        fun timeConvert(inTime: LocalTime?) : String{
-                println(App.prefs.timeFormat)
-                return inTime!!.format(DateTimeFormatter.ofPattern(App.prefs.timeFormat))
-        }
+
 }

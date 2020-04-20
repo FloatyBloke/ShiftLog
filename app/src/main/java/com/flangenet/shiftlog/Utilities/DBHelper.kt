@@ -40,6 +40,7 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
             ("CREATE TABLE $TABLE_NAME ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_START TEXT, $COL_END TEXT, $COL_BREAKS REAL, $COL_HOURS REAL, $COL_RATE REAL, $COL_PAY REAL)")
         println(CREATE_TABLE_QUERY_STRING)
         db!!.execSQL(CREATE_TABLE_QUERY_STRING)
+        println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -123,6 +124,15 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         db.close()
     }
 
+    fun deleteTable(){
+        val db = this.writableDatabase
+        db!!.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+    }
+    fun createTable() {
+        val db = this.writableDatabase
+        onCreate(db)
+    }
+
     fun updateShift(shift: DBShift) : Int
     {
         val db = this.writableDatabase
@@ -144,15 +154,9 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         db.close()
     }
 
-     fun sqlToDatetime(sqlDate: String): LocalDateTime{
-        return LocalDateTime.parse(sqlDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
-    }
 
-    fun datetimeToSQL(inDate: LocalDateTime) : String {
-        return inDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
-    }
 
-    fun dateToSQLDate(inDate: LocalDate) : String {
-        return inDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-    }
+
+
+
 }
