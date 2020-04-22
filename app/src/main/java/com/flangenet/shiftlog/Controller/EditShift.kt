@@ -6,14 +6,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.Model.Shift
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.DBHelper
 import com.flangenet.shiftlog.Utilities.EXTRA_EDIT_SHIFT
-import kotlinx.android.synthetic.main.activity_new_shift.*
+import kotlinx.android.synthetic.main.activity_edit_shift.*
 import java.lang.Exception
-import java.text.SimpleDateFormat
 import java.time.*
 import java.time.format.DateTimeFormatter
 
@@ -29,7 +29,7 @@ class EditShift : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_shift)
+        setContentView(R.layout.activity_edit_shift)
 
         shiftID = intent.getIntExtra(EXTRA_EDIT_SHIFT,0)
         if (shiftID > 0) { txtNewShiftTitle.text = "Edit Shift"}
@@ -37,6 +37,10 @@ class EditShift : AppCompatActivity() {
         btnShiftCancel.setOnClickListener{btnShiftCancelClicked()}
         btnShiftSave.setOnClickListener{btnSaveShiftClicked()}
         btnShiftDelete.setOnClickListener{btnShiftDeleteClicked()}
+
+
+
+
 
         // Spinner Setup - access the items of the list
         val breakArray = resources.getStringArray(R.array.breakChoices)
@@ -79,6 +83,7 @@ class EditShift : AppCompatActivity() {
             shift.end = tTime
             shift.breaks = 0F
             shift.rate = App.prefs.hourlyRate
+            btnShiftDelete.visibility = View.INVISIBLE
         } else {
             val tShift:DBShift = db.getShift(shiftID)
             shift.start = tShift.start!!

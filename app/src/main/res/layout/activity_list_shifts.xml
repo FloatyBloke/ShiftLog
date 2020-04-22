@@ -6,6 +6,71 @@
     android:layout_height="match_parent"
     tools:context=".Controller.ListShifts">
 
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/wak_border_empty"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTotalBreaks"
+        app:layout_constraintEnd_toEndOf="@+id/listShiftsView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/listShiftsView"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/wak_border_empty"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTotalBreaks"
+        app:layout_constraintEnd_toStartOf="@+id/h3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/listShiftsView"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/wak_border_empty"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTotalBreaks"
+        app:layout_constraintEnd_toStartOf="@+id/h4"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/listShiftsView"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Week" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Month" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Year" />
+
+    </com.google.android.material.tabs.TabLayout>
+
     <TextView
         android:id="@+id/txtWeekCommencing"
         android:layout_width="125dp"
@@ -51,31 +116,17 @@
         android:id="@+id/listShiftsView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toTopOf="@+id/btnListLeft"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shiftListHeader" />
-
-    <TextView
-        android:id="@+id/shiftListHeader"
-        android:layout_width="173dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Shift List"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/h1" />
 
     <TextView
         android:id="@+id/h4"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:text="Pay"
         android:textAlignment="textEnd"
         android:textStyle="bold|italic"
@@ -108,32 +159,56 @@
         android:id="@+id/h1"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
         android:text="Break"
         android:textAlignment="textEnd"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toStartOf="@+id/h2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
     <ImageButton
         android:id="@+id/btnListRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:adjustViewBounds="false"
+        android:backgroundTint="@android:color/transparent"
+        android:cropToPadding="false"
+        android:paddingHorizontal="2dp"
+        android:paddingVertical="2dp"
+        android:scaleType="fitCenter"
+        android:tint="@color/design_default_color_secondary_variant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_media_ff" />
+        app:srcCompat="@drawable/ic_play_circle_outline" />
 
     <ImageButton
         android:id="@+id/btnListLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
+        android:backgroundTint="@android:color/transparent"
+        android:paddingHorizontal="2dp"
+        android:paddingVertical="2dp"
+        android:scaleType="fitCenter"
+        android:tint="@color/design_default_color_secondary_variant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_media_rew" />
+        app:srcCompat="@drawable/ic_back_circle_outline" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/wak_border_empty"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTotalBreaks"
+        app:layout_constraintEnd_toStartOf="@+id/h2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/listShiftsView"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
