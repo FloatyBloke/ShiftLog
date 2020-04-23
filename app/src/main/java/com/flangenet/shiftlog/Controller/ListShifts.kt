@@ -13,6 +13,8 @@ import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.DBHelper
 import com.flangenet.shiftlog.Utilities.EXTRA_EDIT_SHIFT
 import com.flangenet.shiftlog.Utilities.dateConvert
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_list_shifts.*
 import java.io.File
 import java.time.LocalDate
@@ -24,6 +26,7 @@ class ListShifts : AppCompatActivity() {
     var lstShifts: List<DBShift> = ArrayList<DBShift>()
     lateinit var shiftsAdapter: ListShiftsAdapter
     var wcDate: LocalDate = LocalDate.now()
+    var searchMode: Int = 0
 
     override fun onResume() {
 
@@ -37,17 +40,30 @@ class ListShifts : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_shifts)
-        //db = DBHelper(this)
-        //refreshData()
+
         val currentDate = LocalDate.now()
         wcDate = currentDate.with(ChronoField.DAY_OF_WEEK,1)
-
-        //var weDate = currentDate.with(ChronoField.DAY_OF_WEEK,7)
         println("Week Commencing Date : $wcDate")
         //println("Week Commencing Ending : $weDate")
+
         btnListLeft.setOnClickListener{btnListLeftClicked()}
         btnListRight.setOnClickListener{btnListRightClicked()}
-        //btnListDisplay.setOnClickListener{btnListDisplayClicked()}
+        tabMode.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(tab:TabLayout.Tab?){
+                // 1
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab?){
+                // 2
+            }
+            override fun onTabSelected(tab: TabLayout.Tab?){
+                //println(tab!!.position)
+                if (tab != null) {
+                    searchMode = tab.position
+                    refreshData()
+                }
+
+        }
+        })
     }
 
 
@@ -55,7 +71,7 @@ class ListShifts : AppCompatActivity() {
 
         //btnListDisplay.text = wcDate.toString()
 
-        lstShifts = db.getShifts(wcDate)
+        lstShifts = db.getShifts(wcDate,searchMode)
 
         shiftsAdapter = ListShiftsAdapter(this, lstShifts as ArrayList<DBShift>){shift ->
             //Toast.makeText(this,"Do whatever needs to be done with shift ${shift.id}",Toast.LENGTH_SHORT).show()
@@ -63,7 +79,6 @@ class ListShifts : AppCompatActivity() {
             editShiftIntent.putExtra(EXTRA_EDIT_SHIFT, shift.id)
             startActivity(editShiftIntent)
         }
-
 
         listShiftsView.adapter = shiftsAdapter
         val layoutManager = LinearLayoutManager(this)
@@ -79,47 +94,51 @@ class ListShifts : AppCompatActivity() {
             totalPay += shift.pay!!
         }
 
-        println("Breaks : $totalBreaks Hours : $totalHours Pay : $totalPay")
         txtTotalBreaks.text = String.format("%.2f",totalBreaks)
         txtTotalHours.text = String.format("%.2f",totalHours)
         txtTotalPay.text = String.format("%.2f",totalPay)
-        txtWeekCommencing.text = "Week ${dateConvert(wcDate)}"
+
+        when(searchMode){
+            0 -> txtWeekCommencing.text = "Week ${dateConvert(wcDate)}"
+            1 -> txtWeekCommencing.text = "${wcDate.month.toString()} ${wcDate.year.toString()}"
+            2 -> txtWeekCommencing.text = "${wcDate.year.toString()}"
+        }
 
     }
 
     fun btnListLeftClicked(){
-        wcDate = wcDate.minusWeeks(1)
-        refreshData()
-
-
-    }
-    fun btnListRightClicked(){
-        wcDate = wcDate.plusWeeks(1)
-        refreshData()
-    }
-
-    fun btnListDisplayClicked(){
-
-        var removableStoragePath: String = ""
-        val fileList = File("/storage/").listFiles()
-        for (file in fileList) {
-            if (!file.absolutePath.equals(
-                    Environment.getExternalStorageDirectory().absolutePath,
-                    ignoreCase = true
-                ) && file.isDirectory && file.canRead()
-            ) removableStoragePath = file.absolutePath
+        when(searchMode){
+            0 -> wcDate = wcDate.minusWeeks(1)
+            1 -> wcDate = wcDate.minusMonths(1)
+            2 -> wcDate = wcDate.minusYears(1)
         }
-        //If there is an SD Card, removableStoragePath will have it's path. If there isn't it will be an empty string.
 
-        println("SDCard : $removableStoragePath")
+        refreshData()
+    }
 
+    fun btnListRightClicked(){
+        when(searchMode) {
+            0 -> wcDate = wcDate.plusWeeks(1)
+            1 -> wcDate = wcDate.plusMonths(1)
+            2 -> wcDate = wcDate.plusYears(1)
+        }
+        refreshData()
+    }
 
-        //println("${getExternalFilesDir}")
-                println("${Environment.DIRECTORY_DOWNLOADS}")
-        //File("/${Environment.DIRECTORY_DOWNLOADS}/shifts.csv").forEachLine { println(it) }
+    fun tabWeekClicked(){
+        txtWeekCommencing.text = "Week"
 
     }
 
+    fun tabMonthClicked(){
+        txtWeekCommencing.text = "Month"
+
+    }
+
+    fun tabYearClicked(){
+        txtWeekCommencing.text = "Year"
+
+    }
 
 
 }

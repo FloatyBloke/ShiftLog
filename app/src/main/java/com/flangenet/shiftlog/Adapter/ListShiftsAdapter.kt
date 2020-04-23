@@ -27,7 +27,8 @@ class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, va
                 val pay = itemView.findViewById<TextView>(R.id.gridPay)
 
                 fun bindShifts(context: Context, shift:DBShift) {
-                        id?.text = "${shift.id} - ${shift.start!!.dayOfWeek}"
+                        //id?.text = "${shift.id} - ${shift.start!!.dayOfWeek}"
+                        id?.text = (shift.start!!.dayOfWeek.toString()).toLowerCase().capitalize()
                         start?.text = "${shift.start}"
                         start.text = dateConvert(shift.start!!.toLocalDate())
 
@@ -58,3 +59,5 @@ class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, va
 
 
 }
+
+

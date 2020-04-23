@@ -19,7 +19,7 @@ class Settings : AppCompatActivity() {
 
 
         // Set Button Listeners
-        btnSettingsCancel.setOnClickListener{settingsCancel()}
+        //btnSettingsCancel.setOnClickListener{settingsCancel()}
         btnSettingsSave.setOnClickListener{settingsSave()}
 
         btnFiles.setOnClickListener{

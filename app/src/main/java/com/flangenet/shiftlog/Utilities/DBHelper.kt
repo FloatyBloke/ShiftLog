@@ -49,12 +49,27 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
 
     }
 
-    fun getShifts(firstDate: LocalDate): List<DBShift> {
+    fun getShifts(firstDate: LocalDate, searchMode: Int): List<DBShift> {
 
-            val lstShifts = ArrayList<DBShift>()
-            val searchDate = dateToSQLDate(firstDate)
-            var selectQuery = "SELECT * FROM $TABLE_NAME"
+        val lstShifts = ArrayList<DBShift>()
+        val searchDate = dateToSQLDate(firstDate)
+        var selectQuery = "SELECT * FROM $TABLE_NAME"
+
+        if (searchMode == 0) {
+            // Week
             selectQuery = " $selectQuery WHERE DATE(start) >= '$searchDate' AND DATE(start) <= DATE('$searchDate','+6 days')"
+        }
+
+        if (searchMode ==  1) {
+            // Month
+            selectQuery = " $selectQuery WHERE DATE(start) >= DATE('$searchDate','start of month') AND DATE(start) <= DATE('$searchDate','start of month','+1 month','-1 day')"
+        }
+
+        if (searchMode == 2){
+            // Year
+            selectQuery = " $selectQuery WHERE DATE(start) >= DATE('$searchDate','start of year') AND DATE(start) <= DATE('$searchDate','start of year', '+12 month','-1 day')"
+        }
+
             selectQuery = " $selectQuery ORDER BY start"
             println(selectQuery)
 

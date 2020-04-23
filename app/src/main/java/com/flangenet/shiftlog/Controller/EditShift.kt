@@ -34,7 +34,7 @@ class EditShift : AppCompatActivity() {
         shiftID = intent.getIntExtra(EXTRA_EDIT_SHIFT,0)
         if (shiftID > 0) { txtNewShiftTitle.text = "Edit Shift"}
         println("Shift To Process : $shiftID")
-        btnShiftCancel.setOnClickListener{btnShiftCancelClicked()}
+        //btnShiftCancel.setOnClickListener{btnShiftCancelClicked()}
         btnShiftSave.setOnClickListener{btnSaveShiftClicked()}
         btnShiftDelete.setOnClickListener{btnShiftDeleteClicked()}
 
