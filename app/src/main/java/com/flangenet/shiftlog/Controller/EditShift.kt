@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.Model.Shift
 import com.flangenet.shiftlog.R
@@ -25,22 +24,15 @@ class EditShift : AppCompatActivity() {
     var shiftID: Int = 0
     var shift = Shift(LocalDateTime.now(),LocalDateTime.now(),0F,0F,5F,0F)
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_shift)
 
         shiftID = intent.getIntExtra(EXTRA_EDIT_SHIFT,0)
-        if (shiftID > 0) { txtNewShiftTitle.text = "Edit Shift"}
-        println("Shift To Process : $shiftID")
-        //btnShiftCancel.setOnClickListener{btnShiftCancelClicked()}
+        if (shiftID > 0) { txtNewShiftTitle.text = getString(R.string.edit_shift)}
+        //println("Shift To Process : $shiftID")
         btnShiftSave.setOnClickListener{btnSaveShiftClicked()}
         btnShiftDelete.setOnClickListener{btnShiftDeleteClicked()}
-
-
-
-
 
         // Spinner Setup - access the items of the list
         val breakArray = resources.getStringArray(R.array.breakChoices)
@@ -51,14 +43,13 @@ class EditShift : AppCompatActivity() {
             val adapter = ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, breakArray)
             spinner.adapter = adapter
-
             spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>,view: View, position: Int, id: Long) {
                     //Toast.makeText(this@NewShift,breakArray[position], Toast.LENGTH_SHORT).show()
                     val breakMins: Int = spinner.selectedItem.toString().toInt()
                     shift.breaks = (breakMins.toFloat()/60)
-                    println(shift.breaks)
+                    //println(shift.breaks)
                     mainCalc()
                 }
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -66,8 +57,6 @@ class EditShift : AppCompatActivity() {
                 }
             }
         }
-
-
 
 
         db = DBHelper(this)
@@ -95,10 +84,6 @@ class EditShift : AppCompatActivity() {
         }
         val t= ((shift.breaks)*60).toInt()
         spinner.setSelection(breakArray.indexOf(t.toString()))
-
-        println("BreakMins $t")
-
-
 
         // Button click to show DatePickerDialog
         txtShiftStartDate.setOnClickListener{
@@ -132,11 +117,7 @@ class EditShift : AppCompatActivity() {
             }
             TimePickerDialog(this, timeSetListener, shift.end.hour, shift.end.minute, true).show()
         }
-
-
         mainCalc()
-
-
     }
 
     fun mainCalc() {
@@ -179,17 +160,14 @@ class EditShift : AppCompatActivity() {
 
     }
 
-    fun btnShiftCancelClicked(){
-        finish()
-    }
 
     fun btnShiftDeleteClicked(){
         val passShift = DBShift(shiftID, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay)
         try {
             db.deleteShift(passShift)
-            Toast.makeText(this,"Deleted Shift : ${shift.start}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"${getString(R.string.shift_deleted)} : ${shift.start}", Toast.LENGTH_SHORT).show()
         } catch (e:Exception){
-            Toast.makeText(this,"Error Deleting Shift : ${shift.start}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"${getString(R.string.error_deleting_shift)} : ${shift.start}", Toast.LENGTH_SHORT).show()
         }
 
         finish()

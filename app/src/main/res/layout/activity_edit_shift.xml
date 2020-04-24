@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/drippy_bg2"
+    android:backgroundTint="@color/white_semit"
+    android:backgroundTintMode="src_over"
     tools:context=".Controller.EditShift">
 
 
@@ -12,11 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
         android:height="45dp"
-        android:background="@drawable/edge_line"
-        android:editable="false"
+        android:background="@drawable/wak_shadow"
         android:ems="10"
         android:gravity="center_vertical"
         android:inputType="none"
@@ -25,18 +26,16 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtPayHead" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPayHead" />
 
     <TextView
         android:id="@+id/txtShiftHourlyRate"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
         android:height="45dp"
-        android:background="@drawable/edge_line"
-        android:editable="false"
+        android:background="@drawable/wak_shadow"
         android:ems="10"
         android:gravity="center_vertical"
         android:inputType="none"
@@ -46,19 +45,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtHourlyRateHead" />
+        app:layout_constraintTop_toBottomOf="@+id/txtHourlyRateHead" />
 
     <TextView
         android:id="@+id/txtHours"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
         android:height="45dp"
-        android:background="@drawable/edge_line"
+        android:background="@drawable/wak_shadow"
         android:duplicateParentState="false"
-        android:editable="false"
         android:ems="10"
         android:gravity="center_vertical"
         android:inputType="none"
@@ -68,7 +65,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtHoursHead" />
+        app:layout_constraintTop_toBottomOf="@+id/txtHoursHead" />
 
     <TextView
         android:id="@+id/txtNewShiftTitle"
@@ -77,8 +74,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/edge_line"
-        android:text="New Shift"
+        android:text="@string/new_shift"
         android:textAlignment="center"
         android:textSize="36sp"
         android:textStyle="bold"
@@ -93,8 +89,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/box_main"
-        android:text="Save Shift"
+        android:background="@drawable/wak_shadow"
+        android:text="@string/save_shift"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
@@ -107,8 +103,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/box_main"
-        android:text="Delete Shift"
+        android:background="@drawable/wak_shadow"
+        android:text="@string/delete_shift"
         app:layout_constraintBottom_toTopOf="@+id/btnShiftSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -118,11 +114,9 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
         android:height="45dp"
-        android:background="@drawable/edge_line"
-        android:editable="false"
+        android:background="@drawable/wak_shadow"
         android:ems="10"
         android:gravity="center_vertical"
         android:inputType="none"
@@ -131,18 +125,16 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtShiftEndDate"
-        app:layout_constraintTop_toTopOf="@+id/txtEnd" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEnd" />
 
     <TextView
         android:id="@+id/txtShiftStartDate"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="4dp"
         android:height="45dp"
-        android:background="@drawable/edge_line"
-        android:editable="false"
+        android:background="@drawable/wak_shadow"
         android:ems="10"
         android:gravity="center_vertical"
         android:inputType="none"
@@ -151,18 +143,16 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/txtShiftStartTime"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtStart" />
+        app:layout_constraintTop_toBottomOf="@+id/txtStart" />
 
     <TextView
         android:id="@+id/txtShiftEndDate"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="4dp"
         android:height="45dp"
-        android:background="@drawable/edge_line"
-        android:editable="false"
+        android:background="@drawable/wak_shadow"
         android:ems="10"
         android:gravity="center_vertical"
         android:inputType="none"
@@ -171,19 +161,17 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/txtShiftEndTime"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtEnd" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEnd" />
 
     <TextView
         android:id="@+id/txtShiftStartTime"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
         android:height="45dp"
-        android:background="@drawable/edge_line"
+        android:background="@drawable/wak_shadow"
         android:duplicateParentState="false"
-        android:editable="false"
         android:ems="10"
         android:gravity="center_vertical"
         android:inputType="none"
@@ -192,21 +180,20 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtShiftStartDate"
-        app:layout_constraintTop_toTopOf="@+id/txtStart" />
+        app:layout_constraintTop_toBottomOf="@+id/txtStart" />
 
     <TextView
         android:id="@+id/txtStart"
         android:layout_width="150dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="38dp"
+        android:layout_height="25dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/box_header"
-        android:text="Shift Start"
+        android:background="@drawable/wak_shadow"
+        android:text="@string/shift_start"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtShiftStartDate"
         app:layout_constraintTop_toBottomOf="@+id/txtNewShiftTitle" />
 
     <Spinner
@@ -214,90 +201,84 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/edge_line"
-        android:popupBackground="@drawable/box_main"
+        android:background="@drawable/wak_shadow"
+        android:popupBackground="@drawable/wak_shadow"
         android:spinnerMode="dropdown"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtBreakHead" />
+        app:layout_constraintTop_toBottomOf="@+id/txtBreakHead" />
 
     <TextView
         android:id="@+id/txtBreakHead"
         android:layout_width="150dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/box_header"
-        android:text="Break Minutes (Unpaid)"
+        android:background="@drawable/wak_shadow"
+        android:text="@string/break_minutes_unpaid"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/spinner"
         app:layout_constraintTop_toBottomOf="@+id/txtShiftEndDate" />
 
     <TextView
         android:id="@+id/txtHourlyRateHead"
         android:layout_width="150dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/box_header"
-        android:text="Hourly Rate"
+        android:background="@drawable/wak_shadow"
+        android:text="@string/hourly_rate"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtShiftHourlyRate"
         app:layout_constraintTop_toBottomOf="@+id/txtHours" />
 
     <TextView
         android:id="@+id/txtPayHead"
         android:layout_width="150dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/box_header"
-        android:text="Pay"
+        android:background="@drawable/wak_shadow"
+        android:text="@string/pay"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtPay"
         app:layout_constraintTop_toBottomOf="@+id/txtShiftHourlyRate" />
 
     <TextView
         android:id="@+id/txtHoursHead"
         android:layout_width="150dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/box_header"
-        android:text="Hours Worked"
+        android:background="@drawable/wak_shadow"
+        android:text="@string/hours_worked"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtHours"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <TextView
         android:id="@+id/txtEnd"
         android:layout_width="150dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/box_header"
-        android:text="Shift End"
+        android:background="@drawable/wak_shadow"
+        android:text="@string/shift_end"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtShiftEndDate"
         app:layout_constraintTop_toBottomOf="@+id/txtShiftStartDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

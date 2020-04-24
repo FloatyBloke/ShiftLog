@@ -38,14 +38,14 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
     override fun onCreate(db: SQLiteDatabase?) {
         val CREATE_TABLE_QUERY_STRING =
             ("CREATE TABLE $TABLE_NAME ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_START TEXT, $COL_END TEXT, $COL_BREAKS REAL, $COL_HOURS REAL, $COL_RATE REAL, $COL_PAY REAL)")
-        println(CREATE_TABLE_QUERY_STRING)
+        //println(CREATE_TABLE_QUERY_STRING)
         db!!.execSQL(CREATE_TABLE_QUERY_STRING)
-        println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        ///println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db!!.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
-        onCreate(db!!)
+        onCreate(db)
 
     }
 
@@ -71,7 +71,7 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         }
 
             selectQuery = " $selectQuery ORDER BY start"
-            println(selectQuery)
+            // println(selectQuery)
 
             val db = this.writableDatabase
 
@@ -95,10 +95,14 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
                         lstShifts.add(tshift)
                     } while (cursor.moveToNext())
                 }
+                cursor.close()
 
             } catch (e: SQLiteException) {
                 //Toast.makeText(EditShift(), "Database query error", Toast.LENGTH_SHORT).show()
             }
+
+
+        db.close()
             return lstShifts
 
         }
@@ -121,6 +125,8 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
                 tShift.rate = cursor.getFloat(cursor.getColumnIndex((COL_RATE)))
                 tShift.pay = cursor.getFloat(cursor.getColumnIndex((COL_PAY)))
         }
+        cursor.close()
+        db.close()
         return tShift
         }
 

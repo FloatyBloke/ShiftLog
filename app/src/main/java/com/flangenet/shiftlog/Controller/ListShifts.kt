@@ -2,23 +2,21 @@ package com.flangenet.shiftlog.Controller
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
-import android.widget.Toast
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flangenet.shiftlog.Adapter.ListShiftsAdapter
 import com.flangenet.shiftlog.Model.DBShift
-import com.flangenet.shiftlog.Model.Shift
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.DBHelper
 import com.flangenet.shiftlog.Utilities.EXTRA_EDIT_SHIFT
 import com.flangenet.shiftlog.Utilities.dateConvert
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_list_shifts.*
-import java.io.File
 import java.time.LocalDate
 import java.time.temporal.ChronoField
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ListShifts : AppCompatActivity() {
 
@@ -42,8 +40,8 @@ class ListShifts : AppCompatActivity() {
         setContentView(R.layout.activity_list_shifts)
 
         val currentDate = LocalDate.now()
-        wcDate = currentDate.with(ChronoField.DAY_OF_WEEK,1)
-        println("Week Commencing Date : $wcDate")
+        wcDate = currentDate.with(ChronoField.DAY_OF_WEEK,(App.prefs.weekStartDay.toLong())+1)
+        //println("Week Commencing Date : $wcDate")
         //println("Week Commencing Ending : $weDate")
 
         btnListLeft.setOnClickListener{btnListLeftClicked()}
@@ -74,7 +72,6 @@ class ListShifts : AppCompatActivity() {
         lstShifts = db.getShifts(wcDate,searchMode)
 
         shiftsAdapter = ListShiftsAdapter(this, lstShifts as ArrayList<DBShift>){shift ->
-            //Toast.makeText(this,"Do whatever needs to be done with shift ${shift.id}",Toast.LENGTH_SHORT).show()
             val editShiftIntent = Intent(this,EditShift::class.java)
             editShiftIntent.putExtra(EXTRA_EDIT_SHIFT, shift.id)
             startActivity(editShiftIntent)
@@ -83,10 +80,9 @@ class ListShifts : AppCompatActivity() {
         listShiftsView.adapter = shiftsAdapter
         val layoutManager = LinearLayoutManager(this)
         listShiftsView.layoutManager = layoutManager
-        //var totals: Shift? = null
-        var totalBreaks:Float = 0F
-        var totalHours: Float = 0F
-        var totalPay: Float = 0F
+        var totalBreaks = 0F
+        var totalHours = 0F
+        var totalPay = 0F
 
         lstShifts.forEach{shift ->
             totalBreaks += shift.breaks!!
@@ -94,14 +90,20 @@ class ListShifts : AppCompatActivity() {
             totalPay += shift.pay!!
         }
 
-        txtTotalBreaks.text = String.format("%.2f",totalBreaks)
-        txtTotalHours.text = String.format("%.2f",totalHours)
-        txtTotalPay.text = String.format("%.2f",totalPay)
+        txtTotalBreaks.text = "${String.format("%.2f",totalBreaks)} "
+        txtTotalHours.text = "${String.format("%.2f",totalHours)} "
+        txtTotalPay.text = "${String.format("%.2f", totalPay)} "
 
         when(searchMode){
-            0 -> txtWeekCommencing.text = "Week ${dateConvert(wcDate)}"
-            1 -> txtWeekCommencing.text = "${wcDate.month.toString()} ${wcDate.year.toString()}"
-            2 -> txtWeekCommencing.text = "${wcDate.year.toString()}"
+            0 -> txtWeekCommencing.text = "${getString(R.string.week)}Week ${dateConvert(wcDate)}"
+            1 -> txtWeekCommencing.text = "${((wcDate.month.toString())).toLowerCase(Locale.ROOT).capitalize()} ${wcDate.year}"
+            2 -> txtWeekCommencing.text = "${getString(R.string.year)}Year ${wcDate.year}"
+        }
+
+        if(lstShifts.count() ==0){
+            txtNoShifts.visibility = View.VISIBLE
+        } else {
+            txtNoShifts.visibility = View.INVISIBLE
         }
 
     }
@@ -124,21 +126,5 @@ class ListShifts : AppCompatActivity() {
         }
         refreshData()
     }
-
-    fun tabWeekClicked(){
-        txtWeekCommencing.text = "Week"
-
-    }
-
-    fun tabMonthClicked(){
-        txtWeekCommencing.text = "Month"
-
-    }
-
-    fun tabYearClicked(){
-        txtWeekCommencing.text = "Year"
-
-    }
-
 
 }

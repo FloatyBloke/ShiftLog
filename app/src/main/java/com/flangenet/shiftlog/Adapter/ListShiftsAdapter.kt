@@ -6,14 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.flangenet.shiftlog.Controller.App
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.dateConvert
 import com.flangenet.shiftlog.Utilities.timeConvert
-import java.time.LocalDate
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
+
 
 class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, val itemClick: (DBShift) -> Unit): RecyclerView.Adapter<ListShiftsAdapter.ViewHolder>(){
 
@@ -23,7 +20,7 @@ class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, va
                 val end = itemView.findViewById<TextView>(R.id.gridEnd)
                 val breaks = itemView.findViewById<TextView>(R.id.gridBreak)
                 val hours = itemView.findViewById<TextView>(R.id.gridHours)
-                val rate = itemView.findViewById<TextView>(R.id.gridRate)
+                //val rate = itemView.findViewById<TextView>(R.id.gridRate)
                 val pay = itemView.findViewById<TextView>(R.id.gridPay)
 
                 fun bindShifts(context: Context, shift:DBShift) {
@@ -34,10 +31,10 @@ class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, va
 
                         end?.text = "${timeConvert(shift.start?.toLocalTime())} - ${timeConvert(shift.end?.toLocalTime())}"
 
-                        breaks?.text = String.format("%.2f",shift.breaks)
-                        hours?.text = String.format("%.2f",shift.hours)
-                        rate?.text = shift.rate.toString()
-                        pay?.text = String.format("%.2f",shift.pay)
+                        breaks?.text = String.format("%.2f",shift.breaks) + " "
+                        hours?.text = String.format("%.2f",shift.hours) + " "
+                        //rate?.text = shift.rate.toString()
+                        pay?.text = String.format("%.2f",shift.pay) + " "
                         itemView.setOnClickListener{itemClick(shift)
                         }
                 }

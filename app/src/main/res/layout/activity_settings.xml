@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/drippy_bg2"
+    android:backgroundTint="@color/white_semit"
+    android:backgroundTintMode="src_over"
     tools:context=".Controller.Settings">
 
     <TextView
@@ -24,11 +27,10 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
         android:height="45dp"
         android:autofillHints=""
-        android:background="@drawable/box_main"
+        android:background="@drawable/wak_shadow"
         android:duplicateParentState="false"
         android:ems="10"
         android:gravity="center_vertical"
@@ -40,18 +42,17 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtUserNameHead" />
+        app:layout_constraintTop_toBottomOf="@+id/txtUserNameHead" />
 
     <TextView
         android:id="@+id/txtUserNameHead"
         android:layout_width="150dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="38dp"
+        android:layout_height="25dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/box_header"
+        android:background="@drawable/wak_shadow"
         android:text="@string/user_name"
         android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/edtUserName"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
@@ -59,11 +60,10 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
         android:height="45dp"
         android:autofillHints=""
-        android:background="@drawable/box_main"
+        android:background="@drawable/wak_shadow"
         android:duplicateParentState="false"
         android:ems="10"
         android:gravity="center_vertical"
@@ -76,18 +76,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtEmailHead" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEmailHead" />
 
     <TextView
         android:id="@+id/txtEmailHead"
         android:layout_width="150dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="38dp"
+        android:layout_height="25dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/box_header"
+        android:background="@drawable/wak_shadow"
         android:text="@string/email_address"
         android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/edtEmail"
         app:layout_constraintTop_toBottomOf="@+id/edtUserName" />
 
     <EditText
@@ -95,11 +94,10 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
         android:height="45dp"
         android:autofillHints=""
-        android:background="@drawable/box_main"
+        android:background="@drawable/wak_shadow"
         android:duplicateParentState="false"
         android:ems="10"
         android:gravity="center_vertical"
@@ -111,18 +109,17 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtHourlyRateHead" />
+        app:layout_constraintTop_toBottomOf="@+id/txtHourlyRateHead" />
 
     <TextView
         android:id="@+id/txtHourlyRateHead"
         android:layout_width="150dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="38dp"
+        android:layout_height="25dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/box_header"
+        android:background="@drawable/wak_shadow"
         android:text="@string/hourly_rate"
         android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/edtShiftHourlyRate"
         app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
 
     <Spinner
@@ -130,24 +127,22 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/box_main"
+        android:background="@drawable/wak_shadow"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtWeekStartHead" />
+        app:layout_constraintTop_toBottomOf="@+id/txtWeekStartHead" />
 
     <TextView
         android:id="@+id/txtWeekStartHead"
         android:layout_width="150dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="38dp"
+        android:layout_height="25dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/box_header"
+        android:background="@drawable/wak_shadow"
         android:text="@string/first_day_of_week"
         android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/dowSpinner"
         app:layout_constraintTop_toBottomOf="@+id/edtShiftHourlyRate" />
 
     <Spinner
@@ -155,25 +150,23 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/box_main"
+        android:background="@drawable/wak_shadow"
         android:popupBackground="@drawable/edge_line"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtDateFormatHead" />
+        app:layout_constraintTop_toBottomOf="@+id/txtDateFormatHead" />
 
     <TextView
         android:id="@+id/txtDateFormatHead"
         android:layout_width="150dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="38dp"
+        android:layout_height="25dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/box_header"
+        android:background="@drawable/wak_shadow"
         android:text="@string/date_format"
         android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/dformatSpinner"
         app:layout_constraintTop_toBottomOf="@+id/dowSpinner" />
 
     <Spinner
@@ -181,29 +174,27 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/box_main"
+        android:background="@drawable/wak_shadow"
         android:popupBackground="@drawable/edge_line"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtTimeFormatHead" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTimeFormatHead" />
 
     <TextView
         android:id="@+id/txtTimeFormatHead"
         android:layout_width="150dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="38dp"
+        android:layout_height="25dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/box_header"
+        android:background="@drawable/wak_shadow"
         android:text="@string/time_format"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tformatSpinner"
         app:layout_constraintTop_toBottomOf="@+id/dformatSpinner" />
 
     <Button
@@ -213,8 +204,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="4dp"
-        android:background="@drawable/box_main"
-        android:text="File Stuff"
+        android:background="@drawable/wak_shadow"
+        android:text="@string/data_utilities"
         app:layout_constraintBottom_toTopOf="@+id/btnSettingsSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -227,7 +218,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/box_main"
+        android:background="@drawable/wak_shadow"
         android:text="@string/save_settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

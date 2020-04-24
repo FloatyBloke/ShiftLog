@@ -23,6 +23,6 @@ fun dateConvert(inDate: LocalDate) : String {
     return inDate.format(DateTimeFormatter.ofPattern(App.prefs.dateFormat))
 }
 fun timeConvert(inTime: LocalTime?) : String{
-    println(App.prefs.timeFormat)
+    //println(App.prefs.timeFormat)
     return inTime!!.format(DateTimeFormatter.ofPattern(App.prefs.timeFormat))
 }

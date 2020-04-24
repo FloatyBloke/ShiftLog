@@ -80,18 +80,6 @@ class Settings : AppCompatActivity() {
         dowSpinner.setSelection(App.prefs.weekStartDay)
         dformatSpinner.setSelection(dateArray.indexOf(App.prefs.dateFormat))
         tformatSpinner.setSelection(dateArray.indexOf(App.prefs.timeFormat))
-
-
-
-
-
-
-
-
-    }
-
-    private fun settingsCancel(){
-        finish()
     }
 
     private fun settingsSave(){
