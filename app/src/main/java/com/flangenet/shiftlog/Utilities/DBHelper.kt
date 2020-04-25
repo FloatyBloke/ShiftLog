@@ -55,19 +55,12 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         val searchDate = dateToSQLDate(firstDate)
         var selectQuery = "SELECT * FROM $TABLE_NAME"
 
-        if (searchMode == 0) {
-            // Week
-            selectQuery = " $selectQuery WHERE DATE(start) >= '$searchDate' AND DATE(start) <= DATE('$searchDate','+6 days')"
-        }
+        when (searchMode){
 
-        if (searchMode ==  1) {
-            // Month
-            selectQuery = " $selectQuery WHERE DATE(start) >= DATE('$searchDate','start of month') AND DATE(start) <= DATE('$searchDate','start of month','+1 month','-1 day')"
-        }
-
-        if (searchMode == 2){
-            // Year
-            selectQuery = " $selectQuery WHERE DATE(start) >= DATE('$searchDate','start of year') AND DATE(start) <= DATE('$searchDate','start of year', '+12 month','-1 day')"
+            0 -> selectQuery = " $selectQuery WHERE DATE(start) >= '$searchDate' AND DATE(start) <= DATE('$searchDate','+6 days')"
+            1 -> selectQuery = " $selectQuery WHERE DATE(start) >= DATE('$searchDate','start of month') AND DATE(start) <= DATE('$searchDate','start of month','+1 month','-1 day')"
+            2 -> selectQuery = " $selectQuery WHERE DATE(start) >= DATE('$searchDate','start of year') AND DATE(start) <= DATE('$searchDate','start of year', '+12 month','-1 day')"
+            3 -> selectQuery = selectQuery  // Do nothing to select all records
         }
 
             selectQuery = " $selectQuery ORDER BY start"

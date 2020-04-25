@@ -1,9 +1,11 @@
 package com.flangenet.shiftlog.Controller
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -37,7 +39,7 @@ class Settings : AppCompatActivity() {
             spinner.adapter = adapter
             spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                     // Code for action
                 }
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -55,7 +57,7 @@ class Settings : AppCompatActivity() {
             spinner2.adapter = adapter
             spinner2.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                     // Code for action
                 }
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -80,6 +82,7 @@ class Settings : AppCompatActivity() {
         dowSpinner.setSelection(App.prefs.weekStartDay)
         dformatSpinner.setSelection(dateArray.indexOf(App.prefs.dateFormat))
         tformatSpinner.setSelection(dateArray.indexOf(App.prefs.timeFormat))
+        hideKeyboard()
     }
 
     private fun settingsSave(){
@@ -92,4 +95,11 @@ class Settings : AppCompatActivity() {
         finish()
         Toast.makeText(this,getString(R.string.settings_saved),Toast.LENGTH_LONG).show()
     }
+    fun hideKeyboard(){
+        val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (inputManager.isAcceptingText){
+            inputManager.hideSoftInputFromWindow(currentFocus?.windowToken,0)
+        }
+    }
+
 }

@@ -9,220 +9,257 @@
     android:backgroundTintMode="src_over"
     tools:context=".Controller.Settings">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/shift_log_settings"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/edtUserName"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:height="45dp"
-        android:autofillHints=""
-        android:background="@drawable/wak_shadow"
-        android:duplicateParentState="false"
-        android:ems="10"
-        android:gravity="center_vertical"
-        android:hint="@string/user_name"
-        android:inputType="text"
-        android:shadowDy="10"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUserNameHead" />
-
-    <TextView
-        android:id="@+id/txtUserNameHead"
-        android:layout_width="150dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/wak_shadow"
-        android:text="@string/user_name"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="@+id/edtUserName"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <EditText
-        android:id="@+id/edtEmail"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:height="45dp"
-        android:autofillHints=""
-        android:background="@drawable/wak_shadow"
-        android:duplicateParentState="false"
-        android:ems="10"
-        android:gravity="center_vertical"
-        android:hint="@string/email_address"
-        android:inputType="text|textEmailAddress"
-        android:shadowDy="10"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmailHead" />
-
-    <TextView
-        android:id="@+id/txtEmailHead"
-        android:layout_width="150dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/wak_shadow"
-        android:text="@string/email_address"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="@+id/edtEmail"
-        app:layout_constraintTop_toBottomOf="@+id/edtUserName" />
-
-    <EditText
-        android:id="@+id/edtShiftHourlyRate"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:height="45dp"
-        android:autofillHints=""
-        android:background="@drawable/wak_shadow"
-        android:duplicateParentState="false"
-        android:ems="10"
-        android:gravity="center_vertical"
-        android:hint="@string/hourly_rate"
-        android:inputType="none|numberDecimal"
-        android:shadowDy="10"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtHourlyRateHead" />
-
-    <TextView
-        android:id="@+id/txtHourlyRateHead"
-        android:layout_width="150dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/wak_shadow"
-        android:text="@string/hourly_rate"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="@+id/edtShiftHourlyRate"
-        app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
-
-    <Spinner
-        android:id="@+id/dowSpinner"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/wak_shadow"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtWeekStartHead" />
-
-    <TextView
-        android:id="@+id/txtWeekStartHead"
-        android:layout_width="150dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/wak_shadow"
-        android:text="@string/first_day_of_week"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="@+id/dowSpinner"
-        app:layout_constraintTop_toBottomOf="@+id/edtShiftHourlyRate" />
-
-    <Spinner
-        android:id="@+id/dformatSpinner"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/wak_shadow"
-        android:popupBackground="@drawable/edge_line"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDateFormatHead" />
-
-    <TextView
-        android:id="@+id/txtDateFormatHead"
-        android:layout_width="150dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/wak_shadow"
-        android:text="@string/date_format"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="@+id/dformatSpinner"
-        app:layout_constraintTop_toBottomOf="@+id/dowSpinner" />
-
-    <Spinner
-        android:id="@+id/tformatSpinner"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/wak_shadow"
-        android:popupBackground="@drawable/edge_line"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTimeFormatHead" />
-
-    <TextView
-        android:id="@+id/txtTimeFormatHead"
-        android:layout_width="150dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/wak_shadow"
-        android:text="@string/time_format"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tformatSpinner"
-        app:layout_constraintTop_toBottomOf="@+id/dformatSpinner" />
-
-    <Button
-        android:id="@+id/btnFiles"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/wak_shadow"
-        android:text="@string/data_utilities"
-        app:layout_constraintBottom_toTopOf="@+id/btnSettingsSave"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnSettingsSave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/wak_shadow"
-        android:text="@string/save_settings"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/shift_log_settings"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_conversion_absoluteHeight="39dp"
+                tools:layout_conversion_absoluteWidth="236dp" />
+
+            <TextView
+                android:id="@+id/txtUserNameHead"
+                android:layout_width="120dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/wak_shadow"
+                android:text="@string/user_name"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="@+id/edtUserName"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                tools:layout_conversion_absoluteHeight="25dp"
+                tools:layout_conversion_absoluteWidth="150dp" />
+
+            <EditText
+                android:id="@+id/edtUserName"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:height="45dp"
+                android:autofillHints=""
+                android:background="@drawable/wak_shadow"
+                android:duplicateParentState="false"
+                android:ems="10"
+                android:gravity="center_vertical"
+                android:hint="@string/user_name"
+                android:inputType="text"
+                android:shadowDy="10"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtUserNameHead"
+                tools:layout_conversion_absoluteHeight="40dp"
+                tools:layout_conversion_absoluteWidth="347dp" />
+
+            <TextView
+                android:id="@+id/txtEmailHead"
+                android:layout_width="120dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/wak_shadow"
+                android:text="@string/email_address"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="@+id/edtEmail"
+                app:layout_constraintTop_toBottomOf="@+id/edtUserName"
+                tools:layout_conversion_absoluteHeight="25dp"
+                tools:layout_conversion_absoluteWidth="150dp" />
+
+            <TextView
+                android:id="@+id/txtHourlyRateHead"
+                android:layout_width="120dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/wak_shadow"
+                android:text="@string/hourly_rate"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="@+id/edtShiftHourlyRate"
+                app:layout_constraintTop_toBottomOf="@+id/edtEmail"
+                tools:layout_conversion_absoluteHeight="25dp"
+                tools:layout_conversion_absoluteWidth="150dp" />
+
+            <TextView
+                android:id="@+id/txtWeekStartHead"
+                android:layout_width="120dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/wak_shadow"
+                android:text="@string/first_day_of_week"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="@+id/dowSpinner"
+                app:layout_constraintTop_toBottomOf="@+id/edtShiftHourlyRate"
+                tools:layout_conversion_absoluteHeight="25dp"
+                tools:layout_conversion_absoluteWidth="150dp" />
+
+            <TextView
+                android:id="@+id/txtTimeFormatHead"
+                android:layout_width="120dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/wak_shadow"
+                android:text="@string/time_format"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="@+id/tformatSpinner"
+                app:layout_constraintTop_toBottomOf="@+id/dformatSpinner"
+                tools:layout_conversion_absoluteHeight="25dp"
+                tools:layout_conversion_absoluteWidth="150dp" />
+
+            <Spinner
+                android:id="@+id/tformatSpinner"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/wak_shadow"
+                android:popupBackground="@drawable/edge_line"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTimeFormatHead"
+                tools:layout_conversion_absoluteHeight="40dp"
+                tools:layout_conversion_absoluteWidth="0dp" />
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:height="45dp"
+                android:autofillHints=""
+                android:background="@drawable/wak_shadow"
+                android:duplicateParentState="false"
+                android:ems="10"
+                android:gravity="center_vertical"
+                android:hint="@string/email_address"
+                android:inputType="text|textEmailAddress"
+                android:shadowDy="10"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtEmailHead"
+                tools:layout_conversion_absoluteHeight="40dp"
+                tools:layout_conversion_absoluteWidth="347dp" />
+
+            <EditText
+                android:id="@+id/edtShiftHourlyRate"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:height="45dp"
+                android:autofillHints=""
+                android:background="@drawable/wak_shadow"
+                android:duplicateParentState="false"
+                android:ems="10"
+                android:gravity="center_vertical"
+                android:hint="@string/hourly_rate"
+                android:inputType="none|numberDecimal"
+                android:shadowDy="10"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtHourlyRateHead"
+                tools:layout_conversion_absoluteHeight="40dp"
+                tools:layout_conversion_absoluteWidth="347dp" />
+
+            <Spinner
+                android:id="@+id/dowSpinner"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/wak_shadow"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtWeekStartHead"
+                tools:layout_conversion_absoluteHeight="40dp"
+                tools:layout_conversion_absoluteWidth="0dp" />
+
+            <Spinner
+                android:id="@+id/dformatSpinner"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/wak_shadow"
+                android:popupBackground="@drawable/edge_line"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtDateFormatHead"
+                tools:layout_conversion_absoluteHeight="40dp"
+                tools:layout_conversion_absoluteWidth="0dp" />
+
+            <TextView
+                android:id="@+id/txtDateFormatHead"
+                android:layout_width="120dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/wak_shadow"
+                android:text="@string/date_format"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="@+id/dformatSpinner"
+                app:layout_constraintTop_toBottomOf="@+id/dowSpinner"
+                tools:layout_conversion_absoluteHeight="25dp"
+                tools:layout_conversion_absoluteWidth="150dp" />
+
+            <Button
+                android:id="@+id/btnFiles"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/wak_shadow"
+                android:text="@string/data_utilities"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tformatSpinner"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="347dp" />
+
+            <Button
+                android:id="@+id/btnSettingsSave"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="@drawable/wak_shadow"
+                android:text="@string/save_settings"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnFiles"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="347dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.flangenet.shiftlog.Controller
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,6 +47,13 @@ class ListShifts : AppCompatActivity() {
 
         btnListLeft.setOnClickListener{btnListLeftClicked()}
         btnListRight.setOnClickListener{btnListRightClicked()}
+
+        findViewById<View>(R.id.listShiftsView).setOnTouchListener{v,event ->
+            println("Touchy : ${event}")
+            true
+
+        }
+
         tabMode.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
             override fun onTabReselected(tab:TabLayout.Tab?){
                 // 1
@@ -95,9 +103,9 @@ class ListShifts : AppCompatActivity() {
         txtTotalPay.text = "${String.format("%.2f", totalPay)} "
 
         when(searchMode){
-            0 -> txtWeekCommencing.text = "${getString(R.string.week)}Week ${dateConvert(wcDate)}"
+            0 -> txtWeekCommencing.text = "${getString(R.string.week)} ${dateConvert(wcDate)}"
             1 -> txtWeekCommencing.text = "${((wcDate.month.toString())).toLowerCase(Locale.ROOT).capitalize()} ${wcDate.year}"
-            2 -> txtWeekCommencing.text = "${getString(R.string.year)}Year ${wcDate.year}"
+            2 -> txtWeekCommencing.text = "${getString(R.string.year)} ${wcDate.year}"
         }
 
         if(lstShifts.count() ==0){

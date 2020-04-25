@@ -45,7 +45,7 @@ class EditShift : AppCompatActivity() {
             spinner.adapter = adapter
             spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>,view: View, position: Int, id: Long) {
+                override fun onItemSelected(parent: AdapterView<*>,view: View?, position: Int, id: Long) {
                     //Toast.makeText(this@NewShift,breakArray[position], Toast.LENGTH_SHORT).show()
                     val breakMins: Int = spinner.selectedItem.toString().toInt()
                     shift.breaks = (breakMins.toFloat()/60)
