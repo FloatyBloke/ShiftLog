@@ -68,8 +68,8 @@ class FileIO : AppCompatActivity() {
         var logData = mutableListOf<String>()
 
         val myExternalFile = File(getExternalFilesDir(filepath), "$outFileName")
-
-        println("Import Filename : ${myExternalFile!!.absoluteFile.toString()}")
+        //val myExternalFile =File("/storage/emulated/0/Android/","$outFileName")
+        println("Export Filename : ${myExternalFile!!.absoluteFile.toString()}")
 
         enableSpinner(true)
 
