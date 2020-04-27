@@ -2,7 +2,7 @@ package com.flangenet.shiftlog.Controller
 
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
+import android.content.Intent.*
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -19,6 +19,7 @@ import com.flangenet.shiftlog.Utilities.sqlToDatetime
 import kotlinx.android.synthetic.main.activity_file_i_o.*
 import java.io.File
 import java.io.InputStream
+import java.io.OutputStream
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -53,13 +54,22 @@ class FileIO : AppCompatActivity() {
             btnExport.isEnabled = false
         }
         btnExport.setOnClickListener{writeFile()}
-        //btnImport.setOnClickListener{readFile()}
+        btnImport.setOnClickListener{readFile()}
         btnTemp.setOnClickListener{testStuff()}
 
     }
 
+    fun testStuff(){
+        db = DBHelper(this)
+        var lstShifts: List<DBShift> = ArrayList<DBShift>()
+        lstShifts = db.getShifts(LocalDate.now(),3)
+        var logData = mutableListOf<String>()
+        logText.setText(lstShifts.toString())
+        db.close()
 
-    fun writeFile() {
+    }
+
+    fun oldwriteFile() {
 
         // Export routine
         db = DBHelper(this)
@@ -90,7 +100,7 @@ class FileIO : AppCompatActivity() {
 
 
 
-    fun readFile(fileName:String){
+    fun oldreadFile(fileName:String){
         //println(importFile.absoluteFile)
 
         //"content://com.android.externalstorage.documents/document/primary:Android/data/com.flangenet.shiftlog/files/Stash/exshifts.csv"
@@ -99,11 +109,13 @@ class FileIO : AppCompatActivity() {
 
 
         try {
-            myExternalFile = File(getExternalFilesDir(filepath),inFileName)
-            myExternalFile= File(fileName)
-            println("Import Filename : ${myExternalFile!!.absoluteFile.toString()}")
+            //myExternalFile = File(getExternalFilesDir(filepath),inFileName)
+            //myExternalFile= File(fileName)
+            //println("Import Filename : ${myExternalFile!!.absoluteFile.toString()}")
+
             val inputStream: InputStream = myExternalFile!!.inputStream()
-            //inputStream = contentResolver.open
+
+                    //inputStream = contentResolver.open
             inputStream.bufferedReader().useLines { lines -> lines.forEach { lineList.add(it)} }
         } catch (e:Exception){
             Toast.makeText(this,"Import Error",Toast.LENGTH_SHORT).show()
@@ -137,7 +149,6 @@ class FileIO : AppCompatActivity() {
                 iShift.hours = importLine[4].toFloat()
                 iShift.rate = importLine[5].toFloat()
                 iShift.pay = importLine[6].toFloat()
-
 
                 //db.addShift(iShift)
             } catch (e:Exception){
@@ -174,28 +185,119 @@ class FileIO : AppCompatActivity() {
     }
 
 
-    fun testStuff(){
+    fun writeFile(){
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+        //val intent =  Intent(Intent.ACTION_GET_CONTENT)
+
+        // Update with mime types
+        intent.type = "*/*";
+        intent.flags = FLAG_GRANT_WRITE_URI_PERMISSION
+        intent.addFlags(FLAG_GRANT_WRITE_URI_PERMISSION)
+        intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION)
+        intent.addFlags(FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+        intent.addFlags(FLAG_GRANT_PREFIX_URI_PERMISSION)
 
 
-            val intent = Intent()
-                .setType("*/*")
-                .setAction(Intent.ACTION_GET_CONTENT)
+        // Update with additional mime types here using a String[].
+        //intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
 
-            startActivityForResult(Intent.createChooser(intent, "Select a file"), 111)
+        // Only pick openable and local files. Theoretically we could pull files from google drive
+        // or other applications that have networked files, but that's unnecessary for this example.
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+
+        // REQUEST_CODE = <some-integer>
+        startActivityForResult(intent, 112);
 
     }
+    fun readFile(){
+        val intent =  Intent(Intent.ACTION_GET_CONTENT);
+
+        // Update with mime types
+        intent.type = "*/*"
+
+        // Update with additional mime types here using a String[].
+        //intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+
+        // Only pick openable and local files. Theoretically we could pull files from google drive
+        // or other applications that have networked files, but that's unnecessary for this example.
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+
+        // REQUEST_CODE = <some-integer>
+        startActivityForResult(intent, 111)
+
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        // 112 is an export
+        if (requestCode == 112 && resultCode == RESULT_OK) {
+            val selectedFile = data?.data //The uri with the location of the file
 
+            val lineList = mutableListOf<String>()
+            if (selectedFile != null) {
+                // Read string into inputAsString
+                // println(selectedFile.path)
+
+
+                //////////////////////////////////////////
+                db = DBHelper(this)
+                var lstShifts: List<DBShift> = ArrayList<DBShift>()
+                lstShifts = db.getShifts(LocalDate.now(),3)
+                db.close()
+                var logData = mutableListOf<String>()
+
+                enableSpinner(true)
+
+                lstShifts.forEach {
+                    var outputData =
+                        "${it.id.toString()},${datetimeToSQL(it.start!!)},${datetimeToSQL(it.end!!)},${it.breaks.toString()},${it.hours.toString()},${it.rate.toString()},${it.pay.toString()}"
+                    logData.add(outputData + System.lineSeparator())
+                }
+
+
+                //logText.text = logData.toString()
+                logText.setText(logData.toString())
+
+
+                ////////////////////////////////////////////
+
+                try {
+
+                    applicationContext.grantUriPermission(packageName,data.data,FLAG_GRANT_WRITE_URI_PERMISSION)
+                    data.flags = FLAG_GRANT_WRITE_URI_PERMISSION
+                    data.addFlags(FLAG_GRANT_WRITE_URI_PERMISSION)
+                    data.addFlags(FLAG_GRANT_READ_URI_PERMISSION)
+                    data.addFlags(FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+                    data.addFlags(FLAG_GRANT_PREFIX_URI_PERMISSION)
+
+                    val output: OutputStream? = data!!.data?.let { contentResolver.openOutputStream(it) }
+                    val outputAsString = output?.bufferedWriter().use { it?.write(logData.toString()) }
+                    Toast.makeText(this,"Export Complete",Toast.LENGTH_SHORT).show()
+                }catch (e:Exception){
+                    Toast.makeText(this,"Export Error ${e.message}",Toast.LENGTH_SHORT).show()
+                    println(e.message)
+                }
+                enableSpinner(false)
+                logText.setText(logData.toString())
+            }
+        }
+
+        // 111 is an import
         if (requestCode == 111 && resultCode == RESULT_OK) {
             val selectedFile = data?.data //The uri with the location of the file
-            println(selectedFile)
 
-
+            val lineList = mutableListOf<String>()
             if (selectedFile != null) {
-                println(selectedFile.path)
-                //readFile("file://${selectedFile.path}")
-                getFileName(this,selectedFile)?.let { readFile2(it) }
+                // Read string into inputAsString
+                // println(selectedFile.path)
+
+                val inputStream: InputStream? =
+                    data.data?.let { contentResolver.openInputStream(it) }
+                inputStream?.bufferedReader()
+                    ?.useLines { lines -> lines.forEach { lineList.add(it) } }
+                importTable(lineList)
             }
         }
     }
@@ -206,34 +308,41 @@ class FileIO : AppCompatActivity() {
         file.forEachLine { println(it) }
     }
 
-    private fun getFileName(
-        context: Context,
-        uri: Uri
-    ): String? {
-        var result: String? = null
-        if (uri.scheme == "content") {
-            val cursor: Cursor? = context.contentResolver.query(uri, null, null, null, null)
+    fun importTable(lineList: List<String>){
+
+        var iShift:DBShift = DBShift(0,LocalDateTime.now(),LocalDateTime.now(),0F,0F,0F,0F)
+
+        var importLine:List<String>
+
+        var logData = StringBuilder()
+
+        var errorCount = 0
+
+        lineList.forEach{
+            importLine = it.split(",")
+
+            println(importLine[0])
             try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            } finally {
-                if (cursor != null) {
-                    cursor.close()
-                }
+                iShift.id = importLine[0].toInt()
+                iShift.start = sqlToDatetime(importLine[1])
+                iShift.end = sqlToDatetime(importLine[2])
+                iShift.breaks = importLine[3].toFloat()
+                iShift.hours = importLine[4].toFloat()
+                iShift.rate = importLine[5].toFloat()
+                iShift.pay = importLine[6].toFloat()
+                logData.append(importLine).append(System.lineSeparator())
+
+                //db.addShift(iShift)
+            } catch (e:Exception){
+                //println("Parse Error : *${importLine[0]}*${importLine[1]}*${importLine[2]}*${importLine[3]}*${importLine[4]}*${importLine[5]}*${importLine[6]}*")
+                errorCount += 1
+
             }
         }
-        if (result == null) {
-            result = uri.path
-            val cut = result!!.lastIndexOf(File.separator)
-            if (cut != -1) {
-                result = result.substring(cut + 1)
-            }
-        }
-        return result
+        logText.setText(logData)
+        Toast.makeText(this,"Import Complete : ${lineList.count() - errorCount}/${lineList.count()} Lines - Errors : $errorCount",Toast.LENGTH_LONG).show()
     }
+
 }
 
 
