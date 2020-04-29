@@ -5,30 +5,19 @@ import android.media.AudioManager
 import android.media.SoundPool
 import android.os.Bundle
 import android.util.Log
-import android.view.GestureDetector
-import android.view.MotionEvent
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GestureDetectorCompat
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.flangenet.shiftlog.Adapter.ListShiftsAdapter
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.R
-import com.flangenet.shiftlog.Utilities.DBHelper
-import com.flangenet.shiftlog.Utilities.EXTRA_EDIT_SHIFT
-import com.flangenet.shiftlog.Utilities.OnSwipeTouchListener
-import com.flangenet.shiftlog.Utilities.dateConvert
+import com.flangenet.shiftlog.Utilities.*
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_list_shifts.*
 import java.time.LocalDate
 import java.time.temporal.ChronoField
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.abs
 
 private const val DEBUG_TAG = "Gestures"
 
@@ -37,18 +26,35 @@ class ListShifts : AppCompatActivity() {
     lateinit var db: DBHelper
     var lstShifts: List<DBShift> = ArrayList<DBShift>()
     lateinit var shiftsAdapter: ListShiftsAdapter
-    var wcDate: LocalDate = LocalDate.now()
+    lateinit var wcDate: LocalDate
     var searchMode: Int = 0
 
     private var soundPool: SoundPool? = null
     private val soundId = 1
 
-    override fun onResume() {
 
+
+    companion object {
+        private val TAG = ListShifts::class.java.simpleName
+        private const val WEEK_COMMENCING_DATE = "WEEK_COMMENCING_DATE"
+    }
+
+    override fun onResume() {
         super.onResume()
         //Toast.makeText(this,"I'm Resuming",Toast.LENGTH_SHORT).show()
         db = DBHelper(this)
         refreshData()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(WEEK_COMMENCING_DATE, dateToSQLDate(wcDate))
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
     }
 
 
@@ -57,10 +63,19 @@ class ListShifts : AppCompatActivity() {
         setContentView(R.layout.activity_list_shifts)
 
         soundPool = SoundPool(6, AudioManager.STREAM_MUSIC, 0)
+        //soundPool.
         soundPool!!.load(baseContext, R.raw.netswish, 1)
 
         val currentDate = LocalDate.now()
-        wcDate = currentDate.with(ChronoField.DAY_OF_WEEK, (App.prefs.weekStartDay.toLong()) + 1)
+
+        if (savedInstanceState != null){
+            wcDate = sqlDateToDate(savedInstanceState.getString(WEEK_COMMENCING_DATE)!!)
+
+        } else {
+            wcDate = currentDate.with(ChronoField.DAY_OF_WEEK, (App.prefs.weekStartDay.toLong()) + 1)
+        }
+
+
 
         btnListLeft.setOnClickListener { btnListLeftClicked() }
         btnListRight.setOnClickListener { btnListRightClicked() }
@@ -78,12 +93,6 @@ class ListShifts : AppCompatActivity() {
                 btnListLeftClicked()
             }
         })
-
-
-
-
-
-
 
 
         tabMode.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -158,7 +167,7 @@ class ListShifts : AppCompatActivity() {
         txtTotalPay.text = "${String.format("%.2f", totalPay)} "
 
         when (searchMode) {
-            0 -> txtWeekCommencing.text = "${getString(R.string.week)} ${dateConvert(wcDate)}"
+            0 -> txtWeekCommencing.text = "${getString(R.string.week)} ${prefsDateConvert(wcDate)}"
             1 -> txtWeekCommencing.text = "${((wcDate.month.toString())).toLowerCase(Locale.ROOT)
                 .capitalize()} ${wcDate.year}"
             2 -> txtWeekCommencing.text = "${getString(R.string.year)} ${wcDate.year}"

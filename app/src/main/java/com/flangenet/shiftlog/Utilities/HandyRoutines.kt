@@ -17,12 +17,21 @@ fun datetimeToSQL(inDate: LocalDateTime) : String {
 fun dateToSQLDate(inDate: LocalDate) : String {
     return inDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 }
+fun sqlDateToDate(sqlDate:String) : LocalDate {
+    return LocalDate.parse(sqlDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+}
 
-fun dateConvert(inDate: LocalDate) : String {
+fun prefsDateConvert(inDate: LocalDate) : String {
     //println(App.prefs.dateFormat)
     return inDate.format(DateTimeFormatter.ofPattern(App.prefs.dateFormat))
 }
-fun timeConvert(inTime: LocalTime?) : String{
+fun prefsTimeConvert(inTime: LocalTime?) : String{
     //println(App.prefs.timeFormat)
     return inTime!!.format(DateTimeFormatter.ofPattern(App.prefs.timeFormat))
+}
+
+fun removeBrackets(inputString: String) : String {
+    var tempString= inputString.replace("[","",true)
+    tempString= tempString.replace("]","",true)
+    return tempString
 }

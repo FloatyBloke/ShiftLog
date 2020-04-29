@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.R
-import com.flangenet.shiftlog.Utilities.dateConvert
-import com.flangenet.shiftlog.Utilities.timeConvert
+import com.flangenet.shiftlog.Utilities.prefsDateConvert
+import com.flangenet.shiftlog.Utilities.prefsTimeConvert
 
 
 class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, val itemClick: (DBShift) -> Unit): RecyclerView.Adapter<ListShiftsAdapter.ViewHolder>(){
@@ -27,9 +27,9 @@ class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, va
                         //id?.text = "${shift.id} - ${shift.start!!.dayOfWeek}"
                         id?.text = (shift.start!!.dayOfWeek.toString()).toLowerCase().capitalize()
                         start?.text = "${shift.start}"
-                        start.text = dateConvert(shift.start!!.toLocalDate())
+                        start.text = prefsDateConvert(shift.start!!.toLocalDate())
 
-                        end?.text = "${timeConvert(shift.start?.toLocalTime())} - ${timeConvert(shift.end?.toLocalTime())}"
+                        end?.text = "${prefsTimeConvert(shift.start?.toLocalTime())} - ${prefsTimeConvert(shift.end?.toLocalTime())}"
 
                         breaks?.text = String.format("%.2f",shift.breaks) + " "
                         hours?.text = String.format("%.2f",shift.hours) + " "

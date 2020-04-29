@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
 import com.flangenet.shiftlog.Controller.EditShift
 import com.flangenet.shiftlog.Model.DBShift
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -142,9 +144,25 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         val db = this.writableDatabase
         db!!.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
     }
+
+    fun emptyTable(context: Context){
+        val db = this.writableDatabase
+        db!!.execSQL("DELETE FROM  $TABLE_NAME")
+        Toast.makeText(context,"Delete !!!", Toast.LENGTH_LONG).show()
+        db.close()
+    }
+
     fun createTable() {
         val db = this.writableDatabase
         onCreate(db)
+    }
+
+    fun getPath()  {
+        val db = this.writableDatabase
+
+        //Toast.makeText(context,"${db!!.path}", Toast.LENGTH_LONG).show()
+        println("DB Path : ${db!!.path}")
+
     }
 
     fun updateShift(shift: DBShift) : Int
@@ -169,7 +187,39 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
     }
 
 
+     fun importShifts(lineList: MutableList<String>) : Int {
 
+        val db=  this.writableDatabase
+        val values = ContentValues()
+        var importLine: List<String>
+        var errorCount = 0
+
+        //GlobalScope.launch {
+            lineList.forEach {
+                val rawLine = removeBrackets(it)
+                importLine = rawLine.split(",")
+                try {
+                    if (rawLine != "") {
+                        //values.put(COL_ID, person.id) as it's an auto number
+                        values.put(COL_START, importLine[1].toString())
+                        values.put(COL_END, importLine[2])
+                        values.put(COL_BREAKS, importLine[3].toFloat())
+                        values.put(COL_HOURS, importLine[4].toFloat())
+                        values.put(COL_RATE, importLine[5].toFloat())
+                        values.put(COL_PAY, importLine[6].toFloat())
+                        db.insert(TABLE_NAME, null, values)
+                        //println(rawLine)
+                    }
+                } catch (e: Exception) {
+                    errorCount += 1
+                    println("Parse Error : ${errorCount}*${importLine[0]}*${importLine[1]}*${importLine[2]}*${importLine[3]}*${importLine[4]}*${importLine[5]}*${importLine[6]}*")
+                }
+            }
+            // db.close()
+            println("Import Complete : Errors : ${errorCount}")
+        //}
+        return errorCount
+    }
 
 
 

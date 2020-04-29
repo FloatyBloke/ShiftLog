@@ -4,19 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/drippy_bg2"
+    android:background="@mipmap/jane_island"
     android:backgroundTint="@color/white_semit"
     android:backgroundTintMode="src_over"
     tools:context=".Controller.EditShift">
 
 
+    <Button
+        android:id="@+id/btnShiftSave"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/wak_shadow"
+        android:text="@string/save_shift"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnShiftDelete"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/wak_shadow"
+        android:text="@string/delete_shift"
+        app:layout_constraintBottom_toTopOf="@+id/btnShiftSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:fillViewport="true"
         android:scrollbars="none"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnShiftDelete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -174,7 +202,7 @@
 
             <TextView
                 android:id="@+id/txtStart"
-                android:layout_width="160dp"
+                android:layout_width="170dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="8dp"
@@ -203,7 +231,7 @@
 
             <TextView
                 android:id="@+id/txtBreakHead"
-                android:layout_width="160dp"
+                android:layout_width="170dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -217,7 +245,7 @@
 
             <TextView
                 android:id="@+id/txtHourlyRateHead"
-                android:layout_width="160dp"
+                android:layout_width="170dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -231,7 +259,7 @@
 
             <TextView
                 android:id="@+id/txtPayHead"
-                android:layout_width="160dp"
+                android:layout_width="170dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -245,7 +273,7 @@
 
             <TextView
                 android:id="@+id/txtHoursHead"
-                android:layout_width="160dp"
+                android:layout_width="170dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -259,7 +287,7 @@
 
             <TextView
                 android:id="@+id/txtEnd"
-                android:layout_width="160dp"
+                android:layout_width="170dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -270,35 +298,6 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/txtShiftEndDate"
                 app:layout_constraintTop_toBottomOf="@+id/txtShiftStartDate" />
-
-            <Button
-                android:id="@+id/btnShiftSave"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/wak_shadow"
-                android:text="@string/save_shift"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnShiftDelete" />
-
-            <Button
-                android:id="@+id/btnShiftDelete"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="96dp"
-                android:layout_marginEnd="32dp"
-                android:background="@drawable/wak_shadow"
-                android:text="@string/delete_shift"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtPay" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
