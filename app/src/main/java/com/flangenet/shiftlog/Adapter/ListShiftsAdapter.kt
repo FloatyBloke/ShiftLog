@@ -10,31 +10,31 @@ import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.prefsDateConvert
 import com.flangenet.shiftlog.Utilities.prefsTimeConvert
+import com.flangenet.shiftlog.Utilities.properCase
 
 
 class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, val itemClick: (DBShift) -> Unit): RecyclerView.Adapter<ListShiftsAdapter.ViewHolder>(){
 
         inner class ViewHolder (itemView: View, val itemClick: (DBShift) -> Unit) : RecyclerView.ViewHolder(itemView){
-                val id = itemView.findViewById<TextView>(R.id.gridId)
-                val start = itemView.findViewById<TextView>(R.id.gridStart)
-                val end = itemView.findViewById<TextView>(R.id.gridEnd)
-                val breaks = itemView.findViewById<TextView>(R.id.gridBreak)
-                val hours = itemView.findViewById<TextView>(R.id.gridHours)
+                private val id: TextView = itemView.findViewById<TextView>(R.id.gridId)
+                private val start: TextView = itemView.findViewById<TextView>(R.id.gridStart)
+                private val end: TextView = itemView.findViewById<TextView>(R.id.gridEnd)
+                private val breaks: TextView = itemView.findViewById<TextView>(R.id.gridBreak)
+                val hours: TextView = itemView.findViewById<TextView>(R.id.gridHours)
                 //val rate = itemView.findViewById<TextView>(R.id.gridRate)
-                val pay = itemView.findViewById<TextView>(R.id.gridPay)
+                val pay: TextView = itemView.findViewById<TextView>(R.id.gridPay)
 
                 fun bindShifts(context: Context, shift:DBShift) {
                         //id?.text = "${shift.id} - ${shift.start!!.dayOfWeek}"
-                        id?.text = (shift.start!!.dayOfWeek.toString()).toLowerCase().capitalize()
-                        start?.text = "${shift.start}"
+                        id.text = properCase(shift.start!!.dayOfWeek.toString())
+                        start.text = "${shift.start}"
                         start.text = prefsDateConvert(shift.start!!.toLocalDate())
-
-                        end?.text = "${prefsTimeConvert(shift.start?.toLocalTime())} - ${prefsTimeConvert(shift.end?.toLocalTime())}"
-
-                        breaks?.text = String.format("%.2f",shift.breaks) + " "
-                        hours?.text = String.format("%.2f",shift.hours) + " "
+                        val t = "${prefsTimeConvert(shift.start?.toLocalTime())} - ${prefsTimeConvert(shift.end?.toLocalTime())}"
+                        end.text = t
+                        breaks.text = String.format("%.2f",shift.breaks)
+                        hours.text = String.format("%.2f",shift.hours)
                         //rate?.text = shift.rate.toString()
-                        pay?.text = String.format("%.2f",shift.pay) + " "
+                        pay.text = String.format("%.2f",shift.pay)
                         itemView.setOnClickListener{itemClick(shift)
                         }
                 }

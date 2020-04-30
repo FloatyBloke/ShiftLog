@@ -34,7 +34,21 @@
     <string name="edit_shift">Edit Shift</string>
     <string name="shift_deleted">"Shift Deleted</string>
     <string name="error_deleting_shift">"Error Deleting Shift"</string>
+    <string name="export">Export</string>
+    <string name="file_utilities">File Utilities</string>
+    <string name="importButton">Import</string>
+    <string name="message_import">Importing... Please wait :)</string>
+    <string name="message_export">Exporting... Please wait :)</string>
 
+    <string name="file_information">
+        \n
+    This area is for importing and exporting\n\n
+    File should be comma delimited text with the following layout\n\n
+    Start DateTime, End DateTime, Break Hours, Hours Worked, Hourly Rate, Pay\n\n
+        \n\n
+    eg.\n\n
+    2014-01-13 08:00,2014-01-13 14:30,0.0,6.5,6.0,39.0\n
+    </string>
 
     <string-array name="breakChoices">
         <item>0</item>

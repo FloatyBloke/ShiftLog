@@ -20,8 +20,8 @@ import java.time.format.DateTimeFormatter
 
 
 class EditShift : AppCompatActivity() {
-    internal lateinit var db: DBHelper
-    var shiftID: Int = 0
+    private lateinit var db: DBHelper
+    private var shiftID: Int = 0
     var shift = Shift(LocalDateTime.now(),LocalDateTime.now(),0F,0F,5F,0F)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -142,12 +142,12 @@ class EditShift : AppCompatActivity() {
         txtShiftStartTime.text = shift.start.format(DateTimeFormatter.ofPattern(App.prefs.timeFormat))
         txtShiftEndTime.text = shift.end.format(DateTimeFormatter.ofPattern(App.prefs.timeFormat))
         txtHours.text = shift.hours.toString()
-        txtShiftHourlyRate.text = shift.rate.toString()
-        txtPay.text = "${shift.pay}"
+        txtShiftHourlyRate.text = String.format("%.2f",shift.rate)
+        txtPay.text = String.format("%.2f",shift.pay)
 
     }
 
-    fun btnSaveShiftClicked(){
+    private fun btnSaveShiftClicked(){
         if (shiftID == 0){
             val passShift = DBShift(1, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay)
             db.addShift(passShift)
@@ -161,7 +161,7 @@ class EditShift : AppCompatActivity() {
     }
 
 
-    fun btnShiftDeleteClicked(){
+    private fun btnShiftDeleteClicked(){
         val passShift = DBShift(shiftID, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay)
         try {
             db.deleteShift(passShift)

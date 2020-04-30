@@ -6,83 +6,74 @@ import android.content.Intent.*
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.provider.OpenableColumns
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.DBHelper
 import com.flangenet.shiftlog.Utilities.datetimeToSQL
-import com.flangenet.shiftlog.Utilities.removeBrackets
-import com.flangenet.shiftlog.Utilities.sqlToDatetime
 import kotlinx.android.synthetic.main.activity_file_i_o.*
-import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
 import java.time.LocalDate
-import java.time.LocalDateTime
 import kotlinx.coroutines.*
-
 
 
 class FileIO : AppCompatActivity() {
 
-    private val filepath: String = ""
-    private val outFileName: String = "shiftLogOut.txt"
-    private val inFileName: String = "shiftLogIn.csv"
-    internal var myExternalFile: File? = null
-    lateinit var db: DBHelper
-    lateinit var outputUri: Uri
-    val outputIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-    val inputIntent = Intent(Intent.ACTION_GET_CONTENT);
+    private lateinit var db: DBHelper
+    private val outputIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+    private val inputIntent = Intent(Intent.ACTION_GET_CONTENT);
 
 
 
     private val isExternalStorageReadOnly: Boolean
         get() {
             val extStorageState = Environment.getExternalStorageState()
-            return Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState)
+            return Environment.MEDIA_MOUNTED_READ_ONLY == extStorageState
         }
     private val isExternalStorageAvailable: Boolean
         get() {
             val extStorageState = Environment.getExternalStorageState()
-            return Environment.MEDIA_MOUNTED.equals(extStorageState)
+            return Environment.MEDIA_MOUNTED == extStorageState
         }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_file_i_o)
+        logText.setText(R.string.file_information)
 
-        enableSpinner(false)
+        enableSpinner(false,getString(R.string.message_export))
 
         if (!isExternalStorageAvailable || isExternalStorageReadOnly) {
             btnExport.isEnabled = false
         }
         btnExport.setOnClickListener { writeFile() }
         btnImport.setOnClickListener { readFile() }
-        btnTemp.setOnClickListener{testing()}
-        //outputUri.path = "content://com.android.providers.downloads.documents/document/raw%3A%2Fstorage%2Femulated%2F0%2FDownload%2Fcleanshifts.csv"
+        //btnTemp.setOnClickListener{testing()}
 
     }
 
-    fun enableSpinner(enable: Boolean) {
+    private fun enableSpinner(enable: Boolean, info: String) {
+        txtInfo.text = info
         if (enable) {
             progressBar.visibility = View.VISIBLE
+            txtInfo.visibility = View.VISIBLE
         } else {
             progressBar.visibility = View.INVISIBLE
+            txtInfo.visibility = View.INVISIBLE
         }
+
         btnImport.isEnabled = !enable
         btnExport.isEnabled = !enable
         logText.isEnabled = !enable
         hideKeyboard()
     }
 
-    fun hideKeyboard() {
+    private fun hideKeyboard() {
         val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         if (inputManager.isAcceptingText) {
             inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
@@ -90,7 +81,7 @@ class FileIO : AppCompatActivity() {
     }
 
 
-     fun writeFile() {
+     private fun writeFile() {
         //val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
         //val intent =  Intent(Intent.ACTION_GET_CONTENT)
 
@@ -115,7 +106,7 @@ class FileIO : AppCompatActivity() {
 
     }
 
-     fun readFile() {
+     private fun readFile() {
         //val intent = Intent(Intent.ACTION_GET_CONTENT);
 
         // Update with mime types
@@ -139,13 +130,10 @@ class FileIO : AppCompatActivity() {
         // 112 is an export
         if (requestCode == 112 && resultCode == RESULT_OK) {
             val selectedFile = data?.data //The uri with the location of the file
-
             if (selectedFile != null) {
                 val uri = data.data
                 exportTable(uri!!)
-                //logText.setText(uri.toString())
             }
-
         }
 
         // 111 is an import
@@ -154,8 +142,6 @@ class FileIO : AppCompatActivity() {
             if (selectedFile != null) {
                 val uri = data.data
                 importTable(uri!!)
-                //logText.setText(uri.toString())
-
             }
         }
     }
@@ -174,13 +160,12 @@ class FileIO : AppCompatActivity() {
 
     private fun exportTable(uri: Uri){
         db = DBHelper(this)
-        var lstShifts: List<DBShift> = ArrayList<DBShift>()
-        lstShifts = db.getShifts(LocalDate.now(), 3)
+        var lstShifts: List<DBShift> = db.getShifts(LocalDate.now(), 3)
         db.close()
 
         var logData = mutableListOf<String>()
 
-        enableSpinner(true)
+        enableSpinner(true, getString(R.string.message_export))
 
         lstShifts.forEach {
             var outputData =
@@ -191,10 +176,8 @@ class FileIO : AppCompatActivity() {
         logText.setText(logData.toString())
 
         try {
-            val output: OutputStream? =
-                uri.let { contentResolver.openOutputStream(it) }
-            val outputAsString =
-                output?.bufferedWriter().use { it?.write(logData.toString()) }
+            val output: OutputStream? = uri.let { contentResolver.openOutputStream(it) }
+            output?.bufferedWriter().use { it?.write(logData.toString()) }
             output?.close()
 
             Toast.makeText(this, "Export Complete", Toast.LENGTH_SHORT).show()
@@ -202,22 +185,15 @@ class FileIO : AppCompatActivity() {
             Toast.makeText(this, "Export Error ${e.message}", Toast.LENGTH_SHORT).show()
             println(e.message)
         }
-        enableSpinner(false)
+        enableSpinner(false, getString(R.string.message_export))
         logText.setText(logData.toString())
     }
 
      private fun importTable(uri: Uri) {
 
         val lineList = mutableListOf<String>()
-        var iShift: DBShift = DBShift(0, LocalDateTime.now(), LocalDateTime.now(), 0F, 0F, 0F, 0F)
-        var importLine: List<String>
-        var logData = StringBuilder()
-        var errorCount = 0
         db = DBHelper(this)
-
-        enableSpinner(true)
-        //GlobalScope.launch {
-
+        enableSpinner(true, getString(R.string.message_import))
         val inputStream: InputStream? = uri.let { contentResolver.openInputStream(it) }
         inputStream?.bufferedReader()?.useLines { lines -> lines.forEach { lineList.add(it) } }
         inputStream?.close()
@@ -228,19 +204,12 @@ class FileIO : AppCompatActivity() {
             val errorTemp = async(Dispatchers.IO) {db.importShifts(lineList)}
             importComplete(errorTemp.await(),lineList.count())
         }
+     }
 
-
-    }
-
-    fun importComplete(errorCount:Int,lineCount:Int) {
-        println("*******I'm back")
-        //db.close()
+    private fun importComplete(errorCount:Int, lineCount:Int) {
         Toast.makeText(applicationContext,"Import Complete : ${lineCount - errorCount}/${lineCount} Lines - Errors : $errorCount",Toast.LENGTH_LONG).show()
-        //Toast.makeText(applicationContext,"Import Complete - Errors : $errorCount",Toast.LENGTH_LONG).show()
-        enableSpinner(false)
-
+        enableSpinner(false,getString(R.string.message_import))
     }
-
 }
 
 

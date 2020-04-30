@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/jane_island"
+    android:background="@mipmap/drippy_bg2"
     android:backgroundTint="@color/white_semit"
     android:backgroundTintMode="src_over"
     tools:context=".Controller.MainActivity">

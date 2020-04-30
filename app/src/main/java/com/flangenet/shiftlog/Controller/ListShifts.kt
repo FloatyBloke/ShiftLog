@@ -2,6 +2,7 @@ package com.flangenet.shiftlog.Controller
 
 import android.content.Intent
 import android.media.AudioManager
+import android.media.MediaPlayer
 import android.media.SoundPool
 import android.os.Bundle
 import android.util.Log
@@ -19,7 +20,7 @@ import java.time.temporal.ChronoField
 import java.util.*
 import kotlin.collections.ArrayList
 
-private const val DEBUG_TAG = "Gestures"
+//private const val DEBUG_TAG = "Gestures"
 
 class ListShifts : AppCompatActivity() {
 
@@ -29,8 +30,10 @@ class ListShifts : AppCompatActivity() {
     lateinit var wcDate: LocalDate
     var searchMode: Int = 0
 
-    private var soundPool: SoundPool? = null
-    private val soundId = 1
+    //private var oldNoisy: SoundPool? = null
+    //private val soundId = 1
+    private var noisy: MediaPlayer? = null
+
 
 
 
@@ -54,7 +57,6 @@ class ListShifts : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-
     }
 
 
@@ -62,15 +64,15 @@ class ListShifts : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_shifts)
 
-        soundPool = SoundPool(6, AudioManager.STREAM_MUSIC, 0)
-        //soundPool.
-        soundPool!!.load(baseContext, R.raw.netswish, 1)
+        //oldNoisy = SoundPool(6, AudioManager.STREAM_MUSIC, 0)
+
+        //oldNoisy?.load(baseContext, R.raw.netswish, 1)
+        noisy = MediaPlayer.create(applicationContext, R.raw.netswish)
 
         val currentDate = LocalDate.now()
 
         if (savedInstanceState != null){
             wcDate = sqlDateToDate(savedInstanceState.getString(WEEK_COMMENCING_DATE)!!)
-
         } else {
             wcDate = currentDate.with(ChronoField.DAY_OF_WEEK, (App.prefs.weekStartDay.toLong()) + 1)
         }
@@ -162,15 +164,17 @@ class ListShifts : AppCompatActivity() {
             totalPay += shift.pay!!
         }
 
-        txtTotalBreaks.text = "${String.format("%.2f", totalBreaks)} "
-        txtTotalHours.text = "${String.format("%.2f", totalHours)} "
-        txtTotalPay.text = "${String.format("%.2f", totalPay)} "
+        txtTotalBreaks.text = String.format("%.2f", totalBreaks)
+        txtTotalHours.text = String.format("%.2f", totalHours)
+        txtTotalPay.text = String.format("%.2f", totalPay)
 
         when (searchMode) {
-            0 -> txtWeekCommencing.text = "${getString(R.string.week)} ${prefsDateConvert(wcDate)}"
-            1 -> txtWeekCommencing.text = "${((wcDate.month.toString())).toLowerCase(Locale.ROOT)
-                .capitalize()} ${wcDate.year}"
-            2 -> txtWeekCommencing.text = "${getString(R.string.year)} ${wcDate.year}"
+            0 -> { val t = getString(R.string.week) + " " + prefsDateConvert(wcDate)
+                txtWeekCommencing.text = t }
+            1 -> { val t = "${properCase(wcDate.month.toString())} ${wcDate.year}"
+                txtWeekCommencing.text = t }
+            2 -> {val t = "${getString(R.string.year)} ${wcDate.year}"
+                txtWeekCommencing.text = t}
         }
 
         if (lstShifts.count() == 0) {
@@ -188,7 +192,8 @@ class ListShifts : AppCompatActivity() {
             2 -> wcDate = wcDate.minusYears(1)
 
         }
-        soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
+        //oldNoisy?.play(soundId, 1F, 1F, 0, 0, 1F)
+        noisy?.start()
         refreshData()
     }
 
@@ -199,7 +204,8 @@ class ListShifts : AppCompatActivity() {
             2 -> wcDate = wcDate.plusYears(1)
 
         }
-        soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
+        //oldNoisy?.play(soundId, 1F, 1F, 0, 0, 1F)
+        noisy?.start()
         refreshData()
     }
 }

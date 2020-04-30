@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/jane_island"
+    android:background="@mipmap/drippy_bg2"
     android:backgroundTint="@color/white_semit"
     android:backgroundTintMode="src_over"
     tools:context=".Controller.ListShifts">
@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
         android:text="@string/hours"
         android:textAlignment="textEnd"
-        android:textStyle="bold|italic"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/headHours"
         app:layout_constraintTop_toTopOf="@+id/txtTotalBreaks" />
 
@@ -117,7 +117,7 @@
         android:layout_height="wrap_content"
         android:text="@string/breaks"
         android:textAlignment="textEnd"
-        android:textStyle="bold|italic"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/headBreak"
         app:layout_constraintTop_toBottomOf="@+id/listShiftsView" />
 
@@ -127,7 +127,7 @@
         android:layout_height="wrap_content"
         android:text="@string/pay"
         android:textAlignment="textEnd"
-        android:textStyle="bold|italic"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/headPay"
         app:layout_constraintTop_toTopOf="@+id/txtTotalHours" />
 
@@ -151,7 +151,7 @@
         android:layout_marginEnd="8dp"
         android:text="@string/pay"
         android:textAlignment="textEnd"
-        android:textStyle="bold|italic"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/headHours" />
 
@@ -162,7 +162,7 @@
         android:layout_marginEnd="16dp"
         android:text="@string/hours"
         android:textAlignment="textEnd"
-        android:textStyle="bold|italic"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/headPay"
         app:layout_constraintTop_toTopOf="@+id/headBreak" />
 
@@ -173,7 +173,7 @@
         android:layout_marginEnd="16dp"
         android:text="@string/breaks"
         android:textAlignment="textEnd"
-        android:textStyle="bold|italic"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/headHours"
         app:layout_constraintTop_toBottomOf="@+id/tabMode" />
 
@@ -184,7 +184,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:adjustViewBounds="false"
-        android:backgroundTint="@android:color/transparent"
+        android:backgroundTint="@color/white_semit"
         android:contentDescription="@string/right_arrow"
         android:cropToPadding="false"
         android:paddingHorizontal="2dp"
@@ -196,15 +196,20 @@
 
     <ImageButton
         android:id="@+id/btnListLeft"
+        style="@style/Widget.AppCompat.ImageButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@android:color/transparent"
+        android:adjustViewBounds="false"
+        android:backgroundTint="@color/white_semit"
+        android:backgroundTintMode="screen"
         android:contentDescription="@string/left_arrow"
+        android:cropToPadding="false"
         android:paddingHorizontal="2dp"
         android:paddingVertical="2dp"
         android:scaleType="fitCenter"
+        android:soundEffectsEnabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_back_circle_outline" />

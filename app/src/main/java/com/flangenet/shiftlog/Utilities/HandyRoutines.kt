@@ -35,3 +35,14 @@ fun removeBrackets(inputString: String) : String {
     tempString= tempString.replace("]","",true)
     return tempString
 }
+fun properCase(inputString: String) : String {
+    var outputString:String = ""
+    inputString.forEach {
+        if (outputString == ""){
+            outputString += it.toUpperCase()
+        } else {
+            outputString += it.toLowerCase()
+        }
+    }
+    return outputString
+}
