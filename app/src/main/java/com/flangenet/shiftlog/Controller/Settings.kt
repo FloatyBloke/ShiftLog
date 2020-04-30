@@ -100,7 +100,7 @@ class Settings : AppCompatActivity() {
         finish()
         Toast.makeText(this,getString(R.string.settings_saved),Toast.LENGTH_LONG).show()
     }
-    fun hideKeyboard(){
+    private fun hideKeyboard(){
         val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         if (inputManager.isAcceptingText){
             inputManager.hideSoftInputFromWindow(currentFocus?.windowToken,0)

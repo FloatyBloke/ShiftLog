@@ -30,13 +30,11 @@ class EditShift : AppCompatActivity() {
 
         shiftID = intent.getIntExtra(EXTRA_EDIT_SHIFT,0)
         if (shiftID > 0) { txtNewShiftTitle.text = getString(R.string.edit_shift)}
-        //println("Shift To Process : $shiftID")
         btnShiftSave.setOnClickListener{btnSaveShiftClicked()}
         btnShiftDelete.setOnClickListener{btnShiftDeleteClicked()}
 
         // Spinner Setup - access the items of the list
         val breakArray = resources.getStringArray(R.array.breakChoices)
-
         // access the spinner
         val spinner = findViewById<Spinner>(R.id.spinner)
         if (spinner != null) {
@@ -67,7 +65,6 @@ class EditShift : AppCompatActivity() {
             var tTime = LocalDateTime.now()
             tTime = tTime.minusSeconds(tTime.second.toLong())
             tTime = tTime.minusNanos(tTime.nano.toLong())
-
             shift.start= tTime
             shift.end = tTime
             shift.breaks = 0F
@@ -124,9 +121,7 @@ class EditShift : AppCompatActivity() {
         // Calculations to update information
 
         val shiftMins = Duration.between(shift.start,shift.end).toMinutes()
-        //println("S:${shift.start} E:${shift.end} Shift:${shiftMins}")
         val shiftHours: Float = (shiftMins.toFloat()/60)
-
         val breakHours: Float = shift.breaks
         val shiftHoursTotal = shiftHours - breakHours
         val hourlyRate: Float = shift.rate
@@ -155,9 +150,7 @@ class EditShift : AppCompatActivity() {
             val passShift = DBShift(shiftID, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay)
             db.updateShift(passShift)
         }
-
         finish()
-
     }
 
 
@@ -169,7 +162,6 @@ class EditShift : AppCompatActivity() {
         } catch (e:Exception){
             Toast.makeText(this,"${getString(R.string.error_deleting_shift)} : ${shift.start}", Toast.LENGTH_SHORT).show()
         }
-
         finish()
     }
 

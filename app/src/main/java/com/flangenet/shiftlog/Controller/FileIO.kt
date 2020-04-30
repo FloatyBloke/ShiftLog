@@ -27,8 +27,6 @@ class FileIO : AppCompatActivity() {
     private val outputIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
     private val inputIntent = Intent(Intent.ACTION_GET_CONTENT);
 
-
-
     private val isExternalStorageReadOnly: Boolean
         get() {
             val extStorageState = Environment.getExternalStorageState()
@@ -53,8 +51,6 @@ class FileIO : AppCompatActivity() {
         }
         btnExport.setOnClickListener { writeFile() }
         btnImport.setOnClickListener { readFile() }
-        //btnTemp.setOnClickListener{testing()}
-
     }
 
     private fun enableSpinner(enable: Boolean, info: String) {
@@ -169,9 +165,8 @@ class FileIO : AppCompatActivity() {
 
         lstShifts.forEach {
             var outputData =
-                "${it.id.toString()},${datetimeToSQL(it.start!!)},${datetimeToSQL(it.end!!)},${it.breaks.toString()},${it.hours.toString()},${it.rate.toString()},${it.pay.toString()}"
+                "${datetimeToSQL(it.start!!)},${datetimeToSQL(it.end!!)},${it.breaks.toString()},${it.hours.toString()},${it.rate.toString()},${it.pay.toString()}"
             logData.add(System.lineSeparator() + outputData)
-            println(outputData)
         }
         logText.setText(logData.toString())
 

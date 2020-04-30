@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
-        <item>@font/abeezee</item>
-        <item>@font/cabin</item>
-        <item>@font/cabin_sketch</item>
-        <item>@font/lato</item>
-        <item>@font/luckiest_guy</item>
-        <item>@font/trade_winds</item>
         <item>@font/ubuntu_light</item>
     </array>
 </resources>

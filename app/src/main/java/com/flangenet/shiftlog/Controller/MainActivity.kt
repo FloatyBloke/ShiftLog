@@ -18,40 +18,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        //floatingActionButton.setOnClickListener {btn1Clicked()}
-
         btnNewShift.setOnClickListener{openNewShift()}
         btnSettings.setOnClickListener{openSettings()}
         btnViewShifts.setOnClickListener{openViewShifts()}
     }
 
-    fun openSettings(){
+    private fun openSettings(){
         val settingsIntent = Intent(this, Settings::class.java)
         startActivity(settingsIntent)
     }
 
-    fun openNewShift(){
+    private fun openNewShift(){
         val newShiftIntent = Intent(this, EditShift::class.java)
         newShiftIntent.putExtra(EXTRA_EDIT_SHIFT,0)
         startActivity(newShiftIntent)
     }
 
-    fun openViewShifts(){
+    private fun openViewShifts(){
         val listShiftsIntent = Intent(this, ListShifts::class.java)
         startActivity(listShiftsIntent)
     }
-
-    public fun sqlToDatetime(sqlDate: String): LocalDateTime {
-        return LocalDateTime.parse(sqlDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
-    }
-
-    public fun datetimeToSQL(inDate: LocalDateTime) : String {
-        return inDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
-    }
-
-    fun dateToSQLDate(inDate: LocalDate) : String {
-        return inDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-    }
-
 }

@@ -40,9 +40,7 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
     override fun onCreate(db: SQLiteDatabase?) {
         val CREATE_TABLE_QUERY_STRING =
             ("CREATE TABLE $TABLE_NAME ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_START TEXT, $COL_END TEXT, $COL_BREAKS REAL, $COL_HOURS REAL, $COL_RATE REAL, $COL_PAY REAL)")
-        //println(CREATE_TABLE_QUERY_STRING)
         db!!.execSQL(CREATE_TABLE_QUERY_STRING)
-        ///println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -159,10 +157,7 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
 
     fun getPath()  {
         val db = this.writableDatabase
-
-        //Toast.makeText(context,"${db!!.path}", Toast.LENGTH_LONG).show()
         println("DB Path : ${db!!.path}")
-
     }
 
     fun updateShift(shift: DBShift) : Int
@@ -194,19 +189,18 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         var importLine: List<String>
         var errorCount = 0
 
-        //GlobalScope.launch {
+
             lineList.forEach {
                 val rawLine = removeBrackets(it)
                 importLine = rawLine.split(",")
                 try {
                     if (rawLine != "") {
-                        //values.put(COL_ID, person.id) as it's an auto number
-                        values.put(COL_START, importLine[1].toString())
-                        values.put(COL_END, importLine[2])
-                        values.put(COL_BREAKS, importLine[3].toFloat())
-                        values.put(COL_HOURS, importLine[4].toFloat())
-                        values.put(COL_RATE, importLine[5].toFloat())
-                        values.put(COL_PAY, importLine[6].toFloat())
+                        values.put(COL_START, importLine[0].toString())
+                        values.put(COL_END, importLine[1])
+                        values.put(COL_BREAKS, importLine[2].toFloat())
+                        values.put(COL_HOURS, importLine[3].toFloat())
+                        values.put(COL_RATE, importLine[4].toFloat())
+                        values.put(COL_PAY, importLine[5].toFloat())
                         db.insert(TABLE_NAME, null, values)
                         //println(rawLine)
                     }
@@ -215,9 +209,9 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
                     println("Parse Error : ${errorCount}*${importLine[0]}*${importLine[1]}*${importLine[2]}*${importLine[3]}*${importLine[4]}*${importLine[5]}*${importLine[6]}*")
                 }
             }
-            // db.close()
+
             println("Import Complete : Errors : ${errorCount}")
-        //}
+
         return errorCount
     }
 

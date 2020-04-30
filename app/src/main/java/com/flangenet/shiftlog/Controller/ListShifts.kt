@@ -44,7 +44,6 @@ class ListShifts : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        //Toast.makeText(this,"I'm Resuming",Toast.LENGTH_SHORT).show()
         db = DBHelper(this)
         refreshData()
     }
