@@ -37,8 +37,8 @@
     <string name="export">Export</string>
     <string name="file_utilities">File Utilities</string>
     <string name="importButton">Import</string>
-    <string name="message_import">Importing... Please wait :)</string>
-    <string name="message_export">Exporting... Please wait :)</string>
+    <string name="message_import">Importing… Please wait :)</string>
+    <string name="message_export">Exporting… Please wait :)</string>
 
     <string name="file_information">
         \n

@@ -1,13 +1,14 @@
 package com.flangenet.shiftlog.Controller
 
 import android.content.Intent
-import android.media.AudioManager
 import android.media.MediaPlayer
-import android.media.SoundPool
 import android.os.Bundle
-import android.util.Log
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flangenet.shiftlog.Adapter.ListShiftsAdapter
 import com.flangenet.shiftlog.Model.DBShift
@@ -17,12 +18,11 @@ import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_list_shifts.*
 import java.time.LocalDate
 import java.time.temporal.ChronoField
-import java.util.*
-import kotlin.collections.ArrayList
+import kotlin.math.abs
 
 //private const val DEBUG_TAG = "Gestures"
 
-class ListShifts : AppCompatActivity() {
+class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
     lateinit var db: DBHelper
     var lstShifts: List<DBShift> = ArrayList<DBShift>()
@@ -33,6 +33,9 @@ class ListShifts : AppCompatActivity() {
     //private var oldNoisy: SoundPool? = null
     //private val soundId = 1
     private var noisy: MediaPlayer? = null
+
+    var gDetector: GestureDetectorCompat? = null
+
 
 
 
@@ -68,6 +71,9 @@ class ListShifts : AppCompatActivity() {
         //oldNoisy?.load(baseContext, R.raw.netswish, 1)
         noisy = MediaPlayer.create(applicationContext, R.raw.netswish)
 
+        this.gDetector = GestureDetectorCompat(this,this)
+        gDetector?.setOnDoubleTapListener(this)
+
         val currentDate = LocalDate.now()
 
         if (savedInstanceState != null){
@@ -82,6 +88,7 @@ class ListShifts : AppCompatActivity() {
         btnListRight.setOnClickListener { btnListRightClicked() }
 
 
+/*
         // set up right and left swipe to call buttons
         listShiftsView.setOnTouchListener(object : OnSwipeTouchListener() {
             override fun onSwipeLeft() {
@@ -94,6 +101,15 @@ class ListShifts : AppCompatActivity() {
                 btnListLeftClicked()
             }
         })
+
+*/
+        listShiftsView.setOnTouchListener(OnTouchListener { v, event ->
+            println("Hello")
+            this.gDetector?.onTouchEvent(event)
+            false
+        })
+
+
 
 
         tabMode.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -116,6 +132,14 @@ class ListShifts : AppCompatActivity() {
     }
 
 
+
+
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        this.gDetector?.onTouchEvent(event)
+        // Be sure to call the superclass implementation
+        return super.onTouchEvent(event)
+    }
 
 
 
@@ -206,6 +230,85 @@ class ListShifts : AppCompatActivity() {
         //oldNoisy?.play(soundId, 1F, 1F, 0, 0, 1F)
         noisy?.start()
         refreshData()
+    }
+
+
+    override fun onShowPress(e: MotionEvent?) {
+        //txtWeekCommencing.text = "Press"
+    }
+
+    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+        //txtWeekCommencing.text = "onSingleTapUp"
+        return true
+    }
+
+    override fun onDown(e: MotionEvent?): Boolean {
+        //txtWeekCommencing.text = "onDown"
+        return true
+    }
+
+    override fun onFling(
+        e1: MotionEvent?,
+        e2: MotionEvent?,
+        velocityX: Float,
+        velocityY: Float
+    ): Boolean {
+        val SWIPE_THRESHOLD = 100
+        val SWIPE_VELOCITY_THRESHOLD = 100
+        val result = false
+        try {
+            val diffY = e2!!.y - e1!!.y
+            val diffX = e2.x - e1.x
+            if (abs(diffX) > abs(diffY)) {
+                if (abs(diffX) > SWIPE_THRESHOLD && abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (diffX > 0) {
+                        btnListLeftClicked()
+                    } else {
+                        btnListRightClicked()
+                    }
+                }
+            } else {
+                // onTouch(e);
+            }
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+        }
+
+
+
+
+
+        //txtWeekCommencing.text = "Swipe"
+        return true
+    }
+
+    override fun onScroll(
+        e1: MotionEvent?,
+        e2: MotionEvent?,
+        distanceX: Float,
+        distanceY: Float
+    ): Boolean {
+        //txtWeekCommencing.text = "onScroll"
+        return true
+    }
+
+    override fun onLongPress(e: MotionEvent?) {
+        //txtWeekCommencing.text = "onLongPress"
+    }
+
+    override fun onDoubleTap(e: MotionEvent?): Boolean {
+        //txtWeekCommencing.text = "onDoubleTap"
+        return true
+    }
+
+    override fun onDoubleTapEvent(e: MotionEvent?): Boolean {
+        //txtWeekCommencing.text = "onDoubleTapEvent"
+        return true
+    }
+
+    override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+        //txtWeekCommencing.text = "onSingleTapConfirmed"
+        return true
     }
 }
 

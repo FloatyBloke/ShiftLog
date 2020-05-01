@@ -60,7 +60,7 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
             0 -> selectQuery = " $selectQuery WHERE DATE(start) >= '$searchDate' AND DATE(start) <= DATE('$searchDate','+6 days')"
             1 -> selectQuery = " $selectQuery WHERE DATE(start) >= DATE('$searchDate','start of month') AND DATE(start) <= DATE('$searchDate','start of month','+1 month','-1 day')"
             2 -> selectQuery = " $selectQuery WHERE DATE(start) >= DATE('$searchDate','start of year') AND DATE(start) <= DATE('$searchDate','start of year', '+12 month','-1 day')"
-            3 -> selectQuery = selectQuery  // Do nothing to select all records
+
         }
 
             selectQuery = " $selectQuery ORDER BY start"
@@ -107,7 +107,7 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         val selectQuery = "SELECT * FROM $TABLE_NAME WHERE $COL_ID=$shiftID"
         val db = this.writableDatabase
         val cursor = db.rawQuery(selectQuery,null)
-        val tShift:DBShift = DBShift()
+        val tShift = DBShift()
         if (cursor.moveToFirst()) {
                 tShift.id = cursor.getInt(cursor.getColumnIndex(COL_ID))
                 tShift.start = sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_START)))
@@ -195,7 +195,7 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
                 importLine = rawLine.split(",")
                 try {
                     if (rawLine != "") {
-                        values.put(COL_START, importLine[0].toString())
+                        values.put(COL_START, importLine[0])
                         values.put(COL_END, importLine[1])
                         values.put(COL_BREAKS, importLine[2].toFloat())
                         values.put(COL_HOURS, importLine[3].toFloat())

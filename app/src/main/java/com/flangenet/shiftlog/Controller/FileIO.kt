@@ -25,7 +25,7 @@ class FileIO : AppCompatActivity() {
 
     private lateinit var db: DBHelper
     private val outputIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-    private val inputIntent = Intent(Intent.ACTION_GET_CONTENT);
+    private val inputIntent = Intent(Intent.ACTION_GET_CONTENT)
 
     private val isExternalStorageReadOnly: Boolean
         get() {
@@ -82,7 +82,7 @@ class FileIO : AppCompatActivity() {
         //val intent =  Intent(Intent.ACTION_GET_CONTENT)
 
         // Update with mime types
-        outputIntent.type = "*/*";
+        outputIntent.type = "*/*"
         outputIntent.flags = FLAG_GRANT_WRITE_URI_PERMISSION
         outputIntent.addFlags(FLAG_GRANT_WRITE_URI_PERMISSION)
         outputIntent.addFlags(FLAG_GRANT_READ_URI_PERMISSION)
@@ -94,11 +94,11 @@ class FileIO : AppCompatActivity() {
 
         // Only pick openable and local files. Theoretically we could pull files from google drive
         // or other applications that have networked files, but that's unnecessary for this example.
-        outputIntent.addCategory(Intent.CATEGORY_OPENABLE);
-        outputIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        outputIntent.addCategory(Intent.CATEGORY_OPENABLE)
+        outputIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
 
         // REQUEST_CODE = <some-integer>
-        startActivityForResult(outputIntent, 112);
+        startActivityForResult(outputIntent, 112)
 
     }
 
@@ -156,15 +156,15 @@ class FileIO : AppCompatActivity() {
 
     private fun exportTable(uri: Uri){
         db = DBHelper(this)
-        var lstShifts: List<DBShift> = db.getShifts(LocalDate.now(), 3)
+        val lstShifts: List<DBShift> = db.getShifts(LocalDate.now(), 3)
         db.close()
 
-        var logData = mutableListOf<String>()
+        val logData = mutableListOf<String>()
 
         enableSpinner(true, getString(R.string.message_export))
 
         lstShifts.forEach {
-            var outputData =
+            val outputData =
                 "${datetimeToSQL(it.start!!)},${datetimeToSQL(it.end!!)},${it.breaks.toString()},${it.hours.toString()},${it.rate.toString()},${it.pay.toString()}"
             logData.add(System.lineSeparator() + outputData)
         }
