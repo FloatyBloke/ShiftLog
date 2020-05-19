@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         btnNewShift.setOnClickListener{openNewShift()}
         btnSettings.setOnClickListener{openSettings()}
         btnViewShifts.setOnClickListener{openViewShifts()}
+
     }
 
     private fun openSettings(){

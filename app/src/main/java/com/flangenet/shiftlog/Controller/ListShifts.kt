@@ -104,7 +104,7 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
 
 */
         listShiftsView.setOnTouchListener(OnTouchListener { v, event ->
-            
+
             this.gDetector?.onTouchEvent(event)
             false
         })
