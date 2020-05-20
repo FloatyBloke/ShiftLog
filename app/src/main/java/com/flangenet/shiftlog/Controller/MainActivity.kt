@@ -3,14 +3,11 @@ package com.flangenet.shiftlog.Controller
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.webkit.WebView
-import android.webkit.WebViewClient
+
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.EXTRA_EDIT_SHIFT
 import kotlinx.android.synthetic.main.activity_main.*
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+
 
 
 class MainActivity : AppCompatActivity() {

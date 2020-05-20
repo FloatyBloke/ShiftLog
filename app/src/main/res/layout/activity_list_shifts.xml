@@ -66,21 +66,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:text="@string/week" />
+            android:text="@string/week"
+            android:focusable="true" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:text="@string/month" />
+            android:text="@string/month"
+            android:focusable="true" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:text="@string/year" />
+            android:text="@string/year"
+            android:focusable="true" />
 
     </com.google.android.material.tabs.TabLayout>
 

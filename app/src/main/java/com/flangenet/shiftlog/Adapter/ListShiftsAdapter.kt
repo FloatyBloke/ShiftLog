@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.R
+import com.flangenet.shiftlog.Utilities.getDayOfWeek
 import com.flangenet.shiftlog.Utilities.prefsDateConvert
 import com.flangenet.shiftlog.Utilities.prefsTimeConvert
 import com.flangenet.shiftlog.Utilities.properCase
@@ -26,7 +27,8 @@ class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, va
 
                 fun bindShifts(shift:DBShift) {
                         //id?.text = "${shift.id} - ${shift.start!!.dayOfWeek}"
-                        id.text = properCase(shift.start!!.dayOfWeek.toString())
+                        //id.text = properCase(shift.start!!.dayOfWeek.toString())
+                        id.text = getDayOfWeek(shift.start!!.toLocalDate())
                         start.text = "${shift.start}"
                         start.text = prefsDateConvert(shift.start!!.toLocalDate())
                         val t = "${prefsTimeConvert(shift.start?.toLocalTime())} - ${prefsTimeConvert(shift.end?.toLocalTime())}"

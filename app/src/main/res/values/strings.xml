@@ -33,7 +33,10 @@
     <string name="no_shifts_for_this_period">No shifts for this period</string>
     <string name="edit_shift">Edit Shift</string>
     <string name="shift_deleted">"Shift Deleted</string>
-    <string name="error_deleting_shift">"Error Deleting Shift"</string>
+    <string name="error_deleting_shift">"Error deleting Shift"</string>
+    <string name="error_creating_shift">"Error creating Shift"</string>
+    <string name="error_updating_shift">"Error updating Shift"</string>
+
     <string name="export">Export</string>
     <string name="file_utilities">File Utilities</string>
     <string name="importButton">Import</string>

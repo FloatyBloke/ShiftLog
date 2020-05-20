@@ -17,8 +17,10 @@ import com.flangenet.shiftlog.Utilities.datetimeToSQL
 import kotlinx.android.synthetic.main.activity_file_i_o.*
 import java.io.InputStream
 import java.io.OutputStream
-import java.time.LocalDate
+//import java.time.LocalDate
+
 import kotlinx.coroutines.*
+import org.joda.time.LocalDate
 
 
 class FileIO : AppCompatActivity() {
@@ -156,7 +158,8 @@ class FileIO : AppCompatActivity() {
 
     private fun exportTable(uri: Uri){
         db = DBHelper(this)
-        val lstShifts: List<DBShift> = db.getShifts(LocalDate.now(), 3)
+        val nowDate = LocalDate()
+        val lstShifts: List<DBShift> = db.getShifts(nowDate, 3)
         db.close()
 
         val logData = mutableListOf<String>()

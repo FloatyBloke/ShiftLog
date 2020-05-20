@@ -1,8 +1,9 @@
 package com.flangenet.shiftlog.Model
 
 import android.database.sqlite.SQLiteOpenHelper
+import org.joda.time.LocalDateTime
 import java.sql.SQLData
-import java.time.LocalDateTime
+//import java.time.LocalDateTime
 
 class DBShift {
 

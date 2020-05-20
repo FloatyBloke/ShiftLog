@@ -86,7 +86,7 @@ class Settings : AppCompatActivity() {
         edtShiftHourlyRate.setText(App.prefs.hourlyRate.toString())
         dowSpinner.setSelection(App.prefs.weekStartDay)
         dformatSpinner.setSelection(dateArray.indexOf(App.prefs.dateFormat))
-        tformatSpinner.setSelection(dateArray.indexOf(App.prefs.timeFormat))
+        tformatSpinner.setSelection(timeArray.indexOf(App.prefs.timeFormat))
         hideKeyboard()
     }
 

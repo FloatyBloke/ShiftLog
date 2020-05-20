@@ -6,16 +6,9 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
-import com.flangenet.shiftlog.Controller.EditShift
 import com.flangenet.shiftlog.Model.DBShift
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoField
-import java.util.*
+import org.joda.time.LocalDate
+//import java.time.LocalDate
 import kotlin.collections.ArrayList
 
 class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VER) {

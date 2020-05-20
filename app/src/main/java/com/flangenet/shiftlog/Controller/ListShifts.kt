@@ -16,8 +16,9 @@ import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.*
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_list_shifts.*
-import java.time.LocalDate
-import java.time.temporal.ChronoField
+import org.joda.time.LocalDate
+//import java.time.LocalDate
+//import java.time.temporal.ChronoField
 import kotlin.math.abs
 
 //private const val DEBUG_TAG = "Gestures"
@@ -74,12 +75,13 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
         this.gDetector = GestureDetectorCompat(this,this)
         gDetector?.setOnDoubleTapListener(this)
 
-        val currentDate = LocalDate.now()
+        val currentDate = LocalDate()
 
         if (savedInstanceState != null){
             wcDate = sqlDateToDate(savedInstanceState.getString(WEEK_COMMENCING_DATE)!!)
         } else {
-            wcDate = currentDate.with(ChronoField.DAY_OF_WEEK, (App.prefs.weekStartDay.toLong()) + 1)
+            //wcDate = currentDate.withDate(ChronoField.DAY_OF_WEEK, (App.prefs.weekStartDay.toLong()) + 1)
+            wcDate = currentDate.minusDays(currentDate.dayOfWeek.toInt() - (App.prefs.weekStartDay.toInt()) - 1)
         }
 
 
@@ -194,7 +196,7 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
         when (searchMode) {
             0 -> { val t = getString(R.string.week) + " " + prefsDateConvert(wcDate)
                 txtWeekCommencing.text = t }
-            1 -> { val t = "${properCase(wcDate.month.toString())} ${wcDate.year}"
+            1 -> { val t = "${properCase(wcDate.monthOfYear.toString())} ${wcDate.year}"
                 txtWeekCommencing.text = t }
             2 -> {val t = "${getString(R.string.year)} ${wcDate.year}"
                 txtWeekCommencing.text = t}
