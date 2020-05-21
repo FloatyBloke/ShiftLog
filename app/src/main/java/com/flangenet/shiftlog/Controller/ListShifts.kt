@@ -26,7 +26,7 @@ import kotlin.math.abs
 class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
     lateinit var db: DBHelper
-    var lstShifts: List<DBShift> = ArrayList<DBShift>()
+    var lstShifts: List<DBShift> = ArrayList()
     lateinit var shiftsAdapter: ListShiftsAdapter
     lateinit var wcDate: LocalDate
     var searchMode: Int = 0
@@ -58,10 +58,6 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +77,7 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
             wcDate = sqlDateToDate(savedInstanceState.getString(WEEK_COMMENCING_DATE)!!)
         } else {
             //wcDate = currentDate.withDate(ChronoField.DAY_OF_WEEK, (App.prefs.weekStartDay.toLong()) + 1)
-            wcDate = currentDate.minusDays(currentDate.dayOfWeek.toInt() - (App.prefs.weekStartDay.toInt()) - 1)
+            wcDate = currentDate.minusDays(currentDate.dayOfWeek - (App.prefs.weekStartDay) - 1)
         }
 
 
@@ -269,8 +265,6 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
                         btnListRightClicked()
                     }
                 }
-            } else {
-                // onTouch(e);
             }
         } catch (exception: Exception) {
             exception.printStackTrace()

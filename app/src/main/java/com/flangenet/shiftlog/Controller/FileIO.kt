@@ -144,18 +144,6 @@ class FileIO : AppCompatActivity() {
         }
     }
 
-    private fun deleteAllShifts() {
-        db = DBHelper(this)
-        db.emptyTable(this)
-        db.close()
-    }
-
-    private fun testing(){
-        db = DBHelper(this)
-        db.getPath()
-        db.close()
-    }
-
     private fun exportTable(uri: Uri){
         db = DBHelper(this)
         val nowDate = LocalDate()

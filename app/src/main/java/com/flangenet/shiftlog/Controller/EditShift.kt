@@ -14,7 +14,8 @@ import com.flangenet.shiftlog.Model.Shift
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.*
 import kotlinx.android.synthetic.main.activity_edit_shift.*
-import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
+
 import org.joda.time.LocalDateTime
 import org.joda.time.Minutes
 

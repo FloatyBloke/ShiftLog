@@ -11,7 +11,6 @@ import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.getDayOfWeek
 import com.flangenet.shiftlog.Utilities.prefsDateConvert
 import com.flangenet.shiftlog.Utilities.prefsTimeConvert
-import com.flangenet.shiftlog.Utilities.properCase
 
 
 class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, val itemClick: (DBShift) -> Unit): RecyclerView.Adapter<ListShiftsAdapter.ViewHolder>(){

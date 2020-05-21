@@ -1,11 +1,6 @@
 package com.flangenet.shiftlog.Utilities
 
-/*import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter*/
 
-import android.R.string
 import com.flangenet.shiftlog.Controller.App
 import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
@@ -35,7 +30,7 @@ fun sqlToDatetime(sqlDate: String): LocalDateTime {
     return inDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))*/
 
 fun datetimeToSQL(inDate: LocalDateTime) : String {
-    val fmt:DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm")
+    val fmt:DateTimeFormatter = forPattern("yyyy-MM-dd HH:mm")
     return fmt.print(inDate)
 }
 
@@ -44,7 +39,7 @@ fun datetimeToSQL(inDate: LocalDateTime) : String {
 }*/
 
 fun dateToSQLDate(inDate: LocalDate) : String {
-    val fmt:DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
+    val fmt:DateTimeFormatter = forPattern("yyyy-MM-dd")
     return fmt.print(inDate)
 }
 
@@ -69,13 +64,13 @@ fun makeDateTime(year:Int, month:Int, day:Int, hour:Int, minute:Int) : LocalDate
     return outDateTime
 }
 fun getDayOfWeek(inDate: LocalDate) : String {
-    val fmt:DateTimeFormatter = DateTimeFormat.forPattern("EEEE")
+    val fmt:DateTimeFormatter = forPattern("EEEE")
     return fmt.print(inDate)
 
 }
 fun prefsDateConvert(inDate: LocalDate) : String {
 
-    val fmt:DateTimeFormatter = DateTimeFormat.forPattern(App.prefs.dateFormat)
+    val fmt:DateTimeFormatter = forPattern(App.prefs.dateFormat)
     return fmt.print(inDate)
 }
 
@@ -86,7 +81,7 @@ fun prefsDateConvert(inDate: LocalDate) : String {
 
 fun prefsTimeConvert(inTime: LocalTime?) : String{
     //println(App.prefs.timeFormat)
-    val fmt:DateTimeFormatter = DateTimeFormat.forPattern(App.prefs.timeFormat)
+    val fmt:DateTimeFormatter = forPattern(App.prefs.timeFormat)
     return fmt.print(inTime)
 }
 
@@ -98,7 +93,7 @@ fun removeBrackets(inputString: String) : String {
 
 
 fun properCase(inputString: String) : String {
-    var outputString:String = ""
+    var outputString = ""
     inputString.forEach {
         if (outputString == ""){
             outputString += it.toUpperCase()

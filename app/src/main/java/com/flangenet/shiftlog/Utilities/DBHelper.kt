@@ -203,7 +203,7 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
                 }
             }
 
-            println("Import Complete : Errors : ${errorCount}")
+            println("Import Complete : Errors : $errorCount")
 
         return errorCount
     }
