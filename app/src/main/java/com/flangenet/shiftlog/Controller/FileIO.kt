@@ -14,6 +14,9 @@ import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.DBHelper
 import com.flangenet.shiftlog.Utilities.datetimeToSQL
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_file_i_o.*
 import java.io.InputStream
 import java.io.OutputStream
@@ -24,6 +27,8 @@ import org.joda.time.LocalDate
 
 
 class FileIO : AppCompatActivity() {
+
+    lateinit var mAdView : AdView
 
     private lateinit var db: DBHelper
     private val outputIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
@@ -45,6 +50,11 @@ class FileIO : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_file_i_o)
         logText.setText(R.string.file_information)
+
+        MobileAds.initialize(this) {}
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         enableSpinner(false,getString(R.string.message_export))
 

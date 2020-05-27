@@ -13,6 +13,9 @@ import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.Model.Shift
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.*
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_edit_shift.*
 import org.joda.time.DateTimeZone
 
@@ -32,6 +35,7 @@ class EditShift : AppCompatActivity() {
 
     var shift = Shift(LocalDateTime(),LocalDateTime(),0F,0F,5F,0F)
 
+    lateinit var mAdView : AdView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +46,11 @@ class EditShift : AppCompatActivity() {
         if (shiftID > 0) { txtNewShiftTitle.text = getString(R.string.edit_shift)}
         btnShiftSave.setOnClickListener{btnSaveShiftClicked()}
         btnShiftDelete.setOnClickListener{btnShiftDeleteClicked()}
+
+        MobileAds.initialize(this) {}
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         // Spinner Setup - access the items of the list
         val breakArray = resources.getStringArray(R.array.breakChoices)

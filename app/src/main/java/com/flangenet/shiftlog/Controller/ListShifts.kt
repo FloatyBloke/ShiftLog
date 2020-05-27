@@ -14,6 +14,9 @@ import com.flangenet.shiftlog.Adapter.ListShiftsAdapter
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.*
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_list_shifts.*
 import org.joda.time.LocalDate
@@ -36,6 +39,8 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
     private var noisy: MediaPlayer? = null
 
     var gDetector: GestureDetectorCompat? = null
+
+    lateinit var mAdView : AdView
 
 
 
@@ -67,6 +72,11 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
 
         //oldNoisy?.load(baseContext, R.raw.netswish, 1)
         noisy = MediaPlayer.create(applicationContext, R.raw.netswish)
+
+        MobileAds.initialize(this) {}
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         this.gDetector = GestureDetectorCompat(this,this)
         gDetector?.setOnDoubleTapListener(this)

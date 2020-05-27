@@ -11,18 +11,30 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import com.flangenet.shiftlog.R
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class Settings : AppCompatActivity() {
+
+    lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
 
+
+
         // Set Button Listeners
         //btnSettingsCancel.setOnClickListener{settingsCancel()}
         btnSettingsSave.setOnClickListener{settingsSave()}
+
+        MobileAds.initialize(this) {}
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         btnFiles.setOnClickListener{
             val fileIntent = Intent(this,FileIO::class.java)

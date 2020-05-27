@@ -13,16 +13,28 @@ import androidx.constraintlayout.widget.ConstraintLayout
 
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.EXTRA_EDIT_SHIFT
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.about_dialog.*
 import kotlinx.android.synthetic.main.activity_main.*
+import com.google.android.gms.ads.MobileAds;
 
 
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var mAdView : AdView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        MobileAds.initialize(this) {}
+        mAdView = findViewById(R.id.adView)
+
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
         btnNewShift.setOnClickListener{openNewShift()}
         btnSettings.setOnClickListener{openSettings()}
         btnViewShifts.setOnClickListener{openViewShifts()}
