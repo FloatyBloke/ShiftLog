@@ -7,6 +7,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,6 +55,7 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
     override fun onResume() {
         super.onResume()
         db = DBHelper(this)
+
         refreshData()
     }
 
@@ -94,6 +96,7 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
 
         btnListLeft.setOnClickListener { btnListLeftClicked() }
         btnListRight.setOnClickListener { btnListRightClicked() }
+
 
 
 /*

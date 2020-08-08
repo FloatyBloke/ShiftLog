@@ -22,7 +22,6 @@ class SharedPrefs(context: Context) {
         set(value) = prefs.edit().putFloat(HOURLY_RATE,value).apply()
 
     var weekStartDay: Int
-        // TODO Implement week start day
         get() = prefs.getInt(WEEK_START_DAY,1)
         set(value) = prefs.edit().putInt(WEEK_START_DAY,value).apply()
     var userName: String?

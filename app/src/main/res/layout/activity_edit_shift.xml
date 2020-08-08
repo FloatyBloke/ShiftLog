@@ -42,10 +42,10 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-4074323739385224~2266013296"
+        app:adUnitId="ca-app-pub-4074323739385224/2541345463"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
         android:id="@+id/nestedScrollView"
@@ -301,6 +301,37 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/txtShiftEndDate"
                 app:layout_constraintTop_toBottomOf="@+id/txtShiftStartDate" />
+            <TextView
+                android:id="@+id/txtTipsHead"
+                android:layout_width="170dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/wak_shadow"
+                android:text="@string/tips"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/edtTips"
+                app:layout_constraintTop_toBottomOf="@+id/txtPay" />
+
+            <EditText
+                android:id="@+id/edtTips"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:height="45dp"
+                android:background="@drawable/wak_shadow"
+                android:ems="10"
+                android:enabled="true"
+                android:gravity="center_horizontal|center_vertical"
+                android:inputType="numberDecimal"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTipsHead" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

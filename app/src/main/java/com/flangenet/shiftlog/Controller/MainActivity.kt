@@ -9,16 +9,19 @@ import android.text.method.LinkMovementMethod
 import android.view.Window
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 
 import com.flangenet.shiftlog.R
+import com.flangenet.shiftlog.Utilities.DBHelper
 import com.flangenet.shiftlog.Utilities.EXTRA_EDIT_SHIFT
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.about_dialog.*
 import kotlinx.android.synthetic.main.activity_main.*
 import com.google.android.gms.ads.MobileAds;
-
+import com.google.android.gms.ads.RequestConfiguration
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,6 +33,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         MobileAds.initialize(this) {}
+
+/*        MobileAds.setRequestConfiguration(
+            RequestConfiguration.Builder()
+                .setTestDeviceIds(Arrays.asList("ABCDEF012345"))
+                .build()
+        )*/
+
         mAdView = findViewById(R.id.adView)
 
         val adRequest = AdRequest.Builder().build()
@@ -39,6 +49,22 @@ class MainActivity : AppCompatActivity() {
         btnSettings.setOnClickListener{openSettings()}
         btnViewShifts.setOnClickListener{openViewShifts()}
         fabAbout.setOnClickListener{openAbout()}
+
+
+        // Routine to add Tips column to database if it does not exist
+        var db = DBHelper(this)
+
+        if (db.isColumnExists("ShiftList","Tips")){
+            Toast.makeText(this,"Tips Column Exists" , Toast.LENGTH_LONG).show()
+        } else {
+
+            Toast.makeText(this,"Tips Column Does Not Exist : " , Toast.LENGTH_LONG).show()
+
+        }
+
+
+
+
 
     }
 
@@ -67,7 +93,8 @@ class MainActivity : AppCompatActivity() {
         val txtExtra= dialog.findViewById<TextView>(R.id.txtAboutDescription)
         val clAbout= dialog.findViewById(R.id.clAbout) as ConstraintLayout
         clAbout.setOnClickListener{ dialog.dismiss() }
-        txtExtra.text = txtExtra.text.toString() + "Version : " + versionName
+        txtExtra.text = "${txtExtra.text}Version : $versionName"
+
         txtExtra.setOnClickListener{ dialog.dismiss() }
 /*        val btnOk = dialog.findViewById(R.id.btnOk) as Button
         btnOk.setOnClickListener { dialog.dismiss() }*/

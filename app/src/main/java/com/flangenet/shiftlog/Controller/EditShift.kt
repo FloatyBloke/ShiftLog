@@ -17,7 +17,6 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_edit_shift.*
-import org.joda.time.DateTimeZone
 
 import org.joda.time.LocalDateTime
 import org.joda.time.Minutes
@@ -33,7 +32,7 @@ class EditShift : AppCompatActivity() {
     private lateinit var db: DBHelper
     private var shiftID: Int = 0
 
-    var shift = Shift(LocalDateTime(),LocalDateTime(),0F,0F,5F,0F)
+    var shift = Shift(LocalDateTime(),LocalDateTime(),0F,0F,5F,0F, 0F)
 
     lateinit var mAdView : AdView
 
@@ -90,6 +89,7 @@ class EditShift : AppCompatActivity() {
             shift.end = tTime
             shift.breaks = 0F
             shift.rate = App.prefs.hourlyRate
+            shift.tips = 0F
             btnShiftDelete.visibility = View.INVISIBLE
         } else {
             val tShift:DBShift = db.getShift(shiftID)
@@ -98,6 +98,7 @@ class EditShift : AppCompatActivity() {
             shift.breaks = tShift.breaks!!
             shift.hours = tShift.hours!!
             shift.rate = tShift.rate!!
+            shift.tips = tShift.tips!!
             shift.pay = tShift.pay!!
         }
         val t= ((shift.breaks)*60).toInt()
@@ -169,6 +170,7 @@ class EditShift : AppCompatActivity() {
         txtHours.text = shift.hours.toString()
         txtShiftHourlyRate.text = String.format("%.2f",shift.rate)
         txtPay.text = String.format("%.2f",shift.pay)
+        edtTips.setText(shift.tips.toString())
 
         if (shift.hours < 0F) {
             txtHours.background = getDrawable(R.drawable.wak_shadow_error)
@@ -184,7 +186,7 @@ class EditShift : AppCompatActivity() {
     private fun btnSaveShiftClicked(){
         if (shiftID == 0){
             try {
-                val passShift = DBShift(1, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay)
+                val passShift = DBShift(1, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay,shift.tips)
                 db.addShift(passShift)
             } catch (e:Exception){
                 Toast.makeText(this,"${getString(R.string.error_creating_shift)} : ${prefsDateConvert(shift.start.toLocalDate())}", Toast.LENGTH_SHORT).show()
@@ -192,7 +194,7 @@ class EditShift : AppCompatActivity() {
 
         } else {
             try {
-                val passShift = DBShift(shiftID, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay)
+                val passShift = DBShift(shiftID, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay,shift.tips)
                 db.updateShift(passShift)
             } catch (e:Exception){
                 Toast.makeText(this,"${getString(R.string.error_updating_shift)} : ${prefsDateConvert(shift.start.toLocalDate())}", Toast.LENGTH_SHORT).show()
@@ -204,7 +206,7 @@ class EditShift : AppCompatActivity() {
 
 
     private fun btnShiftDeleteClicked(){
-        val passShift = DBShift(shiftID, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay)
+        val passShift = DBShift(shiftID, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay,shift.tips)
         try {
             db.deleteShift(passShift)
             Toast.makeText(this,"${getString(R.string.shift_deleted)} : ${prefsDateConvert(shift.start.toLocalDate())}", Toast.LENGTH_SHORT).show()
