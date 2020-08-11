@@ -47,7 +47,7 @@
         android:id="@+id/gridBreak"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:textAlignment="textEnd"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/gridHours"
@@ -58,7 +58,7 @@
         android:id="@+id/gridHours"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:textAlignment="textEnd"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/gridPay"
@@ -66,13 +66,24 @@
         tools:text="Hours" />
 
     <TextView
-        android:id="@+id/gridPay"
-        android:layout_width="100dp"
+        android:id="@+id/gridTips"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:textAlignment="textEnd"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gridBreak"
+        tools:text="Tips" />
+
+    <TextView
+        android:id="@+id/gridPay"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="textEnd"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/gridTips"
         app:layout_constraintTop_toTopOf="@+id/gridHours"
         tools:text="Pay" />
 </androidx.constraintlayout.widget.ConstraintLayout>

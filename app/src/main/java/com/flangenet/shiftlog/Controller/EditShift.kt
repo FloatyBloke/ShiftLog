@@ -1,14 +1,16 @@
 package com.flangenet.shiftlog.Controller
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
+import android.app.*
+import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.view.Window
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.Model.Shift
 import com.flangenet.shiftlog.R
@@ -20,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_edit_shift.*
 
 import org.joda.time.LocalDateTime
 import org.joda.time.Minutes
+import java.nio.file.Files.copy
 
 
 //import java.time.*
@@ -33,13 +36,15 @@ class EditShift : AppCompatActivity() {
     private var shiftID: Int = 0
 
     var shift = Shift(LocalDateTime(),LocalDateTime(),0F,0F,5F,0F, 0F)
-
+    var inShift = Shift(LocalDateTime(),LocalDateTime(),0F,0F,5F,0F, 0F)
     lateinit var mAdView : AdView
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_shift)
+
 
         shiftID = intent.getIntExtra(EXTRA_EDIT_SHIFT,0)
         if (shiftID > 0) { txtNewShiftTitle.text = getString(R.string.edit_shift)}
@@ -101,6 +106,19 @@ class EditShift : AppCompatActivity() {
             shift.tips = tShift.tips!!
             shift.pay = tShift.pay!!
         }
+
+        // Store initial values
+        inShift.start = shift.start
+        inShift.end = shift.end
+        inShift.breaks = shift.breaks
+        inShift.hours = shift.hours
+        inShift.rate = shift.rate
+        inShift.tips = shift.tips
+        inShift.pay = shift.pay
+
+
+
+
         val t= ((shift.breaks)*60).toInt()
         spinner.setSelection(breakArray.indexOf(t.toString()))
 
@@ -136,8 +154,17 @@ class EditShift : AppCompatActivity() {
             }
             TimePickerDialog(this, timeSetListener, shift.end.hourOfDay, shift.end.minuteOfHour, true).show()
         }
+        // Set up only field that has keyboard entry
+        edtTips.setText(shift.tips.toString())
+        edtTips.setOnClickListener{
+            edtTips.selectAll()
+        }
+
+
         mainCalc()
     }
+
+
 
     fun mainCalc() {
         // Calculations to update information
@@ -156,6 +183,7 @@ class EditShift : AppCompatActivity() {
 
         shift.hours = shiftHoursTotal
         shift.pay = shiftPay
+
         //shift.breaks = breakHours
 
         // Update screen
@@ -170,7 +198,7 @@ class EditShift : AppCompatActivity() {
         txtHours.text = shift.hours.toString()
         txtShiftHourlyRate.text = String.format("%.2f",shift.rate)
         txtPay.text = String.format("%.2f",shift.pay)
-        edtTips.setText(shift.tips.toString())
+
 
         if (shift.hours < 0F) {
             txtHours.background = getDrawable(R.drawable.wak_shadow_error)
@@ -181,9 +209,14 @@ class EditShift : AppCompatActivity() {
             btnShiftSave.isEnabled = true
         }
 
+        hideKeyboard()
+
     }
 
     private fun btnSaveShiftClicked(){
+
+        shift.tips = edtTips.text.toString().toFloat()
+
         if (shiftID == 0){
             try {
                 val passShift = DBShift(1, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay,shift.tips)
@@ -206,6 +239,9 @@ class EditShift : AppCompatActivity() {
 
 
     private fun btnShiftDeleteClicked(){
+
+        shift.tips = edtTips.text.toString().toFloat()
+
         val passShift = DBShift(shiftID, shift.start,shift.end,shift.breaks,shift.hours,shift.rate,shift.pay,shift.tips)
         try {
             db.deleteShift(passShift)
@@ -216,8 +252,99 @@ class EditShift : AppCompatActivity() {
         finish()
     }
 
+    private fun openTipsDlg() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.tips_dialog)
+        val tips= dialog.findViewById<TextView>(R.id.txtDlgTips)
+
+        tips.text = "${shift.tips}"
+
+        //tips.setOnClickListener{ dialog.dismiss() }
+        val btnTipsOk = dialog.findViewById(R.id.btnTipsOk) as Button
+
+        btnTipsOk.setOnClickListener {
+            edtTips.text = tips.editableText
+            dialog.dismiss()
+        }
 
 
+        dialog.show()
+
+    }
+
+    private fun hideKeyboard(){
+        val inputManager  = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        if (inputManager.isAcceptingText){
+            inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+        }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            // Back button pressed , Exit from activity
+            println("Back button pressed")
+            Toast.makeText( this,"Back button pressed", Toast.LENGTH_SHORT).show()
+            //updateStockCheck()
+            if (infoChanged()){
+                showSaveDialog()
+            }
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+
+    private fun showSaveDialog() {
+        lateinit var dialog: AlertDialog
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Save Shift ?")
+        builder.setMessage("This shift has been altered, would you like to save it ?")
+        val dialogClickListener = DialogInterface.OnClickListener{ _, which ->
+            when(which){
+                DialogInterface.BUTTON_POSITIVE -> {
+
+                        btnSaveShiftClicked()
+                        finish()
+
+                }
+                DialogInterface.BUTTON_NEGATIVE -> finish()
+            }
+        }
+        builder.setPositiveButton("YES",dialogClickListener)
+        builder.setNegativeButton("NO",dialogClickListener)
+        dialog = builder.create()
+        dialog.show()
+
+    }
+
+    private fun toast(message : String){
+        Toast.makeText(this,message,Toast.LENGTH_LONG).show()
+
+    }
+    private fun saveShift(){
+        //TODO
+    }
+
+    private fun infoChanged() : Boolean {
+        mainCalc()
+        shift.tips = edtTips.text.toString().toFloat()
+        var changed: Boolean = false
+        println("${inShift.start}-${shift.start}" )
+        println("${inShift.end}-${shift.end}" )
+        println("${inShift.breaks}-${shift.breaks}" )
+        println("${inShift.hours}-${shift.hours}" )
+        println("${inShift.rate}-${shift.rate}" )
+        println("${inShift.pay}-${shift.pay}")
+        println("${inShift.tips}-${shift.tips}")
+        if (inShift.start != shift.start || inShift.end != shift.end || inShift.breaks != shift.breaks || inShift.hours != shift.hours || inShift.rate != shift.rate || inShift.pay != shift.pay || inShift.tips != shift.tips){
+            changed = true
+        }
+        println(changed)
+        return changed
+    }
 
 }
 

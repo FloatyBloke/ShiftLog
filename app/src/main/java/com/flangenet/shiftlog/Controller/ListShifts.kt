@@ -190,22 +190,25 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
         var totalBreaks = 0F
         var totalHours = 0F
         var totalPay = 0F
+        var totalTips = 0F
 
 
         lstShifts.forEach { shift ->
             totalBreaks += shift.breaks!!
             totalHours += shift.hours!!
             totalPay += shift.pay!!
+            totalTips += shift.tips!!
         }
 
         txtTotalBreaks.text = String.format("%.2f", totalBreaks)
         txtTotalHours.text = String.format("%.2f", totalHours)
         txtTotalPay.text = String.format("%.2f", totalPay)
+        txtTotalTips.text = String.format("%.2f", totalTips)
 
         when (searchMode) {
             0 -> { val t = getString(R.string.week) + " " + prefsDateConvert(wcDate)
                 txtWeekCommencing.text = t }
-            1 -> { val t = "${properCase(wcDate.monthOfYear.toString())} ${wcDate.year}"
+            1 -> { val t = "${properCase(wcDate.toString("MMMM"))} ${wcDate.year}"
                 txtWeekCommencing.text = t }
             2 -> {val t = "${getString(R.string.year)} ${wcDate.year}"
                 txtWeekCommencing.text = t}

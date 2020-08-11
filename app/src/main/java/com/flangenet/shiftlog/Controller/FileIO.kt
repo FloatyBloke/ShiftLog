@@ -166,7 +166,7 @@ class FileIO : AppCompatActivity() {
 
         lstShifts.forEach {
             val outputData =
-                "${datetimeToSQL(it.start!!)},${datetimeToSQL(it.end!!)},${it.breaks.toString()},${it.hours.toString()},${it.rate.toString()},${it.pay.toString()}"
+                "${datetimeToSQL(it.start!!)},${datetimeToSQL(it.end!!)},${it.breaks.toString()},${it.hours.toString()},${it.rate.toString()},${it.pay.toString()},${it.tips.toString()}"
             logData.add(System.lineSeparator() + outputData)
         }
         logText.setText(logData.toString())

@@ -8,23 +8,9 @@
     tools:context=".Controller.ListShifts">
 
     <ImageView
-        android:id="@+id/gridBar5"
+        android:id="@+id/gridBar1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/wak_border_empty"
-        android:contentDescription="@string/background"
-        app:layout_constraintBottom_toBottomOf="@+id/txtTotalBreaks"
-        app:layout_constraintEnd_toEndOf="@+id/listShiftsView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/listShiftsView"
-        app:layout_constraintTop_toBottomOf="@+id/tabMode"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/gridBar2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
         android:background="@drawable/wak_border_empty"
         android:contentDescription="@string/background"
         app:layout_constraintBottom_toBottomOf="@+id/txtTotalBreaks"
@@ -35,14 +21,39 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/gridBar4"
+        android:id="@+id/gridBar2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
         android:background="@drawable/wak_border_empty"
         android:contentDescription="@string/background"
         app:layout_constraintBottom_toBottomOf="@+id/txtTotalBreaks"
         app:layout_constraintEnd_toStartOf="@+id/headPay"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/listShiftsView"
+        app:layout_constraintTop_toBottomOf="@+id/tabMode"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/gridBar3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/wak_border_empty"
+        android:contentDescription="@string/background"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTotalBreaks"
+        app:layout_constraintEnd_toStartOf="@+id/headTips"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/listShiftsView"
+        app:layout_constraintTop_toBottomOf="@+id/tabMode"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/gridBar4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/wak_border_empty"
+        android:contentDescription="@string/background"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTotalBreaks"
+        app:layout_constraintEnd_toEndOf="@+id/listShiftsView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/listShiftsView"
         app:layout_constraintTop_toBottomOf="@+id/tabMode"
@@ -113,6 +124,16 @@
         app:layout_constraintTop_toTopOf="@+id/txtTotalBreaks" />
 
     <TextView
+        android:id="@+id/txtTotalTips"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:text="@string/tips"
+        android:textAlignment="textEnd"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/headTips"
+        app:layout_constraintTop_toTopOf="@+id/txtTotalBreaks" />
+
+    <TextView
         android:id="@+id/txtTotalBreaks"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
@@ -147,20 +168,20 @@
 
     <TextView
         android:id="@+id/headPay"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/pay"
         android:textAlignment="textEnd"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/headTips"
         app:layout_constraintTop_toTopOf="@+id/headHours" />
 
     <TextView
         android:id="@+id/headHours"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/hours"
         android:textAlignment="textEnd"
         android:textStyle="bold"
@@ -168,10 +189,21 @@
         app:layout_constraintTop_toTopOf="@+id/headBreak" />
 
     <TextView
+        android:id="@+id/headTips"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/tips"
+        android:textAlignment="textEnd"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/gridBar4"
+        app:layout_constraintTop_toTopOf="@+id/headBreak" />
+
+    <TextView
         android:id="@+id/headBreak"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/breaks"
         android:textAlignment="textEnd"
         android:textStyle="bold"

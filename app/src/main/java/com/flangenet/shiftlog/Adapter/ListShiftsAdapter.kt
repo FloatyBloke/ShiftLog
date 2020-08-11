@@ -20,10 +20,11 @@ class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, va
                 private val start: TextView = itemView.findViewById<TextView>(R.id.gridStart)
                 private val end: TextView = itemView.findViewById<TextView>(R.id.gridEnd)
                 private val breaks: TextView = itemView.findViewById<TextView>(R.id.gridBreak)
+
                 val hours: TextView = itemView.findViewById<TextView>(R.id.gridHours)
                 //val rate = itemView.findViewById<TextView>(R.id.gridRate)
                 val pay: TextView = itemView.findViewById<TextView>(R.id.gridPay)
-
+                val tips: TextView = itemView.findViewById<TextView>(R.id.gridTips)
                 fun bindShifts(shift:DBShift) {
                         //id?.text = "${shift.id} - ${shift.start!!.dayOfWeek}"
                         //id.text = properCase(shift.start!!.dayOfWeek.toString())
@@ -36,6 +37,7 @@ class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, va
                         hours.text = String.format("%.2f",shift.hours)
                         //rate?.text = shift.rate.toString()
                         pay.text = String.format("%.2f",shift.pay)
+                        tips.text = String.format("%.2f",shift.tips)
                         itemView.setOnClickListener{itemClick(shift)
                         }
                 }
