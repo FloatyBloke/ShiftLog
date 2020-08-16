@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/txtHeaderExtra" />
 
     <Button
         android:id="@+id/btnViewShifts"
@@ -53,11 +53,26 @@
         android:text="@string/shift_log"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btnNewShift"
+        app:layout_constraintBottom_toTopOf="@+id/txtHeaderExtra"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.51"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/txtHeaderExtra"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:text="@string/shift_log_extra"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnNewShift"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -66,13 +81,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:clickable="true"
+        android:focusable="true"
         android:src="@mipmap/ic_smiley"
         app:backgroundTint="@color/colorAccent"
         app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintStart_toStartOf="parent"
-        app:maxImageSize="30dp"
-        android:focusable="true" />
+        app:maxImageSize="30dp" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

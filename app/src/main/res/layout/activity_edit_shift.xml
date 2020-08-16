@@ -206,7 +206,7 @@
 
             <TextView
                 android:id="@+id/txtStart"
-                android:layout_width="170dp"
+                android:layout_width="190dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="8dp"
@@ -236,7 +236,7 @@
 
             <TextView
                 android:id="@+id/txtBreakHead"
-                android:layout_width="170dp"
+                android:layout_width="190dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -250,7 +250,7 @@
 
             <TextView
                 android:id="@+id/txtHourlyRateHead"
-                android:layout_width="170dp"
+                android:layout_width="190dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -264,7 +264,7 @@
 
             <TextView
                 android:id="@+id/txtPayHead"
-                android:layout_width="170dp"
+                android:layout_width="190dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -278,7 +278,7 @@
 
             <TextView
                 android:id="@+id/txtHoursHead"
-                android:layout_width="170dp"
+                android:layout_width="190dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -292,7 +292,7 @@
 
             <TextView
                 android:id="@+id/txtEnd"
-                android:layout_width="170dp"
+                android:layout_width="190dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -303,9 +303,10 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/txtShiftEndDate"
                 app:layout_constraintTop_toBottomOf="@+id/txtShiftStartDate" />
+
             <TextView
                 android:id="@+id/txtTipsHead"
-                android:layout_width="170dp"
+                android:layout_width="190dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"

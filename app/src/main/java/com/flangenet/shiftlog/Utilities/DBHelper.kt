@@ -18,7 +18,7 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
 
     companion object {
         private val DATABASE_VER = 2
-        private val DATABASE_NAME = "ShiftLog.db"
+        private val DATABASE_NAME = SQLITE_DATABASE_NAME
 
         // Table
         private val TABLE_NAME = "ShiftList"
@@ -35,9 +35,15 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val CREATE_TABLE_QUERY_STRING = ("CREATE TABLE $TABLE_NAME ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_START TEXT, $COL_END TEXT, $COL_BREAKS REAL, $COL_HOURS REAL, $COL_RATE REAL, $COL_PAY REAL, $COL_TIPS REAL)")
-        db!!.execSQL(CREATE_TABLE_QUERY_STRING)
+        val CREATE_TABLE_QUERY_STRING =
+            ("CREATE TABLE $TABLE_NAME ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_START TEXT, $COL_END TEXT, $COL_BREAKS REAL, $COL_HOURS REAL, $COL_RATE REAL, $COL_PAY REAL, $COL_TIPS REAL)")
+
+            db!!.execSQL(CREATE_TABLE_QUERY_STRING)
+        //db.close()
+
     }
+
+
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         //db!!.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
@@ -45,18 +51,29 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         //Toast.makeText(MainActivity.applicationContext(),"Tips Exist : " , Toast.LENGTH_LONG).show()
 
         if(oldVersion == 1 && newVersion == 2){
-            println("Hello..... is this version 1 to 2 ? $oldVersion - $newVersion")
-            Log.d("UPG","Hello..... is this version 1 to 2 ?")
+            //println("Hello..... is this version 1 to 2 ? $oldVersion - $newVersion")
+            //Log.d("UPG","Hello..... is this version 1 to 2 ?")
 
-            val QUERY_STRING_1to2 =
-            ("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_TIPS REAL")
-            db!!.execSQL(QUERY_STRING_1to2)
+            try{
+                val QUERY_STRING_1to2 =
+                    ("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_TIPS REAL")
+                db!!.execSQL(QUERY_STRING_1to2)
+                } catch (e: Exception) {
+                // Do nothing
+                //Log.e("DBUPG", "Impossible error")
+                Toast.makeText(MainActivity.instance ,"Error converting Database",Toast.LENGTH_LONG).show()
+
+            }
+
+
         }
 
 
     }
 
     fun getShifts(firstDate: LocalDate, searchMode: Int): List<DBShift> {
+
+
 
         val lstShifts = ArrayList<DBShift>()
         val searchDate = dateToSQLDate(firstDate)
@@ -75,9 +92,11 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
 
             val db = this.writableDatabase
 
+        lateinit var cursor: Cursor
+
             try {
 
-                val cursor = db.rawQuery(selectQuery, null)
+                cursor = db.rawQuery(selectQuery, null)
 
                 if (cursor.moveToFirst()) {
                     do {
@@ -96,14 +115,17 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
                         lstShifts.add(tshift)
                     } while (cursor.moveToNext())
                 }
-                cursor.close()
+
 
             } catch (e: SQLiteException) {
                 //Toast.makeText(EditShift(), "Database query error", Toast.LENGTH_SHORT).show()
+            } finally {
+                cursor.close()
+                db.close()
             }
 
 
-        db.close()
+
             return lstShifts
 
         }
@@ -114,9 +136,14 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
 
         val selectQuery = "SELECT * FROM $TABLE_NAME WHERE $COL_ID=$shiftID"
         val db = this.writableDatabase
-        val cursor = db.rawQuery(selectQuery,null)
+        lateinit var cursor: Cursor
         val tShift = DBShift()
-        if (cursor.moveToFirst()) {
+
+        try {
+            cursor = db.rawQuery(selectQuery,null)
+
+
+            if (cursor.moveToFirst()) {
                 tShift.id = cursor.getInt(cursor.getColumnIndex(COL_ID))
                 tShift.start = sqlToDatetime(cursor.getString(cursor.getColumnIndex(COL_START)))
 
@@ -126,26 +153,40 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
                 tShift.rate = cursor.getFloat(cursor.getColumnIndex((COL_RATE)))
                 tShift.pay = cursor.getFloat(cursor.getColumnIndex((COL_PAY)))
                 tShift.tips = cursor.getFloat(cursor.getColumnIndex(COL_TIPS))
+            }
+        } catch (e: Exception){
+            println(e.message)
+        } finally {
+            cursor.close()
+            db.close()
         }
-        cursor.close()
-        db.close()
+
+
+
         return tShift
         }
 
 
     fun addShift(shift: DBShift){
         val db=  this.writableDatabase
-        val values = ContentValues()
-        //values.put(COL_ID, person.id) as it's an auto number
-        values.put(COL_START,datetimeToSQL(shift.start!!))
-        values.put(COL_END,datetimeToSQL(shift.end!!))
-        values.put(COL_BREAKS,shift.breaks)
-        values.put(COL_HOURS,shift.hours)
-        values.put(COL_RATE, shift.rate)
-        values.put(COL_PAY,shift.pay)
-        values.put(COL_TIPS,shift.tips)
-        db.insert(TABLE_NAME,null,values)
-        db.close()
+
+        try{
+            val values = ContentValues()
+            //values.put(COL_ID, person.id) as it's an auto number
+            values.put(COL_START,datetimeToSQL(shift.start!!))
+            values.put(COL_END,datetimeToSQL(shift.end!!))
+            values.put(COL_BREAKS,shift.breaks)
+            values.put(COL_HOURS,shift.hours)
+            values.put(COL_RATE, shift.rate)
+            values.put(COL_PAY,shift.pay)
+            values.put(COL_TIPS,shift.tips)
+            db.insert(TABLE_NAME,null,values)
+        } catch (e: Exception) {
+            println(e.message)
+        } finally {
+            db.close()
+        }
+
     }
 
     fun deleteTable(){
@@ -165,64 +206,92 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         onCreate(db)
     }
 
-    fun getPath()  {
+    fun getPath() : String  {
         val db = this.writableDatabase
         println("DB Path : ${db!!.path}")
-    }
-
-    fun updateShift(shift: DBShift) : Int
-    {
-        val db = this.writableDatabase
-        val values = ContentValues()
-        values.put(COL_ID, shift.id)
-        values.put(COL_START,datetimeToSQL(shift.start!!))
-        values.put(COL_END,datetimeToSQL(shift.end!!))
-        values.put(COL_BREAKS,shift.breaks)
-        values.put(COL_HOURS,shift.hours)
-        values.put(COL_RATE, shift.rate)
-        values.put(COL_PAY,shift.pay)
-        values.put(COL_TIPS,shift.tips)
-        return db.update(TABLE_NAME, values,"$COL_ID=?", arrayOf(shift.id.toString()))
-    }
-
-    fun deleteShift(shift: DBShift)
-    {
-        val db = this.writableDatabase
-        db.delete(TABLE_NAME, "$COL_ID=?", arrayOf(shift.id.toString()))
         db.close()
+        return db!!.path
+    }
+
+    fun updateShift(shift: DBShift) : Int {
+        var fig:Int = 0
+        val db = this.writableDatabase
+        try{
+
+            val values = ContentValues()
+            values.put(COL_ID, shift.id)
+            values.put(COL_START,datetimeToSQL(shift.start!!))
+            values.put(COL_END,datetimeToSQL(shift.end!!))
+            values.put(COL_BREAKS,shift.breaks)
+            values.put(COL_HOURS,shift.hours)
+            values.put(COL_RATE, shift.rate)
+            values.put(COL_PAY,shift.pay)
+            values.put(COL_TIPS,shift.tips)
+            fig = db.update(TABLE_NAME, values,"$COL_ID=?", arrayOf(shift.id.toString()))
+        } catch (e: java.lang.Exception){
+            println(e.message)
+        } finally {
+            db.close()
+        }
+
+
+        return fig
+    }
+
+    fun deleteShift(shift: DBShift) {
+
+        val db = this.writableDatabase
+        try {
+            db.delete(TABLE_NAME, "$COL_ID=?", arrayOf(shift.id.toString()))
+        } catch (e:Exception){
+            println(e.message)
+        } finally {
+            db.close()
+        }
+
+
     }
 
 
      fun importShifts(lineList: MutableList<String>) : Int {
 
-        val db=  this.writableDatabase
-        val values = ContentValues()
-        var importLine: List<String>
-        var errorCount = 0
+         val db=  this.writableDatabase
+         val values = ContentValues()
+         lateinit var importLine: List<String>
+         var errorCount = 0
+
+         try {
+             lineList.forEach {
+                 val rawLine = removeBrackets(it)
+                 importLine = rawLine.split(",")
+                 if (rawLine != "") {
+                     values.put(COL_START, importLine[0])
+                     values.put(COL_END, importLine[1])
+                     values.put(COL_BREAKS, importLine[2].toFloat())
+                     values.put(COL_HOURS, importLine[3].toFloat())
+                     values.put(COL_RATE, importLine[4].toFloat())
+                     values.put(COL_PAY, importLine[5].toFloat())
+                     values.put(COL_TIPS, importLine[6].toFloat())
+                     var t = db.insert(TABLE_NAME, null, values)
+                     println("Importing : $t - $rawLine")
+                 }
+             }
 
 
-            lineList.forEach {
-                val rawLine = removeBrackets(it)
-                importLine = rawLine.split(",")
-                try {
-                    if (rawLine != "") {
-                        values.put(COL_START, importLine[0])
-                        values.put(COL_END, importLine[1])
-                        values.put(COL_BREAKS, importLine[2].toFloat())
-                        values.put(COL_HOURS, importLine[3].toFloat())
-                        values.put(COL_RATE, importLine[4].toFloat())
-                        values.put(COL_PAY, importLine[5].toFloat())
-                        values.put(COL_TIPS,importLine[6].toFloat())
-                        db.insert(TABLE_NAME, null, values)
-                        //println(rawLine)
-                    }
-                } catch (e: Exception) {
-                    errorCount += 1
-                    println("Parse Error : ${errorCount}*${importLine[0]}*${importLine[1]}*${importLine[2]}*${importLine[3]}*${importLine[4]}*${importLine[5]}*${importLine[6]}*${importLine[7]}")
-                }
-            }
+         } catch (e: Exception) {
+             Log.e("Import", e.message)
+             errorCount += 1
+             println("Parse Error : ${errorCount}*${importLine[0]}*${importLine[1]}*${importLine[2]}*${importLine[3]}*${importLine[4]}*${importLine[5]}*${importLine[6]}")
 
-            println("Import Complete : Errors : $errorCount")
+         } finally {
+             db.close()
+
+         }
+
+         println("Import Complete : Errors : $errorCount")
+
+
+
 
         return errorCount
     }
@@ -245,6 +314,7 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         } finally {
             if (cursor != null && !cursor.isClosed) cursor.close()
         }
+        db.close()
         return isExists
     }
 

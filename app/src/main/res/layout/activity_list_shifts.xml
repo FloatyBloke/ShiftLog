@@ -135,7 +135,7 @@
 
     <TextView
         android:id="@+id/txtTotalBreaks"
-        android:layout_width="50dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:text="@string/breaks"
         android:textAlignment="textEnd"
@@ -190,7 +190,7 @@
 
     <TextView
         android:id="@+id/headTips"
-        android:layout_width="50dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/tips"
@@ -201,7 +201,7 @@
 
     <TextView
         android:id="@+id/headBreak"
-        android:layout_width="50dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/breaks"

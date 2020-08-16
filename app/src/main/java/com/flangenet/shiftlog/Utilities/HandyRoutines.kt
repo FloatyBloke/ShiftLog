@@ -1,16 +1,25 @@
 package com.flangenet.shiftlog.Utilities
 
 
+import android.content.ContentValues.TAG
 import android.content.Context
+import android.database.Cursor
+import android.net.Uri
+import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.flangenet.shiftlog.Controller.App
+import com.flangenet.shiftlog.Controller.MainActivity
+import com.flangenet.shiftlog.Model.DBShift
 import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalTime
-import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormat.forPattern
 import org.joda.time.format.DateTimeFormatter
+import java.io.File
+import java.io.FilenameFilter
+import java.util.ArrayList
 
 
 /*fun sqlToDatetime(sqlDate: String): LocalDateTime {
@@ -53,6 +62,11 @@ fun dateToSQLDate(inDate: LocalDate) : String {
 fun sqlDateToDate(sqlDate:String) : LocalDate {
     val fmt = forPattern("yyyy-MM-dd")
     return fmt.parseDateTime(sqlDate).toLocalDate()
+}
+
+fun datetimeToFilename(inDate: LocalDateTime) : String {
+    val fmt:DateTimeFormatter = forPattern("yyyyMMddHHmm")
+    return fmt.print(inDate)
 }
 
 /*fun prefsDateConvert(inDate: LocalDate) : String {
@@ -112,8 +126,48 @@ fun hideSoftKeyBoard(context: Context, view: View) {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm?.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     } catch (e: Exception) {
-        // TODO: handle exception
+
         e.printStackTrace()
     }
 
 }
+fun backupSQLiteDatabase(context: Context){
+
+    val backups =  mutableListOf<String>()
+
+    var db = DBHelper(context)
+    //var outFN = File(context.getExternalFilesDir(null),"/${datetimeToFilename(LocalDateTime())}${SQLITE_DATABASE_NAME}")
+    var outFN = File(context.getExternalFilesDir(null),"/${SQLITE_DATABASE_NAME}")
+    println("SQLite Backup - {${outFN.absoluteFile}")
+    try{
+        File("${db.getPath()}").copyTo(outFN, true)
+    } catch (e: Exception){
+        println("SQLite Backup Error")
+    }
+
+    /*
+    File(context.getExternalFilesDir(null),"/").walkTopDown().forEach { it ->
+
+        var t = it.absoluteFile.toString()
+        println("BACKUPS : $it")
+        if (t.endsWith("ShiftLog.db", true)) {
+            backups.add("$it")
+        }
+    }
+
+    backups.reverse()
+    var bCount = backups.count()
+    println("Number of backups : $bCount")
+
+    while (bCount > 5){
+        println("${bCount-1} - ${backups[bCount-1]}")
+        File(backups[bCount-1]).delete()
+        bCount--
+    }
+    */
+
+}
+
+
+
+

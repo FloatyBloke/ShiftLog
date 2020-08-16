@@ -8,6 +8,7 @@
     <string name="shift_log_settings">Shift Log Settings</string>
     <string name="settings_saved">Settings Saved</string>
     <string name="shift_log">Shift Log</string>
+    <string name="shift_log_extra"></string>
     <string name="new_shift">New Shift</string>
     <string name="settings">Settings</string>
     <string name="view_shifts">View Shifts</string>
@@ -42,25 +43,19 @@
     <string name="file_utilities">File Utilities</string>
     <string name="importButton">Import</string>
     <string name="message_import">Importing… Please wait :)</string>
+    <string name="message_import_complete">"Import Complete"</string>
     <string name="message_export">Exporting… Please wait :)</string>
-    <string name="about_info">
-    By Lee J Walker\n\n
-
-    </string>
+    <string name="message_export_complete">"Export Complete"</string>
+    <string name="message_export_error">"Export Error"</string>
+    <string name="import_summary_text">Lines - Errors</string>
+    <string name="about_info">"By Lee J Walker  "</string>
     <string name="aboutEmail">floatybloke@gmail.com</string>
     <string name="aboutEmailHTML"><![CDATA[ contact us at <a href=\"mailto:floatybloke@gmail.com\">floatybloke@gmail.com</a>]]></string>
 
-    <string name="file_information">
-        \n
-    This area is for importing and exporting\n\n
-    File should be comma delimited text with the following layout\n\n
-    Start DateTime, End DateTime, Break Hours, Hours Worked, Hourly Rate, Pay, Tips\n\n
-        \n\n
-    eg.\n\n
-    2014-01-13 08:00,2014-01-13 14:30,0.0,6.5,6.0,39.0,23.0\n
-    </string>
+    <string name="file_information">"               This area is for importing and exporting\n       File should be comma delimited text with the following layout\n       Start DateTime, End DateTime, Break Hours, Hours Worked, Hourly Rate, Pay, Tips/n                  eg.       2014-01-13 08:00,2014-01-13 14:30,0.0,6.5,6.0,39.0,23.0      "</string>
     <string name="log_text">Log Text</string>
     <string name="log_information">Log Information</string>
+
 
     <string-array name="breakChoices">
         <item>0</item>

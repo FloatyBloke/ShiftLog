@@ -184,7 +184,8 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
         }
 
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        itemTouchHelper.attachToRecyclerView(listShiftsView)*/
+        itemTouchHelper.attachToRecyclerView(listShiftsView)
+        */
 
 
         var totalBreaks = 0F

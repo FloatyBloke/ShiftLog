@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ShiftLog</string>
+    <string name="week">Semana</string>
+    <string name="month">Mes</string>
+    <string name="year">Año</string>
+    <string name="week_commencing">Semana Comienza</string>
+    <string name="hours">Horas</string>
+    <string name="tips">Propina</string>
+    <string name="first_day_of_week">Primer dia de la semana</string>
+    <string name="save_settings">Guardar configuración</string>
+    <string name="hourly_rate">Pago por hora</string>
+    <string name="email_address">Correo electrónico</string>
+    <string name="user_name">Nombre de usuario</string>
+    <string name="settings">Configuración</string>
+    <string name="view_shifts">Ver turnos</string>
+    <string name="background">Antecedente</string>
+    <string name="date_format">Formato de fecha</string>
+    <string name="time_format">formato de hora</string>
+    <string name="delete_shift">Eliminar turno</string>
+    <string name="breaks">Descanso</string>
+    <string name="pay">Salario</string>
+    <string name="data_utilities">Utilidades de datos</string>
+    <string name="right_arrow">Flecha derecha</string>
+    <string name="left_arrow">Flecha izquierda</string>
+    <string name="importButton">Importar</string>
+    <string name="export">Exportar</string>
+    <string name="log_text">Registro de texto</string>
+    <string name="log_information">Información de registro</string>
+    <string name="aboutEmail">floatybloke@gmail.com</string>
+    <string name="shift_start">Inicio de turno</string>
+    <string name="settings_saved">Ajustes guardados</string>
+    <string name="file_information">Esta área es para importar y exportar El archivo\n debe ser texto delimitado por comas con el siguiente diseño\n Fecha y hora de inicio, Fecha y hora de finalización, Horas de descanso, Horas trabajadas, Tarifa por hora, Pago, Propinas\n  eg.       2014–01–13 08:00,2014-01-13 14:30,0.0,6.5,6.0,39.0,23.0</string>
+    <string name="break_minutes_unpaid">Descanso Mins (no pagados)</string>
+    <string name="hours_worked">Horas trabajadas</string>
+    <string name="shift_end">Fin de turno</string>
+    <string name="save_shift">Guardar turno</string>
+    <string name="no_shifts_for_this_period">No hay turnos para este período</string>
+    <string name="edit_shift">Editar turno</string>
+    <string name="shift_deleted">Turno eliminado</string>
+    <string name="error_deleting_shift">Error al eliminar turno</string>
+    <string name="error_creating_shift">Error al crear turno</string>
+    <string name="error_updating_shift">Error al actualizar turno</string>
+    <string name="file_utilities">Utilidades de archivo</string>
+    <string name="message_import">Importando… Espere :)</string>
+    <string name="message_export">Exportando… Espere :)</string>
+    <string name="about_info">"By Lee J Walker  "</string>
+    <string name="aboutEmailHTML"><![CDATA[ contact us at <a href=\"mailto:floatybloke@gmail.com\">floatybloke@gmail.com</a>]]></string>
+    <string name="shift_log_settings">ShiftLog Configuración</string>
+    <string name="shift_log">Shift Log</string>
+    <string name="new_shift">Nuevo turno</string>
+    <string-array name="dayOfWeek">
+        <item>Lunes</item>
+        <item>Martes</item>
+        <item>Miercoles</item>
+        <item>Jueves</item>
+        <item>Viernes</item>
+        <item>Sabado</item>
+        <item>Domingo</item>
+    </string-array>
+    <string name="shift_log_extra">Registro de Turnos</string>
+    <string name="message_import_complete">Importación completa</string>
+    <string name="message_export_complete">Exportación completa</string>
+    <string name="message_export_error">Error al exportar</string>
+    <string name="import_summary_text">Líneas - Errores</string>
+</resources>

@@ -4,6 +4,9 @@ import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.os.Environment.getExternalStorageDirectory
+import android.os.Environment.getExternalStoragePublicDirectory
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.Window
@@ -15,12 +18,14 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.DBHelper
 import com.flangenet.shiftlog.Utilities.EXTRA_EDIT_SHIFT
+import com.flangenet.shiftlog.Utilities.SQLITE_DATABASE_NAME
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.about_dialog.*
 import kotlinx.android.synthetic.main.activity_main.*
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.RequestConfiguration
+import java.io.File
 import java.util.*
 
 
@@ -28,12 +33,21 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var mAdView : AdView
 
+
+
+
+    companion object {
+        lateinit var instance: MainActivity
+        private set
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         MobileAds.initialize(this) {}
-
+        instance = this
 /*        MobileAds.setRequestConfiguration(
             RequestConfiguration.Builder()
                 .setTestDeviceIds(Arrays.asList("ABCDEF012345"))
@@ -52,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
 
         // Routine to add Tips column to database if it does not exist
-        var db = DBHelper(this)
+        /*var db = DBHelper(this)
 
         if (db.isColumnExists("ShiftList","Tips")){
             Toast.makeText(this,"Tips Column Exists" , Toast.LENGTH_LONG).show()
@@ -62,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
+*/
 
 
 

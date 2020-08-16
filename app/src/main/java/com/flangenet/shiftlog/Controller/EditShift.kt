@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_edit_shift.*
 
 import org.joda.time.LocalDateTime
 import org.joda.time.Minutes
+import java.io.File
 import java.nio.file.Files.copy
 
 
@@ -215,6 +216,11 @@ class EditShift : AppCompatActivity() {
 
     private fun btnSaveShiftClicked(){
 
+
+        // Backup before save internal SQLite Database backup
+
+        backupSQLiteDatabase(this)
+
         shift.tips = edtTips.text.toString().toFloat()
 
         if (shiftID == 0){
@@ -284,9 +290,9 @@ class EditShift : AppCompatActivity() {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK){
-            // Back button pressed , Exit from activity
-            println("Back button pressed")
-            Toast.makeText( this,"Back button pressed", Toast.LENGTH_SHORT).show()
+            // Back button pressed , check if info has changed and if you ask to save
+            //println("Back button pressed")
+            //Toast.makeText( this,"Back button pressed", Toast.LENGTH_SHORT).show()
             //updateStockCheck()
             if (infoChanged()){
                 showSaveDialog()
@@ -324,9 +330,7 @@ class EditShift : AppCompatActivity() {
         Toast.makeText(this,message,Toast.LENGTH_LONG).show()
 
     }
-    private fun saveShift(){
-        //TODO
-    }
+
 
     private fun infoChanged() : Boolean {
         mainCalc()
@@ -342,7 +346,7 @@ class EditShift : AppCompatActivity() {
         if (inShift.start != shift.start || inShift.end != shift.end || inShift.breaks != shift.breaks || inShift.hours != shift.hours || inShift.rate != shift.rate || inShift.pay != shift.pay || inShift.tips != shift.tips){
             changed = true
         }
-        println(changed)
+        //println(changed)
         return changed
     }
 
