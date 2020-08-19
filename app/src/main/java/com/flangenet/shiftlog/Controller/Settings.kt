@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_settings.*
 
 class Settings : AppCompatActivity() {
 
-    lateinit var mAdView : AdView
+    private lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,6 +99,7 @@ class Settings : AppCompatActivity() {
         dowSpinner.setSelection(App.prefs.weekStartDay)
         dformatSpinner.setSelection(dateArray.indexOf(App.prefs.dateFormat))
         tformatSpinner.setSelection(timeArray.indexOf(App.prefs.timeFormat))
+        checkBox.isChecked = App.prefs.viewTipsColumn!!
         hideKeyboard()
     }
 
@@ -109,6 +110,7 @@ class Settings : AppCompatActivity() {
         App.prefs.weekStartDay = dowSpinner.selectedItemPosition
         App.prefs.dateFormat = dformatSpinner.selectedItem.toString()
         App.prefs.timeFormat = tformatSpinner.selectedItem.toString()
+        App.prefs.viewTipsColumn = checkBox.isChecked
         finish()
         Toast.makeText(this,getString(R.string.settings_saved),Toast.LENGTH_LONG).show()
     }

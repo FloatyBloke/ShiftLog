@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.flangenet.shiftlog.Controller.App
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.getDayOfWeek
@@ -25,6 +26,7 @@ class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, va
                 //val rate = itemView.findViewById<TextView>(R.id.gridRate)
                 val pay: TextView = itemView.findViewById<TextView>(R.id.gridPay)
                 val tips: TextView = itemView.findViewById<TextView>(R.id.gridTips)
+
                 fun bindShifts(shift:DBShift) {
                         //id?.text = "${shift.id} - ${shift.start!!.dayOfWeek}"
                         //id.text = properCase(shift.start!!.dayOfWeek.toString())
@@ -38,6 +40,9 @@ class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, va
                         //rate?.text = shift.rate.toString()
                         pay.text = String.format("%.2f",shift.pay)
                         tips.text = String.format("%.2f",shift.tips)
+                        if (!App.prefs.viewTipsColumn!!) {
+                                tips.visibility = View.GONE
+                        }
                         itemView.setOnClickListener{itemClick(shift)
                         }
                 }

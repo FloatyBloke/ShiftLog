@@ -1,6 +1,9 @@
 package com.flangenet.shiftlog.Controller
 
-import android.app.*
+import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.Dialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
@@ -10,7 +13,6 @@ import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.Model.Shift
 import com.flangenet.shiftlog.R
@@ -19,11 +21,8 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_edit_shift.*
-
 import org.joda.time.LocalDateTime
 import org.joda.time.Minutes
-import java.io.File
-import java.nio.file.Files.copy
 
 
 //import java.time.*
@@ -326,16 +325,12 @@ class EditShift : AppCompatActivity() {
 
     }
 
-    private fun toast(message : String){
-        Toast.makeText(this,message,Toast.LENGTH_LONG).show()
-
-    }
 
 
     private fun infoChanged() : Boolean {
         mainCalc()
         shift.tips = edtTips.text.toString().toFloat()
-        var changed: Boolean = false
+        var changed = false
         println("${inShift.start}-${shift.start}" )
         println("${inShift.end}-${shift.end}" )
         println("${inShift.breaks}-${shift.breaks}" )

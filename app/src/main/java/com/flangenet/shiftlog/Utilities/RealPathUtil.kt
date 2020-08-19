@@ -1,3 +1,5 @@
+package com.flangenet.shiftlog.Utilities
+
 import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Context

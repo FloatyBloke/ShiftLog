@@ -86,7 +86,7 @@
 
             <TextView
                 android:id="@+id/txtUserNameHead"
-                android:layout_width="150dp"
+                android:layout_width="180dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/wak_shadow"
@@ -120,7 +120,7 @@
 
             <TextView
                 android:id="@+id/txtEmailHead"
-                android:layout_width="150dp"
+                android:layout_width="180dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/wak_shadow"
@@ -133,7 +133,7 @@
 
             <TextView
                 android:id="@+id/txtHourlyRateHead"
-                android:layout_width="150dp"
+                android:layout_width="180dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/wak_shadow"
@@ -146,7 +146,7 @@
 
             <TextView
                 android:id="@+id/txtWeekStartHead"
-                android:layout_width="150dp"
+                android:layout_width="180dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/wak_shadow"
@@ -159,7 +159,7 @@
 
             <TextView
                 android:id="@+id/txtTimeFormatHead"
-                android:layout_width="150dp"
+                android:layout_width="180dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/wak_shadow"
@@ -167,6 +167,18 @@
                 android:textAlignment="center"
                 app:layout_constraintStart_toStartOf="@+id/tformatSpinner"
                 app:layout_constraintTop_toBottomOf="@+id/dformatSpinner"
+                tools:layout_conversion_absoluteHeight="25dp"
+                tools:layout_conversion_absoluteWidth="150dp" />
+
+            <TextView
+                android:id="@+id/txtTimeFormatHead2"
+                android:layout_width="180dp"
+                android:layout_height="25dp"
+                android:background="@drawable/wak_shadow"
+                android:text="@string/show_tips"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="@+id/tformatSpinner"
+                app:layout_constraintTop_toBottomOf="@+id/tformatSpinner"
                 tools:layout_conversion_absoluteHeight="25dp"
                 tools:layout_conversion_absoluteWidth="150dp" />
 
@@ -183,6 +195,27 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtTimeFormatHead"
                 tools:layout_conversion_absoluteHeight="40dp"
                 tools:layout_conversion_absoluteWidth="0dp" />
+
+            <EditText
+                android:id="@+id/edtBlanco"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:height="45dp"
+                android:autofillHints=""
+                android:background="@drawable/wak_shadow"
+                android:duplicateParentState="false"
+                android:ems="10"
+                android:inputType="none|numberDecimal"
+                android:shadowDy="10"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTimeFormatHead2"
+                tools:layout_conversion_absoluteHeight="40dp"
+                tools:layout_conversion_absoluteWidth="347dp" />
 
             <EditText
                 android:id="@+id/edtEmail"
@@ -257,7 +290,7 @@
 
             <TextView
                 android:id="@+id/txtDateFormatHead"
-                android:layout_width="150dp"
+                android:layout_width="180dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/wak_shadow"
@@ -267,6 +300,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/dowSpinner"
                 tools:layout_conversion_absoluteHeight="25dp"
                 tools:layout_conversion_absoluteWidth="150dp" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edtBlanco" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

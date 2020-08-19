@@ -2,31 +2,17 @@ package com.flangenet.shiftlog.Controller
 
 import android.app.Dialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
-import android.os.Environment.getExternalStorageDirectory
-import android.os.Environment.getExternalStoragePublicDirectory
-import android.text.Html
-import android.text.method.LinkMovementMethod
 import android.view.Window
-import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-
 import com.flangenet.shiftlog.R
-import com.flangenet.shiftlog.Utilities.DBHelper
 import com.flangenet.shiftlog.Utilities.EXTRA_EDIT_SHIFT
-import com.flangenet.shiftlog.Utilities.SQLITE_DATABASE_NAME
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import kotlinx.android.synthetic.main.about_dialog.*
+import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.*
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.RequestConfiguration
-import java.io.File
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -107,7 +93,8 @@ class MainActivity : AppCompatActivity() {
         val txtExtra= dialog.findViewById<TextView>(R.id.txtAboutDescription)
         val clAbout= dialog.findViewById(R.id.clAbout) as ConstraintLayout
         clAbout.setOnClickListener{ dialog.dismiss() }
-        txtExtra.text = "${txtExtra.text}Version : $versionName"
+        txtExtra.text =
+            "${txtExtra.text}${System.lineSeparator()}${getString(R.string.about_version)} : $versionName"
 
         txtExtra.setOnClickListener{ dialog.dismiss() }
 /*        val btnOk = dialog.findViewById(R.id.btnOk) as Button

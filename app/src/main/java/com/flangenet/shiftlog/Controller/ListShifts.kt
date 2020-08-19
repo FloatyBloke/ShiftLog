@@ -1,13 +1,14 @@
 package com.flangenet.shiftlog.Controller
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,8 +22,6 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_list_shifts.*
 import org.joda.time.LocalDate
-//import java.time.LocalDate
-//import java.time.temporal.ChronoField
 import kotlin.math.abs
 
 //private const val DEBUG_TAG = "Gestures"
@@ -80,7 +79,7 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
-        this.gDetector = GestureDetectorCompat(this,this)
+        this.gDetector = GestureDetectorCompat(this, this)
         gDetector?.setOnDoubleTapListener(this)
 
         val currentDate = LocalDate()
@@ -96,6 +95,29 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
 
         btnListLeft.setOnClickListener { btnListLeftClicked() }
         btnListRight.setOnClickListener { btnListRightClicked() }
+
+
+        // Hide tips column if not required
+
+        if (!App.prefs.viewTipsColumn!!) {
+            txtTotalTips.visibility = View.GONE
+            headTips.visibility = View.GONE
+        } else {
+            txtTotalTips.visibility = View.VISIBLE
+            headTips.visibility = View.VISIBLE
+        }
+
+
+        fab.setOnClickListener {
+
+            val screen = takeScreenshotOfView(it,100,100)
+            val sendIntent = Intent()
+            sendIntent.action = Intent.ACTION_SEND
+            sendIntent.putExtra(Intent.EXTRA_TEXT, getReport())
+
+            sendIntent.type = "text/plain"
+            startActivity(sendIntent)
+        }
 
 
 
@@ -114,10 +136,9 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
         })
 
 */
-        listShiftsView.setOnTouchListener(OnTouchListener { v, event ->
-
+        listShiftsView.setOnTouchListener(fun(v: View, event: MotionEvent): Boolean {
             this.gDetector?.onTouchEvent(event)
-            false
+            return false
         })
 
 
@@ -207,12 +228,18 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
         txtTotalTips.text = String.format("%.2f", totalTips)
 
         when (searchMode) {
-            0 -> { val t = getString(R.string.week) + " " + prefsDateConvert(wcDate)
-                txtWeekCommencing.text = t }
-            1 -> { val t = "${properCase(wcDate.toString("MMMM"))} ${wcDate.year}"
-                txtWeekCommencing.text = t }
-            2 -> {val t = "${getString(R.string.year)} ${wcDate.year}"
-                txtWeekCommencing.text = t}
+            0 -> {
+                val t = getString(R.string.week) + " " + prefsDateConvert(wcDate)
+                txtWeekCommencing.text = t
+            }
+            1 -> {
+                val t = "${properCase(wcDate.toString("MMMM"))} ${wcDate.year}"
+                txtWeekCommencing.text = t
+            }
+            2 -> {
+                val t = "${getString(R.string.year)} ${wcDate.year}"
+                txtWeekCommencing.text = t
+            }
         }
 
         if (lstShifts.count() == 0) {
@@ -270,7 +297,6 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
     ): Boolean {
         val SWIPE_THRESHOLD = 100
         val SWIPE_VELOCITY_THRESHOLD = 100
-        val result = false
         try {
             val diffY = e2!!.y - e1!!.y
             val diffX = e2.x - e1.x
@@ -322,6 +348,41 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
     override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
         //txtWeekCommencing.text = "onSingleTapConfirmed"
         return true
+    }
+
+
+    fun getReport() : String{
+        var output = StringBuilder()
+
+        output.append("${App.prefs.USER_NAME}")
+        output.append("Week Commencing - ${prefsDateConvert(wcDate)}")
+        output.append("Start - End - Breaks - Hours - pay")
+
+        lstShifts.forEach {
+            output.append("${prefsDateConvert(it.start!!.toLocalDate())}-${prefsTimeConvert(it.start!!.toLocalTime())}${prefsTimeConvert(
+                it.end?.toLocalTime())} - ${it.breaks} - ${it.hours} - ${it.pay}")
+        }
+        output.append("${txtTotalBreaks.text} - ${txtTotalHours.text} - ${txtTotalPay.text}")
+
+
+
+
+        println(output.toString())
+
+        return output.toString()
+    }
+
+    fun takeScreenshotOfView(view: View, height: Int, width: Int): Bitmap {
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val bgDrawable = view.background
+        if (bgDrawable != null) {
+            bgDrawable.draw(canvas)
+        } else {
+            canvas.drawColor(Color.WHITE)
+        }
+        view.draw(canvas)
+        return bitmap
     }
 }
 

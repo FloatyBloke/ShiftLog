@@ -63,4 +63,7 @@
     <string name="message_export_complete">Exportación completa</string>
     <string name="message_export_error">Error al exportar</string>
     <string name="import_summary_text">Líneas - Errores</string>
+    <string name="about_version">Versión</string>
+    <string name="burnley">Burnley</string>
+    <string name="barnsley">Barnsley</string>
 </resources>

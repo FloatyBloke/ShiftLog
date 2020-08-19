@@ -12,6 +12,7 @@ class SharedPrefs(context: Context) {
     var USER_EMAIL = "user email"
     var DATE_FORMAT = "date format"
     var TIME_FORMAT = "time format"
+    var VIEW_TIPS_COLUMN = "view tips column"
 
 
     val PREFS_FILENAME = "prefsWL"
@@ -39,4 +40,8 @@ class SharedPrefs(context: Context) {
     var timeFormat: String?
         get() = prefs.getString(TIME_FORMAT, "HH:mm")
         set(value) = prefs.edit().putString(TIME_FORMAT,value).apply()
+
+    var viewTipsColumn : Boolean?
+        get() = prefs.getBoolean(VIEW_TIPS_COLUMN, true)
+        set(value) = prefs.edit().putBoolean(VIEW_TIPS_COLUMN, value!!).apply()
 }

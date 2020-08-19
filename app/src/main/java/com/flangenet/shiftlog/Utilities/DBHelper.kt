@@ -210,11 +210,11 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
         val db = this.writableDatabase
         println("DB Path : ${db!!.path}")
         db.close()
-        return db!!.path
+        return db.path
     }
 
     fun updateShift(shift: DBShift) : Int {
-        var fig:Int = 0
+        var fig = 0
         val db = this.writableDatabase
         try{
 
