@@ -174,6 +174,7 @@
                 android:id="@+id/txtTimeFormatHead2"
                 android:layout_width="180dp"
                 android:layout_height="25dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/wak_shadow"
                 android:text="@string/show_tips"
                 android:textAlignment="center"
@@ -283,7 +284,6 @@
                 tools:layout_conversion_absoluteWidth="150dp" />
 
 
-
             <Spinner
                 android:id="@+id/spinTipShow"
                 android:layout_width="0dp"
@@ -291,9 +291,10 @@
                 android:height="45dp"
                 android:autofillHints=""
                 android:background="@drawable/wak_shadow"
-                android:popupBackground="@drawable/edge_line"
                 android:duplicateParentState="false"
+                android:popupBackground="@drawable/edge_line"
                 android:shadowDy="10"
+                android:spinnerMode="dropdown"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
