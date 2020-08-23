@@ -8,7 +8,7 @@
     <string name="shift_log_settings">Shift Log Settings</string>
     <string name="settings_saved">Settings Saved</string>
     <string name="shift_log">Shift Log</string>
-    <string name="shift_log_extra"></string>
+    <string name="shift_log_extra"> </string>
     <string name="new_shift">New Shift</string>
     <string name="settings">Settings</string>
     <string name="view_shifts">View Shifts</string>
@@ -52,7 +52,7 @@
     <string name="aboutEmail">floatybloke@gmail.com</string>
     <string name="aboutEmailHTML"><![CDATA[ contact us at <a href=\"mailto:floatybloke@gmail.com\">floatybloke@gmail.com</a>]]></string>
 
-    <string name="file_information">"               This area is for importing and exporting\n       File should be comma delimited text with the following layout\n       Start DateTime, End DateTime, Break Hours, Hours Worked, Hourly Rate, Pay, Tips/n                  eg.       2014-01-13 08:00,2014-01-13 14:30,0.0,6.5,6.0,39.0,23.0      "</string>
+    <string name="file_information">"               This area is for importing and exporting\n       File should be comma delimited text with the following layout\n       Start DateTime, End DateTime, Break Hours, Hours Worked, Hourly Rate, Pay, Tips/n                  eg.       2014–01-13 08:00,2014-01-13 14:30,0.0,6.5,6.0,39.0,23.0      "</string>
     <string name="log_text">Log Text</string>
     <string name="log_information">Log Information</string>
     <string name="about_version">Version</string>
@@ -93,4 +93,9 @@
         <item>HH:mm</item>
         <item>h:mm a</item>
     </string-array>
+    <string-array name="yesNo">
+        <item>No</item>
+        <item>Yes</item>
+    </string-array>
+
 </resources>

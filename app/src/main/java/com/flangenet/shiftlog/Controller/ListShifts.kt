@@ -1,14 +1,12 @@
 package com.flangenet.shiftlog.Controller
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,19 +26,19 @@ import kotlin.math.abs
 
 class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
-    lateinit var db: DBHelper
-    var lstShifts: List<DBShift> = ArrayList()
-    lateinit var shiftsAdapter: ListShiftsAdapter
-    lateinit var wcDate: LocalDate
+    private lateinit var db: DBHelper
+    private var lstShifts: List<DBShift> = ArrayList()
+    private lateinit var shiftsAdapter: ListShiftsAdapter
+    private lateinit var wcDate: LocalDate
     var searchMode: Int = 0
 
     //private var oldNoisy: SoundPool? = null
     //private val soundId = 1
     private var noisy: MediaPlayer? = null
 
-    var gDetector: GestureDetectorCompat? = null
+    private var gDetector: GestureDetectorCompat? = null
 
-    lateinit var mAdView : AdView
+    private lateinit var mAdView : AdView
 
 
 
@@ -110,13 +108,20 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
 
         fab.setOnClickListener {
 
-            val screen = takeScreenshotOfView(it,100,100)
-            val sendIntent = Intent()
-            sendIntent.action = Intent.ACTION_SEND
-            sendIntent.putExtra(Intent.EXTRA_TEXT, getReport())
 
-            sendIntent.type = "text/plain"
-            startActivity(sendIntent)
+            try {
+                val sendIntent = Intent()
+                sendIntent.action = Intent.ACTION_SEND
+                sendIntent.putExtra(Intent.EXTRA_TEXT, getReport())
+                sendIntent.type = "text/plain"
+                startActivity(sendIntent)
+            } catch (e:Exception){
+                Toast.makeText(this,"Error sharing",Toast.LENGTH_LONG).show()
+
+            }
+
+
+            //println(getReport())
         }
 
 
@@ -250,7 +255,7 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
 
     }
 
-    fun btnListLeftClicked() {
+    private fun btnListLeftClicked() {
         when (searchMode) {
             0 -> wcDate = wcDate.minusWeeks(1)
             1 -> wcDate = wcDate.minusMonths(1)
@@ -262,7 +267,7 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
         refreshData()
     }
 
-    fun btnListRightClicked() {
+    private fun btnListRightClicked() {
         when (searchMode) {
             0 -> wcDate = wcDate.plusWeeks(1)
             1 -> wcDate = wcDate.plusMonths(1)
@@ -351,38 +356,31 @@ class ListShifts : AppCompatActivity(), GestureDetector.OnGestureListener, Gestu
     }
 
 
-    fun getReport() : String{
+    private fun getReport() : String{
         var output = StringBuilder()
 
-        output.append("${App.prefs.USER_NAME}")
-        output.append("Week Commencing - ${prefsDateConvert(wcDate)}")
-        output.append("Start - End - Breaks - Hours - pay")
+        output.append("${App.prefs.userName}\n")
+        output.append("Week Commencing:${prefsDateConvert(wcDate)}\n")
+        //output.append("Start - End - Breaks - Hours - pay\n")
 
         lstShifts.forEach {
-            output.append("${prefsDateConvert(it.start!!.toLocalDate())}-${prefsTimeConvert(it.start!!.toLocalTime())}${prefsTimeConvert(
-                it.end?.toLocalTime())} - ${it.breaks} - ${it.hours} - ${it.pay}")
+            output.append("${prefsDateConvert(it.start!!.toLocalDate())}\n")
+            output.append("${prefsTimeConvert(it.start!!.toLocalTime())}-${prefsTimeConvert(it.end?.toLocalTime())}\n")
+            output.append("Hours:${it.hours}\n\n")
         }
-        output.append("${txtTotalBreaks.text} - ${txtTotalHours.text} - ${txtTotalPay.text}")
+        output.append("Totals\nHours:${txtTotalHours.text}\nPay:${txtTotalPay.text}")
 
 
 
 
-        println(output.toString())
+        //println("Report : ${output.toString()}")
 
         return output.toString()
     }
 
-    fun takeScreenshotOfView(view: View, height: Int, width: Int): Bitmap {
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        val bgDrawable = view.background
-        if (bgDrawable != null) {
-            bgDrawable.draw(canvas)
-        } else {
-            canvas.drawColor(Color.WHITE)
-        }
-        view.draw(canvas)
-        return bitmap
-    }
+
+
+
+
 }
 

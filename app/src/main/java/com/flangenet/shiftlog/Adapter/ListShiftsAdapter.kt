@@ -16,16 +16,16 @@ import com.flangenet.shiftlog.Utilities.prefsTimeConvert
 
 class ListShiftsAdapter (val context:Context, val shifts: ArrayList<DBShift>, val itemClick: (DBShift) -> Unit): RecyclerView.Adapter<ListShiftsAdapter.ViewHolder>(){
 
-        inner class ViewHolder (itemView: View, val itemClick: (DBShift) -> Unit) : RecyclerView.ViewHolder(itemView){
-                private val id: TextView = itemView.findViewById<TextView>(R.id.gridId)
-                private val start: TextView = itemView.findViewById<TextView>(R.id.gridStart)
-                private val end: TextView = itemView.findViewById<TextView>(R.id.gridEnd)
-                private val breaks: TextView = itemView.findViewById<TextView>(R.id.gridBreak)
+        class ViewHolder (itemView: View, val itemClick: (DBShift) -> Unit) : RecyclerView.ViewHolder(itemView){
+                private val id: TextView = itemView.findViewById(R.id.gridId)
+                private val start: TextView = itemView.findViewById(R.id.gridStart)
+                private val end: TextView = itemView.findViewById(R.id.gridEnd)
+                private val breaks: TextView = itemView.findViewById(R.id.gridBreak)
 
-                val hours: TextView = itemView.findViewById<TextView>(R.id.gridHours)
+                val hours: TextView = itemView.findViewById(R.id.gridHours)
                 //val rate = itemView.findViewById<TextView>(R.id.gridRate)
-                val pay: TextView = itemView.findViewById<TextView>(R.id.gridPay)
-                val tips: TextView = itemView.findViewById<TextView>(R.id.gridTips)
+                val pay: TextView = itemView.findViewById(R.id.gridPay)
+                val tips: TextView = itemView.findViewById(R.id.gridTips)
 
                 fun bindShifts(shift:DBShift) {
                         //id?.text = "${shift.id} - ${shift.start!!.dayOfWeek}"

@@ -329,13 +329,15 @@
                 android:ems="10"
                 android:enabled="true"
                 android:gravity="center_horizontal|center_vertical"
+                android:hint="@string/tips"
+                android:imeOptions="actionDone"
                 android:inputType="numberDecimal"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
-                android:imeOptions="actionDone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtTipsHead" />
+                app:layout_constraintTop_toBottomOf="@+id/txtTipsHead"
+                android:autofillHints="" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

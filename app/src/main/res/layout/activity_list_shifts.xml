@@ -282,13 +282,17 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:adjustViewBounds="false"
+        android:backgroundTint="#C689D1"
         android:clickable="true"
+        android:fadingEdge="vertical"
         android:focusable="true"
         android:src="?attr/actionModeShareDrawable"
+        app:backgroundTint="#3A6B94"
         app:fabCustomSize="38dp"
         app:fabSize="auto"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:maxImageSize="24dp" />
+        app:layout_constraintTop_toTopOf="@+id/tabMode"
+        app:maxImageSize="30dp"
+        app:useCompatPadding="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

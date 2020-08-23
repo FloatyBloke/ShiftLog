@@ -2,16 +2,17 @@ package com.flangenet.shiftlog.Controller
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.view.Window
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.Model.Shift
@@ -36,8 +37,8 @@ class EditShift : AppCompatActivity() {
     private var shiftID: Int = 0
 
     var shift = Shift(LocalDateTime(),LocalDateTime(),0F,0F,5F,0F, 0F)
-    var inShift = Shift(LocalDateTime(),LocalDateTime(),0F,0F,5F,0F, 0F)
-    lateinit var mAdView : AdView
+    private var inShift = Shift(LocalDateTime(),LocalDateTime(),0F,0F,5F,0F, 0F)
+    private lateinit var mAdView : AdView
 
 
 
@@ -124,7 +125,7 @@ class EditShift : AppCompatActivity() {
 
         // Button click to show DatePickerDialog
         txtShiftStartDate.setOnClickListener{
-            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, outYear, outMonth, outDay ->
+            val dpd = DatePickerDialog(this, { _, outYear, outMonth, outDay ->
                 shift.start = makeDateTime(outYear,(outMonth+1),outDay, shift.start.hourOfDay,shift.start.minuteOfHour)
                 mainCalc()
             }, shift.start.year, ((shift.start.monthOfYear)-1), shift.start.dayOfMonth)
@@ -132,7 +133,7 @@ class EditShift : AppCompatActivity() {
         }
 
         txtShiftEndDate.setOnClickListener{
-            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, outYear, outMonth, outDay ->
+            val dpd = DatePickerDialog(this, { _, outYear, outMonth, outDay ->
                 shift.end = makeDateTime(outYear,(outMonth+1),outDay,shift.end.hourOfDay,shift.end.minuteOfHour)
                 mainCalc()
             }, shift.end.year, ((shift.end.monthOfYear)-1), shift.end.dayOfMonth)
@@ -255,28 +256,6 @@ class EditShift : AppCompatActivity() {
             Toast.makeText(this,"${getString(R.string.error_deleting_shift)} : ${prefsDateConvert(shift.start.toLocalDate())}", Toast.LENGTH_SHORT).show()
         }
         finish()
-    }
-
-    private fun openTipsDlg() {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(true)
-        dialog.setContentView(R.layout.tips_dialog)
-        val tips= dialog.findViewById<TextView>(R.id.txtDlgTips)
-
-        tips.text = "${shift.tips}"
-
-        //tips.setOnClickListener{ dialog.dismiss() }
-        val btnTipsOk = dialog.findViewById(R.id.btnTipsOk) as Button
-
-        btnTipsOk.setOnClickListener {
-            edtTips.text = tips.editableText
-            dialog.dismiss()
-        }
-
-
-        dialog.show()
-
     }
 
     private fun hideKeyboard(){

@@ -7,7 +7,7 @@
     <string name="week_commencing">Semana Comienza</string>
     <string name="hours">Horas</string>
     <string name="tips">Propina</string>
-    <string name="first_day_of_week">Primer dia de la semana</string>
+    <string name="first_day_of_week">Primer día de la semana</string>
     <string name="save_settings">Guardar configuración</string>
     <string name="hourly_rate">Pago por hora</string>
     <string name="email_address">Correo electrónico</string>
@@ -30,7 +30,7 @@
     <string name="aboutEmail">floatybloke@gmail.com</string>
     <string name="shift_start">Inicio de turno</string>
     <string name="settings_saved">Ajustes guardados</string>
-    <string name="file_information">Esta área es para importar y exportar El archivo\n debe ser texto delimitado por comas con el siguiente diseño\n Fecha y hora de inicio, Fecha y hora de finalización, Horas de descanso, Horas trabajadas, Tarifa por hora, Pago, Propinas\n  eg.       2014–01–13 08:00,2014-01-13 14:30,0.0,6.5,6.0,39.0,23.0</string>
+    <string name="file_information">Esta área es para importar y exportar El archivo\n debe ser texto delimitado por comas con el siguiente diseño\n Fecha y hora de inicio, Fecha y hora de finalización, Horas de descanso, Horas trabajadas, Tarifa por hora, Pago, Propinas\n  eg.       2014–01–13 08:00,2014–01-13 14:30,0.0,6.5,6.0,39.0,23.0</string>
     <string name="break_minutes_unpaid">Descanso Mins (no pagados)</string>
     <string name="hours_worked">Horas trabajadas</string>
     <string name="shift_end">Fin de turno</string>
@@ -58,6 +58,10 @@
         <item>Sabado</item>
         <item>Domingo</item>
     </string-array>
+    <string-array name="yesNo">
+        <item>Si</item>
+        <item>No</item>
+    </string-array>
     <string name="shift_log_extra">Registro de Turnos</string>
     <string name="message_import_complete">Importación completa</string>
     <string name="message_export_complete">Exportación completa</string>
@@ -66,4 +70,5 @@
     <string name="about_version">Versión</string>
     <string name="burnley">Burnley</string>
     <string name="barnsley">Barnsley</string>
+    <string name="show_tips">Mostrar Propinas En Resumen</string>
 </resources>

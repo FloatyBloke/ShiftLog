@@ -92,6 +92,15 @@ class Settings : AppCompatActivity() {
             spinner3.adapter = adapter
         }
 
+        // tipShow Spinner Setup
+        val ynArray = resources.getStringArray(R.array.yesNo)
+        val spinner4 = findViewById<Spinner>(R.id.spinTipShow)
+        if (spinner4 != null) {
+            val adapter = ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, ynArray)
+            spinner4.adapter = adapter
+        }
+
         // Set form up with saved information, placed after Spinner is created
         edtUserName.setText(App.prefs.userName)
         edtEmail.setText(App.prefs.userEmail)
@@ -99,7 +108,9 @@ class Settings : AppCompatActivity() {
         dowSpinner.setSelection(App.prefs.weekStartDay)
         dformatSpinner.setSelection(dateArray.indexOf(App.prefs.dateFormat))
         tformatSpinner.setSelection(timeArray.indexOf(App.prefs.timeFormat))
-        checkBox.isChecked = App.prefs.viewTipsColumn!!
+        var yn = "No"
+        if (App.prefs.viewTipsColumn!!) { yn="Yes"}
+        spinTipShow.setSelection(ynArray.indexOf((yn)))
         hideKeyboard()
     }
 
@@ -110,7 +121,7 @@ class Settings : AppCompatActivity() {
         App.prefs.weekStartDay = dowSpinner.selectedItemPosition
         App.prefs.dateFormat = dformatSpinner.selectedItem.toString()
         App.prefs.timeFormat = tformatSpinner.selectedItem.toString()
-        App.prefs.viewTipsColumn = checkBox.isChecked
+        App.prefs.viewTipsColumn = (spinTipShow.selectedItem.toString() == "Yes")
         finish()
         Toast.makeText(this,getString(R.string.settings_saved),Toast.LENGTH_LONG).show()
     }

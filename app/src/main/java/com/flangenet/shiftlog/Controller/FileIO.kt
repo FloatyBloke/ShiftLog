@@ -12,13 +12,11 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.flangenet.shiftlog.Model.DBShift
 import com.flangenet.shiftlog.R
 import com.flangenet.shiftlog.Utilities.DBHelper
@@ -41,11 +39,11 @@ import java.io.OutputStream
 
 class FileIO : AppCompatActivity() {
 
-    lateinit var mAdView : AdView
+    private lateinit var mAdView : AdView
 
     private lateinit var db: DBHelper
-    private val outputIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-    private val inputIntent = Intent(Intent.ACTION_GET_CONTENT)
+    private val outputIntent = Intent(ACTION_CREATE_DOCUMENT)
+    private val inputIntent = Intent(ACTION_GET_CONTENT)
 
 
     private val WRITE_EXTERNAL_REQUEST_CODE = 113
@@ -119,23 +117,7 @@ class FileIO : AppCompatActivity() {
 
     }
 
-    private fun makeRequest(permRequest: Int) {
-        if (permRequest == WRITE_EXTERNAL_REQUEST_CODE){
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                WRITE_EXTERNAL_REQUEST_CODE
-            )
-        } else if (permRequest == READ_EXTERNAL_REQUEST_CODE){
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                READ_EXTERNAL_REQUEST_CODE
-            )
-        }
-
-    }
-/*
+    /*
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>, grantResults: IntArray
@@ -202,8 +184,8 @@ class FileIO : AppCompatActivity() {
 
         // Only pick openable and local files. Theoretically we could pull files from google drive
         // or other applications that have networked files, but that's unnecessary for this example.
-        outputIntent.addCategory(Intent.CATEGORY_OPENABLE)
-        outputIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+        outputIntent.addCategory(CATEGORY_OPENABLE)
+        outputIntent.putExtra(EXTRA_LOCAL_ONLY, true)
 
         // REQUEST_CODE = <some-integer>
         startActivityForResult(outputIntent, 112)
@@ -226,8 +208,8 @@ class FileIO : AppCompatActivity() {
 
         // Only pick openable and local files. Theoretically we could pull files from google drive
         // or other applications that have networked files, but that's unnecessary for this example.
-        inputIntent.addCategory(Intent.CATEGORY_OPENABLE)
-        inputIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+        inputIntent.addCategory(CATEGORY_OPENABLE)
+        inputIntent.putExtra(EXTRA_LOCAL_ONLY, true)
 
         // REQUEST_CODE = <some-integer>
         startActivityForResult(inputIntent, 111)
@@ -329,7 +311,7 @@ class FileIO : AppCompatActivity() {
     private fun importTableOld(uri: Uri) {
 
         val lineList = mutableListOf<String>()
-         var log: String = ""
+
         db = DBHelper(this)
         enableSpinner(true, getString(R.string.message_import))
         val inputStream: InputStream? = uri.let { contentResolver.openInputStream(it) }
@@ -368,7 +350,7 @@ class FileIO : AppCompatActivity() {
         return this?.data?.let { data -> RealPathUtil.getRealPath(context, data) ?: "" } ?: ""
     }
 
-    fun Uri?.getFilePath(context: Context): String {
+    private fun Uri?.getFilePath(context: Context): String {
         return this?.let { uri -> RealPathUtil.getRealPath(context, uri) ?: "" } ?: ""
     }
 

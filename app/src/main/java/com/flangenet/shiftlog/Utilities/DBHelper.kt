@@ -272,14 +272,14 @@ class DBHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null,
                      values.put(COL_RATE, importLine[4].toFloat())
                      values.put(COL_PAY, importLine[5].toFloat())
                      values.put(COL_TIPS, importLine[6].toFloat())
-                     var t = db.insert(TABLE_NAME, null, values)
+                     val t = db.insert(TABLE_NAME, null, values)
                      println("Importing : $t - $rawLine")
                  }
              }
 
 
          } catch (e: Exception) {
-             Log.e("Import", e.message)
+             Log.e("Import", e.message!!)
              errorCount += 1
              println("Parse Error : ${errorCount}*${importLine[0]}*${importLine[1]}*${importLine[2]}*${importLine[3]}*${importLine[4]}*${importLine[5]}*${importLine[6]}")
 

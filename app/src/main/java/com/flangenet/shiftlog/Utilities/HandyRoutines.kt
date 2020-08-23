@@ -103,10 +103,10 @@ fun removeBrackets(inputString: String) : String {
 fun properCase(inputString: String) : String {
     var outputString = ""
     inputString.forEach {
-        if (outputString == ""){
-            outputString += it.toUpperCase()
+        outputString += if (outputString == ""){
+            it.toUpperCase()
         } else {
-            outputString += it.toLowerCase()
+            it.toLowerCase()
         }
     }
     return outputString

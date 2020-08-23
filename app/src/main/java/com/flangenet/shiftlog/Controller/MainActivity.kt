@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var mAdView : AdView
+    private lateinit var mAdView : AdView
 
 
 
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         val clAbout= dialog.findViewById(R.id.clAbout) as ConstraintLayout
         clAbout.setOnClickListener{ dialog.dismiss() }
         txtExtra.text =
-            "${txtExtra.text}${System.lineSeparator()}${getString(R.string.about_version)} : $versionName"
+            "${txtExtra.text}${System.lineSeparator()}${getString(R.string.about_version)} : ${versionName}"
 
         txtExtra.setOnClickListener{ dialog.dismiss() }
 /*        val btnOk = dialog.findViewById(R.id.btnOk) as Button
